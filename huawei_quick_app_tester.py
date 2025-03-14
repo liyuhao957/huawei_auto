@@ -351,6 +351,52 @@ class QuickAppTester:
             # 每次侧滑后极短等待
             time.sleep(0.1)  # 减少等待时间，提高连续性
         
+        # 滑动完成后等待2秒，让界面稳定下来
+        logger.info("滑动完成，等待2秒让界面稳定")
+        time.sleep(2)
+        
+        # 滑动10次后检测快应用是否在前台
+        logger.info("滑动10次后检测快应用是否在前台")
+        
+        # 获取当前前台应用信息
+        current_app = self.device.app_current()
+        logger.info(f"当前前台应用信息: {current_app}")
+        package_name = current_app.get('package', '')
+        activity = current_app.get('activity', '')
+        
+        # 检查是否是快应用相关包名
+        is_quick_app = False
+        if "com.huawei.fastapp" in package_name:
+            logger.info(f"检测到快应用在前台运行: {package_name}")
+            is_quick_app = True
+            
+            # 尝试使用dumpsys获取更多信息
+            try:
+                window_info = self.device.shell("dumpsys window | grep mCurrentFocus")
+                logger.info(f"窗口信息: {window_info}")
+                # 检查输出字符串而不是对象
+                if isinstance(window_info, str):
+                    if "买乐多" in window_info or "fastapp" in window_info.lower():
+                        logger.info("通过窗口信息确认快应用在前台运行")
+                        is_quick_app = True
+                else:
+                    # 如果是ShellResponse对象，获取其output属性
+                    output = getattr(window_info, 'output', '')
+                    if "买乐多" in output or "fastapp" in output.lower():
+                        logger.info("通过窗口信息确认快应用在前台运行")
+                        is_quick_app = True
+            except Exception as e:
+                logger.warning(f"获取窗口信息失败: {str(e)}")
+        
+        if is_quick_app:
+            logger.info("侧滑拦截成功：快应用仍在前台运行")
+        else:
+            logger.warning("侧滑拦截失败：快应用已不在前台运行")
+        
+        # 检测完成后等待2秒再继续后续操作
+        logger.info("检测完成，等待2秒再继续后续操作")
+        time.sleep(2)
+        
         # 滑动10次后立即截图
         logger.info("滑动10次后立即截图")
         self.take_screenshot("after_10_swipes")
