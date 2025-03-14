@@ -41,13 +41,15 @@ if not os.path.exists(SCREENSHOTS_DIR):
 FEISHU_WEBHOOK_URL = "https://open.feishu.cn/open-apis/bot/v2/hook/2e9f09a8-4cec-4475-a6a8-4da61c4a874c"  # 替换为您的飞书机器人webhook URL
 FEISHU_SECRET = "YOUR_SECRET"  # 替换为您的飞书机器人签名密钥，如果没有设置签名可以留空
 
-def send_feishu_notification(title, content):
+def send_feishu_notification(title, content, mention_user=None, mention_all=False):
     """
     发送飞书机器人通知
     
     Args:
         title: 通知标题
         content: 通知内容
+        mention_user: 要@的用户ID，如果为None则不@任何人
+        mention_all: 是否@所有人
     
     Returns:
         bool: 是否发送成功
@@ -59,7 +61,7 @@ def send_feishu_notification(title, content):
     try:
         timestamp = str(int(time.time()))
         
-        # 构建消息内容
+        # 使用卡片消息格式
         msg = {
             "msg_type": "interactive",
             "card": {
@@ -80,22 +82,35 @@ def send_feishu_notification(title, content):
                             "tag": "lark_md",
                             "content": content
                         }
-                    },
-                    {
-                        "tag": "hr"
-                    },
-                    {
-                        "tag": "note",
-                        "elements": [
-                            {
-                                "tag": "plain_text",
-                                "content": f"测试时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-                            }
-                        ]
                     }
                 ]
             }
         }
+        
+        # 如果需要@所有人，添加@所有人元素
+        if mention_all:
+            # 在卡片顶部添加@所有人元素
+            at_element = {
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": "<at id=all></at>"
+                }
+            }
+            # 将@所有人元素插入到元素列表的最前面
+            msg["card"]["elements"].insert(0, at_element)
+        
+        # 添加时间戳注释
+        msg["card"]["elements"].append({"tag": "hr"})
+        msg["card"]["elements"].append({
+            "tag": "note",
+            "elements": [
+                {
+                    "tag": "plain_text",
+                    "content": f"测试时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+                }
+            ]
+        })
         
         # 如果设置了签名密钥，则计算签名
         headers = {"Content-Type": "application/json"}
@@ -1134,9 +1149,6 @@ def run_test():
         logger.info(f"本次测试执行时间: {current_time}")
         logger.info("下一次测试将在30分钟后执行")
         
-        # 构建飞书通知内容 - 只显示防侧滑和拉回结果
-        title = "快应用防侧滑与拉回测试"
-        
         # 设置表情符号和状态
         防侧滑_success = result3['防侧滑']
         拉回_success = result3['拉回']
@@ -1145,26 +1157,41 @@ def run_test():
         防侧滑_icon = "✅" if 防侧滑_success else "❌"
         拉回_icon = "✅" if 拉回_success else "❌"
         
-        # 构建更美观的内容，使用飞书支持的Markdown格式，删除标题
-        content = f"""
+        # 构建标题
+        title = "快应用防侧滑与拉回测试"
+        
+        # 判断是否需要@所有人
+        need_mention = not 防侧滑_success or not 拉回_success
+        
+        # 发送飞书通知，如果测试失败则@所有人
+        if need_mention:
+            # 构建简洁的失败通知内容
+            if not 拉回_success and 防侧滑_success:
+                content = "**拉回测试失败，请及时处理！**\n\n**防侧滑**: ✅ **成功**\n\n**拉回**: ❌ **失败**"
+            elif not 防侧滑_success and 拉回_success:
+                content = "**防侧滑测试失败，请及时处理！**\n\n**防侧滑**: ❌ **失败**\n\n**拉回**: ✅ **成功**"
+            else:
+                content = "**防侧滑和拉回测试均失败，请及时处理！**\n\n**防侧滑**: ❌ **失败**\n\n**拉回**: ❌ **失败**"
+            
+            # 使用卡片消息格式发送并@所有人
+            send_feishu_notification(title, content, mention_all=True)
+        else:
+            # 测试全部成功，使用卡片消息格式发送
+            content = f"""
 **防侧滑**: {防侧滑_icon} **{('成功' if 防侧滑_success else '失败')}**
 
 **拉回**: {拉回_icon} **{('成功' if 拉回_success else '失败')}**
 """
-        
-        # 发送飞书通知
-        send_feishu_notification(title, content)
+            send_feishu_notification(title, content)
         
         return final_result
     except Exception as e:
         logger.error(f"测试失败，错误: {str(e)}")
         
-        # 发送错误通知
+        # 发送错误通知并@所有人
         title = "快应用测试异常"
-        content = f"""
-**错误信息**: {str(e)}
-"""
-        send_feishu_notification(title, content)
+        content = f"**测试过程中发生异常，请及时处理！**\n\n**错误信息**: {str(e)}"
+        send_feishu_notification(title, content, mention_all=True)
         
         return False
 
