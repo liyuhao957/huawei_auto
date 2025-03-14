@@ -512,6 +512,8 @@ class QuickAppTester:
         else:
             logger.warning("侧滑拦截失败：快应用已不在前台运行")
             test_results["防侧滑"] = False
+            # 侧滑拦截失败后，直接继续执行后续测试步骤，不添加额外的恢复逻辑
+            logger.info("侧滑拦截失败，继续执行后续测试步骤")
         
         # 检测完成后等待2秒再继续后续操作
         logger.info("检测完成，等待2秒再继续后续操作")
