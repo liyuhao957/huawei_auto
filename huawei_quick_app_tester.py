@@ -447,6 +447,12 @@ class QuickAppTester:
         
         logger.info(f"快应用'买乐多'是否在前台运行: {'是' if is_quick_app else '否'}")
         
+        # 添加判断，明确标记是否成功拉回快应用
+        if is_quick_app:
+            logger.info("拉回成功：按Home键后快应用仍在前台运行")
+        else:
+            logger.warning("拉回失败：按Home键后快应用已不在前台运行")
+        
         # 检测完快应用是否在前台运行后立即截图
         logger.info("检测完快应用是否在前台运行后立即截图")
         self.take_screenshot("after_foreground_check")
