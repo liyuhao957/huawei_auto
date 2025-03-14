@@ -1,0 +1,138 @@
+2025-03-14 14:08:09,482 - ScreenWakeTest - INFO - 启动屏幕唤醒测试
+2025-03-14 14:08:09,482 - ScreenWakeTest - INFO - 初始化ScreenWakeTester
+2025-03-14 14:08:09,866 - ScreenWakeTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 14:08:09,867 - ScreenWakeTest - INFO - 开始屏幕唤醒测试
+2025-03-14 14:08:09,867 - ScreenWakeTest - INFO - 步骤1: 让屏幕熄灭
+2025-03-14 14:08:10,115 - ScreenWakeTest - INFO - 已按下电源键，等待5秒让屏幕熄灭
+2025-03-14 14:08:15,116 - ScreenWakeTest - INFO - 步骤2: 检查屏幕状态
+2025-03-14 14:08:15,169 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 14:08:15,170 - ScreenWakeTest - INFO - 屏幕是否亮起: True
+2025-03-14 14:08:15,170 - ScreenWakeTest - INFO - 步骤3: 唤醒并解锁屏幕
+2025-03-14 14:08:15,170 - ScreenWakeTest - INFO - 开始唤醒屏幕并解锁...
+2025-03-14 14:08:15,240 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 14:08:15,240 - ScreenWakeTest - INFO - 步骤1: 唤醒屏幕
+2025-03-14 14:08:15,240 - ScreenWakeTest - INFO - 尝试使用screen_on方法唤醒屏幕
+2025-03-14 14:08:16,359 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 14:08:16,359 - ScreenWakeTest - INFO - 步骤2: 解锁屏幕
+2025-03-14 14:08:16,359 - ScreenWakeTest - INFO - 尝试使用unlock方法解锁屏幕
+2025-03-14 14:08:17,440 - ScreenWakeTest - INFO - 尝试滑动解锁屏幕
+2025-03-14 14:08:19,769 - ScreenWakeTest - INFO - 使用shell命令解锁屏幕
+2025-03-14 14:08:23,906 - ScreenWakeTest - INFO - 启动屏幕唤醒测试
+2025-03-14 14:08:23,906 - ScreenWakeTest - INFO - 初始化ScreenWakeTester
+2025-03-14 14:08:24,099 - ScreenWakeTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 14:08:24,099 - ScreenWakeTest - INFO - 开始屏幕唤醒测试
+2025-03-14 14:08:24,099 - ScreenWakeTest - INFO - 步骤1: 让屏幕熄灭
+2025-03-14 14:08:24,219 - ScreenWakeTest - INFO - 已按下电源键，等待5秒让屏幕熄灭
+2025-03-14 14:08:29,220 - ScreenWakeTest - INFO - 步骤2: 检查屏幕状态
+2025-03-14 14:08:29,275 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 14:08:29,276 - ScreenWakeTest - INFO - 屏幕是否亮起: True
+2025-03-14 14:08:29,276 - ScreenWakeTest - INFO - 步骤3: 唤醒并解锁屏幕
+2025-03-14 14:08:29,276 - ScreenWakeTest - INFO - 开始唤醒屏幕并解锁...
+2025-03-14 14:08:29,348 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 14:08:29,348 - ScreenWakeTest - INFO - 步骤1: 唤醒屏幕
+2025-03-14 14:08:29,348 - ScreenWakeTest - INFO - 尝试使用screen_on方法唤醒屏幕
+2025-03-14 14:08:30,483 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 14:08:30,483 - ScreenWakeTest - INFO - 步骤2: 解锁屏幕
+2025-03-14 14:08:30,483 - ScreenWakeTest - INFO - 尝试使用unlock方法解锁屏幕
+2025-03-14 14:08:31,555 - ScreenWakeTest - INFO - 尝试滑动解锁屏幕
+2025-03-14 14:08:33,901 - ScreenWakeTest - INFO - 使用shell命令解锁屏幕
+2025-03-14 14:08:35,049 - ScreenWakeTest - INFO - 步骤3: 验证是否成功唤醒和解锁
+2025-03-14 14:08:35,329 - ScreenWakeTest - INFO - 当前应用信息: {'package': 'com.huawei.android.launcher', 'activity': '.unihome.UniHomeLauncher', 'pid': 22225}
+2025-03-14 14:08:36,128 - ScreenWakeTest - INFO - 截图已保存: screenshots/after_wake_unlock.png
+2025-03-14 14:08:36,129 - ScreenWakeTest - INFO - 成功唤醒并解锁屏幕
+2025-03-14 14:08:36,129 - ScreenWakeTest - INFO - 步骤4: 验证结果
+2025-03-14 14:08:36,129 - ScreenWakeTest - INFO - 测试成功: 屏幕已成功唤醒并解锁
+2025-03-14 14:08:36,129 - ScreenWakeTest - INFO - 测试完成。结果: 成功
+2025-03-14 14:21:38,318 - ScreenWakeTest - INFO - 启动屏幕唤醒测试
+2025-03-14 14:21:38,318 - ScreenWakeTest - INFO - 初始化ScreenWakeTester
+2025-03-14 14:21:38,686 - ScreenWakeTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 14:21:38,686 - ScreenWakeTest - INFO - 开始屏幕唤醒测试
+2025-03-14 14:21:38,686 - ScreenWakeTest - INFO - 步骤1: 检查屏幕状态
+2025-03-14 14:21:38,765 - ScreenWakeTest - INFO - 屏幕状态: 熄屏
+2025-03-14 14:21:38,766 - ScreenWakeTest - INFO - 屏幕是否亮起: False
+2025-03-14 14:21:38,766 - ScreenWakeTest - INFO - 步骤2: 唤醒并解锁屏幕
+2025-03-14 14:21:38,766 - ScreenWakeTest - INFO - 开始唤醒屏幕并解锁...
+2025-03-14 14:21:38,871 - ScreenWakeTest - INFO - 屏幕状态: 熄屏
+2025-03-14 14:21:38,872 - ScreenWakeTest - INFO - 步骤1: 唤醒屏幕
+2025-03-14 14:21:38,872 - ScreenWakeTest - INFO - 尝试使用screen_on方法唤醒屏幕
+2025-03-14 14:21:40,602 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 14:21:40,602 - ScreenWakeTest - INFO - 步骤2: 解锁屏幕
+2025-03-14 14:21:40,603 - ScreenWakeTest - INFO - 尝试使用unlock方法解锁屏幕
+2025-03-14 14:21:41,669 - ScreenWakeTest - INFO - 尝试滑动解锁屏幕
+2025-03-14 14:21:43,926 - ScreenWakeTest - INFO - 使用shell命令解锁屏幕
+2025-03-14 14:21:45,035 - ScreenWakeTest - INFO - 步骤3: 验证是否成功唤醒和解锁
+2025-03-14 14:21:45,185 - ScreenWakeTest - INFO - 当前应用信息: {'package': 'com.huawei.android.launcher', 'activity': '.unihome.UniHomeLauncher', 'pid': 22225}
+2025-03-14 14:21:45,956 - ScreenWakeTest - INFO - 截图已保存: screenshots/after_wake_unlock.png
+2025-03-14 14:21:45,957 - ScreenWakeTest - INFO - 成功唤醒并解锁屏幕
+2025-03-14 14:21:45,957 - ScreenWakeTest - INFO - 步骤3: 验证结果
+2025-03-14 14:21:45,957 - ScreenWakeTest - INFO - 测试成功: 屏幕已成功唤醒并解锁
+2025-03-14 14:21:45,957 - ScreenWakeTest - INFO - 测试完成。结果: 成功
+2025-03-14 14:23:44,104 - ScreenWakeTest - INFO - 启动屏幕唤醒测试
+2025-03-14 14:23:44,104 - ScreenWakeTest - INFO - 初始化ScreenWakeTester
+2025-03-14 14:23:44,466 - ScreenWakeTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 14:23:44,467 - ScreenWakeTest - INFO - 开始屏幕唤醒测试
+2025-03-14 14:23:44,467 - ScreenWakeTest - INFO - 步骤1: 检查屏幕状态
+2025-03-14 14:23:44,551 - ScreenWakeTest - INFO - 屏幕状态: 熄屏
+2025-03-14 14:23:44,551 - ScreenWakeTest - INFO - 屏幕是否亮起: False
+2025-03-14 14:23:44,552 - ScreenWakeTest - INFO - 步骤2: 唤醒屏幕
+2025-03-14 14:23:44,552 - ScreenWakeTest - INFO - 开始唤醒屏幕...
+2025-03-14 14:23:44,668 - ScreenWakeTest - INFO - 屏幕状态: 熄屏
+2025-03-14 14:23:44,668 - ScreenWakeTest - INFO - 尝试唤醒屏幕
+2025-03-14 14:23:44,668 - ScreenWakeTest - INFO - 尝试使用screen_on方法唤醒屏幕
+2025-03-14 14:23:46,416 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 14:23:46,416 - ScreenWakeTest - INFO - 成功使用screen_on方法唤醒屏幕
+2025-03-14 14:23:46,416 - ScreenWakeTest - INFO - 步骤3: 简单解锁
+2025-03-14 14:23:46,417 - ScreenWakeTest - INFO - 尝试简单解锁（适用于无密码设备）
+2025-03-14 14:23:46,417 - ScreenWakeTest - INFO - 尝试滑动解锁屏幕
+2025-03-14 14:23:48,222 - ScreenWakeTest - INFO - 按下Home键确保回到主屏幕
+2025-03-14 14:23:48,938 - ScreenWakeTest - INFO - 当前应用信息: {'package': 'com.huawei.android.launcher', 'activity': '.unihome.UniHomeLauncher', 'pid': 22225}
+2025-03-14 14:23:49,645 - ScreenWakeTest - INFO - 截图已保存: screenshots/after_wake_unlock.png
+2025-03-14 14:23:49,645 - ScreenWakeTest - INFO - 简单解锁完成
+2025-03-14 14:23:49,645 - ScreenWakeTest - INFO - 步骤4: 验证结果
+2025-03-14 14:23:49,646 - ScreenWakeTest - INFO - 测试成功: 屏幕已成功唤醒并解锁
+2025-03-14 14:23:49,646 - ScreenWakeTest - INFO - 测试完成。结果: 成功
+2025-03-14 14:24:52,412 - ScreenWakeTest - INFO - 启动屏幕唤醒测试
+2025-03-14 14:24:52,412 - ScreenWakeTest - INFO - 初始化ScreenWakeTester
+2025-03-14 14:24:52,645 - ScreenWakeTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 14:24:52,646 - ScreenWakeTest - INFO - 开始屏幕唤醒测试
+2025-03-14 14:24:52,646 - ScreenWakeTest - INFO - 步骤1: 检查屏幕状态
+2025-03-14 14:24:52,705 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 14:24:52,706 - ScreenWakeTest - INFO - 屏幕是否亮起: True
+2025-03-14 14:24:52,706 - ScreenWakeTest - INFO - 步骤2: 唤醒屏幕
+2025-03-14 14:24:52,706 - ScreenWakeTest - INFO - 开始唤醒屏幕...
+2025-03-14 14:24:52,781 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 14:24:52,782 - ScreenWakeTest - INFO - 屏幕已经处于亮屏状态，无需唤醒
+2025-03-14 14:24:52,782 - ScreenWakeTest - INFO - 步骤3: 简单解锁
+2025-03-14 14:24:52,782 - ScreenWakeTest - INFO - 尝试简单解锁（适用于无密码设备）
+2025-03-14 14:24:52,782 - ScreenWakeTest - INFO - 尝试滑动解锁屏幕
+2025-03-14 14:24:54,544 - ScreenWakeTest - INFO - 按下Home键确保回到主屏幕
+2025-03-14 14:24:55,298 - ScreenWakeTest - INFO - 当前应用信息: {'package': 'com.huawei.android.launcher', 'activity': '.unihome.UniHomeLauncher', 'pid': 22225}
+2025-03-14 14:24:56,010 - ScreenWakeTest - INFO - 截图已保存: screenshots/after_wake_unlock.png
+2025-03-14 14:24:56,011 - ScreenWakeTest - INFO - 简单解锁完成
+2025-03-14 14:24:56,011 - ScreenWakeTest - INFO - 步骤4: 验证结果
+2025-03-14 14:24:56,011 - ScreenWakeTest - INFO - 测试成功: 屏幕已成功唤醒并解锁
+2025-03-14 14:24:56,011 - ScreenWakeTest - INFO - 测试完成。结果: 成功
+2025-03-14 15:07:22,063 - ScreenWakeTest - INFO - 启动屏幕唤醒测试
+2025-03-14 15:07:22,063 - ScreenWakeTest - INFO - 初始化ScreenWakeTester
+2025-03-14 15:07:22,462 - ScreenWakeTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 15:07:22,462 - ScreenWakeTest - INFO - 开始屏幕唤醒测试
+2025-03-14 15:07:22,462 - ScreenWakeTest - INFO - 步骤1: 检查屏幕状态
+2025-03-14 15:07:22,535 - ScreenWakeTest - INFO - 屏幕状态: 熄屏
+2025-03-14 15:07:22,535 - ScreenWakeTest - INFO - 屏幕是否亮起: False
+2025-03-14 15:07:22,535 - ScreenWakeTest - INFO - 步骤2: 唤醒屏幕
+2025-03-14 15:07:22,536 - ScreenWakeTest - INFO - 开始唤醒屏幕...
+2025-03-14 15:07:22,647 - ScreenWakeTest - INFO - 屏幕状态: 熄屏
+2025-03-14 15:07:22,647 - ScreenWakeTest - INFO - 尝试唤醒屏幕
+2025-03-14 15:07:22,647 - ScreenWakeTest - INFO - 尝试使用screen_on方法唤醒屏幕
+2025-03-14 15:07:24,390 - ScreenWakeTest - INFO - 屏幕状态: 亮屏
+2025-03-14 15:07:24,390 - ScreenWakeTest - INFO - 成功使用screen_on方法唤醒屏幕
+2025-03-14 15:07:24,390 - ScreenWakeTest - INFO - 步骤3: 简单解锁
+2025-03-14 15:07:24,391 - ScreenWakeTest - INFO - 尝试简单解锁（适用于无密码设备）
+2025-03-14 15:07:24,391 - ScreenWakeTest - INFO - 尝试滑动解锁屏幕
+2025-03-14 15:07:26,199 - ScreenWakeTest - INFO - 按下Home键确保回到主屏幕
+2025-03-14 15:07:26,921 - ScreenWakeTest - INFO - 当前应用信息: {'package': 'com.huawei.android.launcher', 'activity': '.unihome.UniHomeLauncher', 'pid': 22225}
+2025-03-14 15:07:27,620 - ScreenWakeTest - INFO - 截图已保存: screenshots/after_wake_unlock.png
+2025-03-14 15:07:27,620 - ScreenWakeTest - INFO - 简单解锁完成
+2025-03-14 15:07:27,620 - ScreenWakeTest - INFO - 步骤4: 验证结果
+2025-03-14 15:07:27,620 - ScreenWakeTest - INFO - 测试成功: 屏幕已成功唤醒并解锁
+2025-03-14 15:07:27,620 - ScreenWakeTest - INFO - 测试完成。结果: 成功

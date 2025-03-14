@@ -10,6 +10,7 @@ import uiautomator2 as u2
 import time
 import logging
 import os
+import schedule
 from datetime import datetime
 
 # 配置日志
@@ -40,6 +41,137 @@ class QuickAppTester:
         self.device = u2.connect(device_serial)  # 连接设备
         self.screen_width, self.screen_height = self.device.window_size()
         logger.info(f"设备屏幕尺寸: {self.screen_width}x{self.screen_height}")
+        
+    def check_screen_state(self):
+        """检查屏幕状态"""
+        try:
+            # 尝试获取当前屏幕状态
+            info = self.device.info
+            screen_on = info.get('screenOn', None)
+            if screen_on is not None:
+                logger.info(f"屏幕状态: {'亮屏' if screen_on else '熄屏'}")
+                return screen_on
+            else:
+                # 如果无法直接获取屏幕状态，尝试通过其他方式判断
+                try:
+                    # 尝试截图，如果成功则说明屏幕是亮的
+                    self.device.screenshot()
+                    logger.info("屏幕状态: 亮屏 (通过截图判断)")
+                    return True
+                except Exception as e:
+                    logger.info(f"屏幕状态: 可能熄屏 (截图失败: {str(e)})")
+                    return False
+        except Exception as e:
+            logger.warning(f"检查屏幕状态失败: {str(e)}")
+            return None
+    
+    def wake_screen(self):
+        """唤醒屏幕"""
+        logger.info("开始唤醒屏幕...")
+        
+        # 检查当前屏幕状态
+        screen_state = self.check_screen_state()
+        
+        # 如果屏幕已经亮起，直接返回成功
+        if screen_state:
+            logger.info("屏幕已经处于亮屏状态，无需唤醒")
+            return True
+        
+        # 尝试唤醒屏幕
+        logger.info("尝试唤醒屏幕")
+        try:
+            # 方法1: 使用uiautomator2的screen_on方法
+            logger.info("尝试使用screen_on方法唤醒屏幕")
+            self.device.screen_on()
+            time.sleep(1)
+            
+            # 检查是否成功唤醒
+            if self.check_screen_state():
+                logger.info("成功使用screen_on方法唤醒屏幕")
+                return True
+            
+            # 方法2: 使用按电源键唤醒
+            logger.info("尝试使用按电源键方法唤醒屏幕")
+            self.device.press("power")
+            time.sleep(1)
+            
+            if self.check_screen_state():
+                logger.info("成功使用电源键唤醒屏幕")
+                return True
+            
+            # 方法3: 使用shell命令唤醒
+            logger.info("尝试使用shell命令唤醒屏幕")
+            self.device.shell("input keyevent KEYCODE_WAKEUP")
+            time.sleep(1)
+            
+            if self.check_screen_state():
+                logger.info("成功使用shell命令唤醒屏幕")
+                return True
+            
+            logger.error("所有唤醒方法均失败")
+            return False
+        except Exception as e:
+            logger.error(f"唤醒屏幕时出错: {str(e)}")
+            return False
+    
+    def simple_unlock(self):
+        """简单解锁（适用于无密码设备）"""
+        logger.info("尝试简单解锁（适用于无密码设备）")
+        
+        try:
+            # 对于无密码设备，通常只需要滑动一下即可解锁
+            logger.info("尝试滑动解锁屏幕")
+            self.device.swipe(self.screen_width * 0.5, self.screen_height * 0.8, 
+                             self.screen_width * 0.5, self.screen_height * 0.2)
+            time.sleep(0.5)
+            
+            # 按下Home键确保回到主屏幕
+            logger.info("按下Home键确保回到主屏幕")
+            self.device.press("home")
+            time.sleep(0.5)
+            
+            # 验证是否成功解锁
+            current_app = self.device.app_current()
+            logger.info(f"当前应用信息: {current_app}")
+            
+            logger.info("简单解锁完成")
+            return True
+        except Exception as e:
+            logger.error(f"简单解锁时出错: {str(e)}")
+            return False
+    
+    def ensure_screen_on(self):
+        """确保屏幕处于唤醒和解锁状态"""
+        logger.info("确保屏幕处于唤醒和解锁状态")
+        
+        # 1. 检查屏幕状态
+        logger.info("步骤1: 检查屏幕状态")
+        screen_on = self.check_screen_state()
+        logger.info(f"屏幕是否亮起: {screen_on}")
+        
+        # 如果屏幕已经亮起，直接返回成功
+        if screen_on:
+            logger.info("屏幕已经处于亮屏状态")
+            return True
+        
+        # 2. 唤醒屏幕
+        logger.info("步骤2: 唤醒屏幕")
+        wake_result = self.wake_screen()
+        
+        if not wake_result:
+            logger.error("唤醒屏幕失败")
+            return False
+        
+        # 3. 简单解锁（适用于无密码设备）
+        logger.info("步骤3: 简单解锁")
+        unlock_result = self.simple_unlock()
+        
+        if wake_result and unlock_result:
+            logger.info("屏幕已成功唤醒并解锁")
+            return True
+        else:
+            logger.error("屏幕唤醒或解锁失败")
+            return False
         
     def take_screenshot(self, name=None):
         """截取屏幕截图"""
@@ -801,6 +933,13 @@ def run_test():
         logger.info("开始快应用测试序列")
         tester = QuickAppTester(device_serial=DEVICE_SERIAL)
         
+        # 确保屏幕处于唤醒和解锁状态
+        logger.info("===== 检查并确保屏幕处于唤醒状态 =====")
+        screen_result = tester.ensure_screen_on()
+        if not screen_result:
+            logger.error("无法确保屏幕处于唤醒状态，测试终止")
+            return False
+        
         # 执行流程1: 清除快应用中心数据
         logger.info("===== 开始执行流程1: 通过设置清理快应用中心数据 =====")
         result1 = tester.clear_quick_app_center_data()
@@ -830,6 +969,12 @@ def run_test():
         # 总体结果取决于所有流程是否都成功
         final_result = result1 and result2 and result3 and result4
         logger.info(f"测试完成。总体结果: {'成功' if final_result else '失败'}")
+        
+        # 记录执行时间
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        logger.info(f"本次测试执行时间: {current_time}")
+        logger.info("下一次测试将在30分钟后执行")
+        
         return final_result
     except Exception as e:
         logger.error(f"测试失败，错误: {str(e)}")
@@ -837,8 +982,27 @@ def run_test():
 
 
 def main():
-    """主函数"""
+    """主函数 - 设置定时任务，每30分钟执行一次测试"""
+    logger.info("启动定时测试任务，每30分钟执行一次完整测试流程")
+    
+    # 立即执行一次测试
+    logger.info("立即执行第一次测试")
     run_test()
+    
+    # 设置定时任务，每30分钟执行一次
+    schedule.every(2).minutes.do(run_test)
+    
+    # 持续运行定时任务
+    try:
+        while True:
+            schedule.run_pending()
+            time.sleep(1)  # 短暂休眠，避免CPU占用过高
+    except KeyboardInterrupt:
+        logger.info("用户中断，定时测试任务已停止")
+    except Exception as e:
+        logger.error(f"定时任务异常: {str(e)}")
+    finally:
+        logger.info("定时测试任务已结束")
 
 
 if __name__ == "__main__":
