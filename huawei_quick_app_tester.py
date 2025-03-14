@@ -25,12 +25,6 @@ logger = logging.getLogger("QuickAppTester")
 
 # 配置
 DEVICE_SERIAL = None  # 如果有多台设备连接，请设置为特定设备序列号
-SCREENSHOTS_DIR = "screenshots"  # 存储截图的目录
-
-# 如果截图目录不存在，则创建
-if not os.path.exists(SCREENSHOTS_DIR):
-    os.makedirs(SCREENSHOTS_DIR)
-
 
 class QuickAppTester:
     """主类，用于执行快应用测试"""
@@ -41,17 +35,6 @@ class QuickAppTester:
         self.device = u2.connect(device_serial)  # 连接设备
         self.screen_width, self.screen_height = self.device.window_size()
         logger.info(f"设备屏幕尺寸: {self.screen_width}x{self.screen_height}")
-        
-    def take_screenshot(self, name=None):
-        """截取屏幕截图"""
-        if not name:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            name = f"screenshot_{timestamp}"
-        
-        filename = f"{SCREENSHOTS_DIR}/{name}.png"
-        self.device.screenshot(filename)
-        logger.info(f"截图已保存: {filename}")
-        return filename
         
     def is_quick_app_running(self, app_name=None):
         """
@@ -138,17 +121,9 @@ class QuickAppTester:
         """流程3: 在快应用中心搜索并打开"买乐多"，然后进行侧滑、截图和前台检测"""
         logger.info("开始执行流程3: 在快应用中心搜索并打开'买乐多'...")
         
-        # 注意：由于流程2结束时已经在快应用中心界面，所以不需要按Home键和打开快应用中心
-        
-        # 截图记录当前状态
-        self.take_screenshot("quick_app_center_before_search")
-        
         # 1. 点击搜索框
         logger.info("步骤1: 点击搜索框")
         search_box = self.device(resourceId="com.huawei.fastapp:id/search_src_text")
-        
-        # 截图记录点击前状态
-        self.take_screenshot("before_click_search_box")
         
         if search_box.exists:
             logger.info("找到搜索框")
@@ -173,9 +148,6 @@ class QuickAppTester:
         # 按下回车键执行搜索
         self.device.press("enter")
         time.sleep(3)
-        
-        # 截图记录搜索结果
-        self.take_screenshot("search_results_mld")
         
         # 3. 点击搜索结果旁边的"打开"按钮
         logger.info("步骤3: 点击第一个'买乐多'旁边的'打开'按钮")
@@ -209,9 +181,6 @@ class QuickAppTester:
             self.device.click(self.screen_width * 0.814, self.screen_height * 0.16)
             time.sleep(10)
         
-        # 截图记录应用打开状态
-        self.take_screenshot("mld_app_opened")
-        
         # 4. 快速侧滑10次 - 使用超快速连续侧滑（从swipe_only_test.py的方法3）
         logger.info("步骤4: 超快速连续侧滑10次")
         for i in range(10):
@@ -233,14 +202,6 @@ class QuickAppTester:
             
             # 每次侧滑后极短等待
             time.sleep(0.1)  # 减少等待时间，提高连续性
-            
-            # 每3次侧滑后截图
-            if (i+1) % 3 == 0:
-                self.take_screenshot(f"swipe_{i+1}")
-        
-        # 5. 截图
-        logger.info("步骤5: 截图记录侧滑后状态")
-        self.take_screenshot("after_side_swipes")
         
         # 6. 按Home键返回桌面
         logger.info("步骤6: 按Home键返回桌面")
@@ -250,9 +211,6 @@ class QuickAppTester:
         
         # 7. 判断快应用是否在前台
         logger.info("步骤7: 判断快应用是否在前台")
-        
-        # 截图记录当前状态
-        self.take_screenshot("before_check_foreground")
         
         # 获取当前前台应用信息
         current_app = self.device.app_current()
@@ -291,10 +249,6 @@ class QuickAppTester:
         
         logger.info(f"快应用'买乐多'是否在前台运行: {'是' if is_quick_app else '否'}")
         
-        # 8. 截图
-        logger.info("步骤8: 截图记录最终状态")
-        self.take_screenshot("final_state")
-        
         logger.info("流程3执行完成")
         return True
         
@@ -314,10 +268,6 @@ class QuickAppTester:
             logger.info("尝试使用intent方式打开应用市场")
             self.device.shell("am start -n com.huawei.appmarket/.MainActivity")
             time.sleep(8)  # 等待8秒让应用市场完全加载
-            
-            # 截图记录当前状态
-            self.take_screenshot("appmarket_opened")
-            
         except Exception as e:
             logger.warning(f"使用intent打开应用市场失败: {str(e)}，尝试备选方法")
             try:
@@ -341,9 +291,6 @@ class QuickAppTester:
         # 由于clickable为false，尝试多种方法
         my_tab = self.device(text="我的", resourceId="com.huawei.appmarket:id/content")
         
-        # 截图记录点击前状态
-        self.take_screenshot("before_click_my_tab")
-        
         if my_tab.exists:
             logger.info("找到'我的'选项卡")
             # 尝试点击元素
@@ -362,16 +309,10 @@ class QuickAppTester:
             self.device.click(self.screen_width * 0.9, self.screen_height * 0.95)
             time.sleep(2)
         
-        # 截图记录点击后状态
-        self.take_screenshot("after_click_my_tab")
-        
         # 4. 点击"快应用管理"
         logger.info("步骤4: 点击'快应用管理'")
         # 由于clickable为false，尝试多种方法
         quick_app_mgmt = self.device(text="快应用管理", resourceId="com.huawei.appmarket:id/menu_title_textview")
-        
-        # 截图记录点击前状态
-        self.take_screenshot("before_click_quick_app_mgmt")
         
         if quick_app_mgmt.exists:
             logger.info("找到'快应用管理'选项")
@@ -403,9 +344,6 @@ class QuickAppTester:
                     return False
             time.sleep(3)
         
-        # 截图记录点击后状态
-        self.take_screenshot("after_click_quick_app_mgmt")
-        
         # 5. 点击"同意"（如果出现隐私协议对话框）
         logger.info("步骤5: 检查并点击'同意'按钮（如果出现）")
         agree_button = self.device(text="同意")
@@ -415,9 +353,6 @@ class QuickAppTester:
             time.sleep(2)
         else:
             logger.info("未出现需要点击'同意'的对话框，继续执行")
-        
-        # 截图记录当前状态
-        self.take_screenshot("quick_app_management_page")
         
         logger.info("成功进入快应用管理界面")
         return True
@@ -461,9 +396,6 @@ class QuickAppTester:
         # 3. 点击搜索框（搜索设置项）
         logger.info("步骤3: 点击搜索框")
         search_box = self.device(resourceId="android:id/search_edit_frame")
-        
-        # 截图记录当前状态
-        self.take_screenshot("before_click_search_box")
         
         # 尝试多种方法点击搜索框
         search_clicked = False
@@ -574,11 +506,9 @@ class QuickAppTester:
         # 检查是否成功点击了搜索框
         if not search_clicked:
             logger.warning("所有方法都未能使搜索框获得焦点，尝试直接输入文本")
-            # 截图记录当前状态
-            self.take_screenshot("search_box_not_focused")
-        else:
-            # 截图记录成功状态
-            self.take_screenshot("search_box_focused")
+            # 尝试直接点击屏幕顶部区域
+            self.device.click(self.screen_width * 0.5, self.screen_height * 0.1)
+            time.sleep(1.5)
         
         # 4. 输入"应用和服务"
         logger.info("步骤4: 输入'应用和服务'")
@@ -603,9 +533,6 @@ class QuickAppTester:
                 time.sleep(2)
             except Exception as e2:
                 logger.error(f"使用adb shell命令输入文本也失败: {str(e2)}")
-        
-        # 截图记录搜索结果
-        self.take_screenshot("search_results")
         
         # 5. 点击搜索结果"应用和服务"
         logger.info("步骤5: 点击搜索结果'应用和服务'")
@@ -711,18 +638,12 @@ class QuickAppTester:
             self.device.shell("am start -a android.settings.APPLICATION_DETAILS_SETTINGS -d package:com.huawei.fastapp")
             time.sleep(3)
             
-            # 截图记录当前状态
-            self.take_screenshot("after_intent_jump")
-            
             # 检查是否成功进入详情页面
             if self.device(text="存储").exists or self.device(text="强行停止").exists or self.device(text="应用信息").exists:
                 logger.info("成功使用intent进入快应用中心详情页面")
             else:
                 # 如果intent方式失败，尝试点击搜索结果
                 logger.warning("intent跳转可能失败，尝试点击搜索结果")
-                
-                # 截图记录当前状态
-                self.take_screenshot("search_results_before_click")
                 
                 # 尝试点击搜索结果
                 quick_app = self.device(text="快应用中心")
@@ -738,9 +659,6 @@ class QuickAppTester:
         except Exception as e:
             logger.warning(f"使用intent跳转失败: {str(e)}，尝试常规点击方法")
             
-            # 截图记录当前状态
-            self.take_screenshot("search_results_before_click")
-            
             # 尝试点击搜索结果
             quick_app = self.device(text="快应用中心")
             if quick_app.exists:
@@ -752,9 +670,6 @@ class QuickAppTester:
                 logger.warning("未找到'快应用中心'文本，尝试点击可能的位置")
                 self.device.click(self.screen_width * 0.5, self.screen_height * 0.38)
                 time.sleep(3)
-        
-        # 截图记录当前状态
-        self.take_screenshot("after_click_quick_app")
         
         # 10. 向下滑动到最底部
         logger.info("步骤10: 向下滑动查找'存储'")
@@ -768,14 +683,11 @@ class QuickAppTester:
             # 检查是否找到"存储"
             if self.device(text="存储").exists:
                 logger.info("找到'存储'选项")
-                # 截图记录找到存储选项的状态
-                self.take_screenshot("found_storage")
                 break
             
-            # 如果是最后一次滑动还没找到，截图记录
+            # 如果是最后一次滑动还没找到，记录日志
             if i == 3 and not self.device(text="存储").exists:
                 logger.warning("多次滑动后仍未找到'存储'选项")
-                self.take_screenshot("storage_not_found")
         
         # 11. 点击存储
         logger.info("步骤11: 点击'存储'")
@@ -808,10 +720,6 @@ class QuickAppTester:
         time.sleep(2)
         
         logger.info("快应用中心数据清理完成")
-        
-        # 截图记录最终状态
-        self.take_screenshot("clear_completed")
-        
         return True
 
 

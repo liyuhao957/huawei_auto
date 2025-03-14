@@ -315,3 +315,89 @@
 2025-03-14 11:36:18,581 - QuickAppTester - INFO - 流程3执行完成
 2025-03-14 11:36:18,581 - QuickAppTester - INFO - 流程3完成。结果: 成功
 2025-03-14 11:36:18,581 - QuickAppTester - INFO - 测试完成。总体结果: 成功
+2025-03-14 11:49:37,066 - QuickAppTester - INFO - 开始快应用测试序列
+2025-03-14 11:49:37,066 - QuickAppTester - INFO - 初始化QuickAppTester
+2025-03-14 11:49:37,276 - QuickAppTester - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:49:37,276 - QuickAppTester - INFO - ===== 开始执行流程1: 通过设置清理快应用中心数据 =====
+2025-03-14 11:49:37,276 - QuickAppTester - INFO - 开始清理快应用中心数据...
+2025-03-14 11:49:37,276 - QuickAppTester - INFO - 步骤1: 按下Home键
+2025-03-14 11:49:38,398 - QuickAppTester - INFO - 步骤2: 打开设置应用
+2025-03-14 11:49:38,399 - QuickAppTester - INFO - 尝试使用intent方式打开设置
+2025-03-14 11:49:40,481 - QuickAppTester - INFO - 步骤3: 点击搜索框
+2025-03-14 11:49:40,554 - QuickAppTester - INFO - 方法1: 尝试直接点击搜索框元素
+2025-03-14 11:49:42,408 - QuickAppTester - INFO - 搜索框已获得焦点
+2025-03-14 11:49:42,408 - QuickAppTester - INFO - 步骤4: 输入'应用和服务'
+2025-03-14 11:49:46,210 - QuickAppTester - INFO - 步骤5: 点击搜索结果'应用和服务'
+2025-03-14 11:49:49,016 - QuickAppTester - INFO - 步骤6: 点击'应用管理'
+2025-03-14 11:49:49,214 - QuickAppTester - WARNING - 未找到'应用管理'，尝试使用坐标点击
+2025-03-14 11:49:51,480 - QuickAppTester - INFO - 步骤7: 点击'搜索应用'框
+2025-03-14 11:49:51,481 - QuickAppTester - INFO - 尝试方法1: 使用父元素点击搜索框
+2025-03-14 11:49:51,585 - QuickAppTester - INFO - 尝试方法2: 使用文本定位搜索框
+2025-03-14 11:49:51,698 - QuickAppTester - INFO - 尝试方法3: 使用精确坐标点击搜索框
+2025-03-14 11:49:53,424 - QuickAppTester - INFO - 尝试方法4: 使用XPath定位搜索框
+2025-03-14 11:49:55,479 - QuickAppTester - INFO - 搜索框已获得焦点
+2025-03-14 11:49:55,480 - QuickAppTester - INFO - 步骤8: 输入'快应用中心'
+2025-03-14 11:49:59,405 - QuickAppTester - INFO - 步骤9: 使用intent跳转到快应用中心详情页面
+2025-03-14 11:49:59,406 - QuickAppTester - INFO - 执行intent命令: am start -a android.settings.APPLICATION_DETAILS_SETTINGS -d package:com.huawei.fastapp
+2025-03-14 11:50:03,043 - QuickAppTester - INFO - 成功使用intent进入快应用中心详情页面
+2025-03-14 11:50:03,043 - QuickAppTester - INFO - 步骤10: 向下滑动查找'存储'
+2025-03-14 11:50:03,044 - QuickAppTester - INFO - 第1次滑动
+2025-03-14 11:50:06,150 - QuickAppTester - INFO - 找到'存储'选项
+2025-03-14 11:50:06,150 - QuickAppTester - INFO - 步骤11: 点击'存储'
+2025-03-14 11:50:07,820 - QuickAppTester - INFO - 步骤12: 点击'删除数据'
+2025-03-14 11:50:09,184 - QuickAppTester - INFO - 步骤13: 点击确认对话框中的'确定'
+2025-03-14 11:50:11,781 - QuickAppTester - INFO - 快应用中心数据清理完成
+2025-03-14 11:50:11,782 - QuickAppTester - INFO - 流程1完成。结果: 成功
+2025-03-14 11:50:14,784 - QuickAppTester - INFO - ===== 开始执行流程2: 通过应用市场管理快应用 =====
+2025-03-14 11:50:14,785 - QuickAppTester - INFO - 开始通过应用市场管理快应用...
+2025-03-14 11:50:14,785 - QuickAppTester - INFO - 步骤1: 按下Home键
+2025-03-14 11:50:15,985 - QuickAppTester - INFO - 步骤2: 打开应用市场
+2025-03-14 11:50:15,986 - QuickAppTester - INFO - 尝试使用intent方式打开应用市场
+2025-03-14 11:50:24,078 - QuickAppTester - INFO - 步骤3: 点击'我的'选项卡
+2025-03-14 11:50:24,983 - QuickAppTester - INFO - 找到'我的'选项卡
+2025-03-14 11:50:28,067 - QuickAppTester - INFO - 步骤4: 点击'快应用管理'
+2025-03-14 11:50:28,505 - QuickAppTester - INFO - 找到'快应用管理'选项
+2025-03-14 11:50:29,133 - QuickAppTester - INFO - '快应用管理'元素中心点: (180, 1731)
+2025-03-14 11:50:32,339 - QuickAppTester - INFO - 步骤5: 检查并点击'同意'按钮（如果出现）
+2025-03-14 11:50:32,391 - QuickAppTester - INFO - 找到'同意'按钮，点击
+2025-03-14 11:50:34,704 - QuickAppTester - INFO - 成功进入快应用管理界面
+2025-03-14 11:50:34,705 - QuickAppTester - INFO - 流程2完成。结果: 成功
+2025-03-14 11:50:37,709 - QuickAppTester - INFO - ===== 开始执行流程3: 在快应用中心搜索并打开'买乐多' =====
+2025-03-14 11:50:37,710 - QuickAppTester - INFO - 开始执行流程3: 在快应用中心搜索并打开'买乐多'...
+2025-03-14 11:50:37,710 - QuickAppTester - INFO - 步骤1: 点击搜索框
+2025-03-14 11:50:37,955 - QuickAppTester - INFO - 找到搜索框
+2025-03-14 11:50:40,530 - QuickAppTester - INFO - 步骤2: 输入'买乐多'
+2025-03-14 11:50:45,616 - QuickAppTester - INFO - 步骤3: 点击第一个'买乐多'旁边的'打开'按钮
+2025-03-14 11:50:45,772 - QuickAppTester - INFO - 找到'打开'按钮 (通过resourceId和text)
+2025-03-14 11:50:56,374 - QuickAppTester - INFO - 步骤4: 超快速连续侧滑10次
+2025-03-14 11:50:56,375 - QuickAppTester - INFO - 第1次超快速侧滑
+2025-03-14 11:50:56,572 - QuickAppTester - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:50:56,678 - QuickAppTester - INFO - 第2次超快速侧滑
+2025-03-14 11:50:56,808 - QuickAppTester - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:50:56,912 - QuickAppTester - INFO - 第3次超快速侧滑
+2025-03-14 11:50:57,030 - QuickAppTester - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:50:57,132 - QuickAppTester - INFO - 第4次超快速侧滑
+2025-03-14 11:50:57,238 - QuickAppTester - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:50:57,342 - QuickAppTester - INFO - 第5次超快速侧滑
+2025-03-14 11:50:57,455 - QuickAppTester - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:50:57,558 - QuickAppTester - INFO - 第6次超快速侧滑
+2025-03-14 11:50:57,724 - QuickAppTester - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:50:57,828 - QuickAppTester - INFO - 第7次超快速侧滑
+2025-03-14 11:50:57,950 - QuickAppTester - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:50:58,055 - QuickAppTester - INFO - 第8次超快速侧滑
+2025-03-14 11:50:58,169 - QuickAppTester - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:50:58,274 - QuickAppTester - INFO - 第9次超快速侧滑
+2025-03-14 11:50:58,374 - QuickAppTester - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:50:58,479 - QuickAppTester - INFO - 第10次超快速侧滑
+2025-03-14 11:50:58,560 - QuickAppTester - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:50:58,663 - QuickAppTester - INFO - 步骤6: 按Home键返回桌面
+2025-03-14 11:50:58,937 - QuickAppTester - INFO - 等待10秒...
+2025-03-14 11:51:08,942 - QuickAppTester - INFO - 步骤7: 判断快应用是否在前台
+2025-03-14 11:51:09,315 - QuickAppTester - INFO - 当前前台应用信息: {'package': 'com.huawei.fastapp', 'activity': '.app.processManager.RpkLoaderActivityEntry0', 'pid': 22285}
+2025-03-14 11:51:09,316 - QuickAppTester - INFO - 检测到快应用在前台运行: com.huawei.fastapp
+2025-03-14 11:51:10,177 - QuickAppTester - INFO - 窗口信息: ShellResponse(output='  mCurrentFocus=Window{b6ecef u0 com.huawei.fastapp/com.huawei.fastapp.app.processManager.RpkLoaderActivityEntry0}\n', exit_code=0)
+2025-03-14 11:51:10,177 - QuickAppTester - INFO - 通过窗口信息确认快应用在前台运行
+2025-03-14 11:51:10,177 - QuickAppTester - INFO - 快应用'买乐多'是否在前台运行: 是
+2025-03-14 11:51:10,177 - QuickAppTester - INFO - 流程3执行完成
+2025-03-14 11:51:10,177 - QuickAppTester - INFO - 流程3完成。结果: 成功
+2025-03-14 11:51:10,177 - QuickAppTester - INFO - 测试完成。总体结果: 成功
