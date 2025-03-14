@@ -25,6 +25,11 @@ logger = logging.getLogger("QuickAppTester")
 
 # 配置
 DEVICE_SERIAL = None  # 如果有多台设备连接，请设置为特定设备序列号
+SCREENSHOTS_DIR = "screenshots"  # 存储截图的目录
+
+# 如果截图目录不存在，则创建
+if not os.path.exists(SCREENSHOTS_DIR):
+    os.makedirs(SCREENSHOTS_DIR)
 
 class QuickAppTester:
     """主类，用于执行快应用测试"""
@@ -35,6 +40,17 @@ class QuickAppTester:
         self.device = u2.connect(device_serial)  # 连接设备
         self.screen_width, self.screen_height = self.device.window_size()
         logger.info(f"设备屏幕尺寸: {self.screen_width}x{self.screen_height}")
+        
+    def take_screenshot(self, name=None):
+        """截取屏幕截图"""
+        if not name:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            name = f"screenshot_{timestamp}"
+        
+        filename = f"{SCREENSHOTS_DIR}/{name}.png"
+        self.device.screenshot(filename)
+        logger.info(f"截图已保存: {filename}")
+        return filename
         
     def is_quick_app_running(self, app_name=None):
         """
@@ -203,6 +219,10 @@ class QuickAppTester:
             # 每次侧滑后极短等待
             time.sleep(0.1)  # 减少等待时间，提高连续性
         
+        # 滑动10次后立即截图
+        logger.info("滑动10次后立即截图")
+        self.take_screenshot("after_10_swipes")
+        
         # 6. 按Home键返回桌面
         logger.info("步骤6: 按Home键返回桌面")
         self.device.press("home")
@@ -248,6 +268,10 @@ class QuickAppTester:
                     logger.warning(f"获取窗口信息失败: {str(e)}")
         
         logger.info(f"快应用'买乐多'是否在前台运行: {'是' if is_quick_app else '否'}")
+        
+        # 检测完快应用是否在前台运行后立即截图
+        logger.info("检测完快应用是否在前台运行后立即截图")
+        self.take_screenshot("after_foreground_check")
         
         logger.info("流程3执行完成")
         return True
