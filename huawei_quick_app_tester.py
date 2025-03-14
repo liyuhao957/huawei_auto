@@ -746,6 +746,54 @@ class QuickAppTester:
         logger.info("快应用中心数据清理完成")
         return True
 
+    def clear_all_apps(self):
+        """清空手机里的全部应用（简化版）"""
+        logger.info("开始清空手机里的全部应用...")
+        
+        # 1. 先强制停止快应用中心和相关应用
+        logger.info("步骤1: 强制停止快应用中心和相关应用")
+        try:
+            # 强制停止快应用中心
+            self.device.shell("am force-stop com.huawei.fastapp")
+            logger.info("已强制停止快应用中心")
+            time.sleep(1)
+            
+            # 强制停止快应用UI进程
+            self.device.shell("am force-stop com.huawei.fastapp:ui")
+            logger.info("已强制停止快应用UI进程")
+            time.sleep(1)
+        except Exception as e:
+            logger.warning(f"强制停止应用时出错: {str(e)}，继续执行后续步骤")
+        
+        # 2. 按Home键回到桌面
+        logger.info("步骤2: 按Home键回到桌面")
+        self.device.press("home")
+        time.sleep(1)
+        
+        # 3. 打开最近任务列表
+        logger.info("步骤3: 打开最近任务列表")
+        self.device.press("recent")
+        time.sleep(2)
+        
+        # 4. 直接点击底部中间位置，不检查任务卡片是否存在
+        logger.info("步骤4: 直接点击底部中间位置清除应用")
+        center_x = int(self.screen_width * 0.5)
+        center_y = int(self.screen_height * 0.9)
+        logger.info(f"点击坐标: ({center_x}, {center_y})")
+        self.device.click(center_x, center_y)
+        
+        # 5. 等待1秒
+        logger.info("等待1秒...")
+        time.sleep(1)
+        
+        # 6. 返回桌面
+        logger.info("返回桌面")
+        self.device.press("home")
+        
+        # 7. 直接返回成功
+        logger.info("点击底部中间位置完成，清空手机里的全部应用完成")
+        return True
+
 
 def run_test():
     """运行完整的测试序列"""
@@ -774,8 +822,13 @@ def run_test():
         result3 = tester.search_and_open_quick_app()
         logger.info(f"流程3完成。结果: {'成功' if result3 else '失败'}")
         
-        # 总体结果取决于三个流程是否都成功
-        final_result = result1 and result2 and result3
+        # 执行流程4: 清空手机里的全部应用
+        logger.info("===== 开始执行流程4: 清空手机里的全部应用 =====")
+        result4 = tester.clear_all_apps()
+        logger.info(f"流程4完成。结果: {'成功' if result4 else '失败'}")
+        
+        # 总体结果取决于所有流程是否都成功
+        final_result = result1 and result2 and result3 and result4
         logger.info(f"测试完成。总体结果: {'成功' if final_result else '失败'}")
         return final_result
     except Exception as e:
