@@ -11,6 +11,11 @@ import time
 import logging
 import os
 import schedule
+import requests
+import json
+import hashlib
+import base64
+import hmac
 from datetime import datetime
 
 # 配置日志
@@ -31,6 +36,98 @@ SCREENSHOTS_DIR = "screenshots"  # 存储截图的目录
 # 如果截图目录不存在，则创建
 if not os.path.exists(SCREENSHOTS_DIR):
     os.makedirs(SCREENSHOTS_DIR)
+
+# 飞书机器人配置
+FEISHU_WEBHOOK_URL = "https://open.feishu.cn/open-apis/bot/v2/hook/2e9f09a8-4cec-4475-a6a8-4da61c4a874c"  # 替换为您的飞书机器人webhook URL
+FEISHU_SECRET = "YOUR_SECRET"  # 替换为您的飞书机器人签名密钥，如果没有设置签名可以留空
+
+def send_feishu_notification(title, content):
+    """
+    发送飞书机器人通知
+    
+    Args:
+        title: 通知标题
+        content: 通知内容
+    
+    Returns:
+        bool: 是否发送成功
+    """
+    if not FEISHU_WEBHOOK_URL or FEISHU_WEBHOOK_URL == "https://open.feishu.cn/open-apis/bot/v2/hook/YOUR_WEBHOOK_URL":
+        logger.warning("飞书机器人webhook URL未配置，跳过通知发送")
+        return False
+    
+    try:
+        timestamp = str(int(time.time()))
+        
+        # 构建消息内容
+        msg = {
+            "msg_type": "interactive",
+            "card": {
+                "config": {
+                    "wide_screen_mode": True
+                },
+                "header": {
+                    "title": {
+                        "tag": "plain_text",
+                        "content": title
+                    },
+                    "template": "green" if "成功" in content or "通过" in content else "red"
+                },
+                "elements": [
+                    {
+                        "tag": "div",
+                        "text": {
+                            "tag": "lark_md",
+                            "content": content
+                        }
+                    },
+                    {
+                        "tag": "hr"
+                    },
+                    {
+                        "tag": "note",
+                        "elements": [
+                            {
+                                "tag": "plain_text",
+                                "content": f"测试时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+        
+        # 如果设置了签名密钥，则计算签名
+        headers = {"Content-Type": "application/json"}
+        if FEISHU_SECRET and FEISHU_SECRET != "YOUR_SECRET":
+            # 计算签名
+            string_to_sign = f"{timestamp}\n{FEISHU_SECRET}"
+            sign = base64.b64encode(hmac.new(FEISHU_SECRET.encode('utf-8'), string_to_sign.encode('utf-8'), digestmod=hashlib.sha256).digest()).decode('utf-8')
+            
+            # 添加签名到请求头
+            headers.update({
+                "timestamp": timestamp,
+                "sign": sign
+            })
+        
+        # 发送请求
+        response = requests.post(FEISHU_WEBHOOK_URL, headers=headers, data=json.dumps(msg))
+        
+        # 检查响应
+        if response.status_code == 200:
+            result = response.json()
+            if result.get("code") == 0:
+                logger.info(f"飞书通知发送成功: {title}")
+                return True
+            else:
+                logger.warning(f"飞书通知发送失败: {result.get('msg')}")
+                return False
+        else:
+            logger.warning(f"飞书通知发送失败，状态码: {response.status_code}")
+            return False
+    except Exception as e:
+        logger.error(f"飞书通知发送异常: {str(e)}")
+        return False
 
 class QuickAppTester:
     """主类，用于执行快应用测试"""
@@ -269,6 +366,12 @@ class QuickAppTester:
         """流程3: 在快应用中心搜索并打开"买乐多"，然后进行侧滑、截图和前台检测"""
         logger.info("开始执行流程3: 在快应用中心搜索并打开'买乐多'...")
         
+        # 用于存储测试结果
+        test_results = {
+            "防侧滑": False,
+            "拉回": False
+        }
+        
         # 1. 点击搜索框
         logger.info("步骤1: 点击搜索框")
         search_box = self.device(resourceId="com.huawei.fastapp:id/search_src_text")
@@ -390,8 +493,10 @@ class QuickAppTester:
         
         if is_quick_app:
             logger.info("侧滑拦截成功：快应用仍在前台运行")
+            test_results["防侧滑"] = True
         else:
             logger.warning("侧滑拦截失败：快应用已不在前台运行")
+            test_results["防侧滑"] = False
         
         # 检测完成后等待2秒再继续后续操作
         logger.info("检测完成，等待2秒再继续后续操作")
@@ -450,15 +555,17 @@ class QuickAppTester:
         # 添加判断，明确标记是否成功拉回快应用
         if is_quick_app:
             logger.info("拉回成功：按Home键后快应用仍在前台运行")
+            test_results["拉回"] = True
         else:
             logger.warning("拉回失败：按Home键后快应用已不在前台运行")
+            test_results["拉回"] = False
         
         # 检测完快应用是否在前台运行后立即截图
         logger.info("检测完快应用是否在前台运行后立即截图")
         self.take_screenshot("after_foreground_check")
         
         logger.info("流程3执行完成")
-        return True
+        return test_results
         
     def manage_quick_apps_via_market(self):
         """通过应用市场进入快应用管理界面"""
@@ -1011,7 +1118,7 @@ def run_test():
         # 执行流程3: 在快应用中心搜索并打开"买乐多"
         logger.info("===== 开始执行流程3: 在快应用中心搜索并打开'买乐多' =====")
         result3 = tester.search_and_open_quick_app()
-        logger.info(f"流程3完成。结果: {'成功' if result3 else '失败'}")
+        logger.info(f"流程3完成。结果: {'成功' if result3['防侧滑'] and result3['拉回'] else '失败'}")
         
         # 执行流程4: 清空手机里的全部应用
         logger.info("===== 开始执行流程4: 清空手机里的全部应用 =====")
@@ -1019,7 +1126,7 @@ def run_test():
         logger.info(f"流程4完成。结果: {'成功' if result4 else '失败'}")
         
         # 总体结果取决于所有流程是否都成功
-        final_result = result1 and result2 and result3 and result4
+        final_result = result1 and result2 and result3['防侧滑'] and result3['拉回'] and result4
         logger.info(f"测试完成。总体结果: {'成功' if final_result else '失败'}")
         
         # 记录执行时间
@@ -1027,9 +1134,38 @@ def run_test():
         logger.info(f"本次测试执行时间: {current_time}")
         logger.info("下一次测试将在30分钟后执行")
         
+        # 构建飞书通知内容 - 只显示防侧滑和拉回结果
+        title = "快应用防侧滑与拉回测试"
+        
+        # 设置表情符号和状态
+        防侧滑_success = result3['防侧滑']
+        拉回_success = result3['拉回']
+        
+        # 设置状态图标和文字
+        防侧滑_icon = "✅" if 防侧滑_success else "❌"
+        拉回_icon = "✅" if 拉回_success else "❌"
+        
+        # 构建更美观的内容，使用飞书支持的Markdown格式，删除标题
+        content = f"""
+**防侧滑**: {防侧滑_icon} **{('成功' if 防侧滑_success else '失败')}**
+
+**拉回**: {拉回_icon} **{('成功' if 拉回_success else '失败')}**
+"""
+        
+        # 发送飞书通知
+        send_feishu_notification(title, content)
+        
         return final_result
     except Exception as e:
         logger.error(f"测试失败，错误: {str(e)}")
+        
+        # 发送错误通知
+        title = "快应用测试异常"
+        content = f"""
+**错误信息**: {str(e)}
+"""
+        send_feishu_notification(title, content)
+        
         return False
 
 
@@ -1042,7 +1178,7 @@ def main():
     run_test()
     
     # 设置定时任务，每30分钟执行一次
-    schedule.every(2).minutes.do(run_test)
+    schedule.every(30).minutes.do(run_test)
     
     # 持续运行定时任务
     try:
