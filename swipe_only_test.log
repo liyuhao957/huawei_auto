@@ -1,0 +1,233 @@
+2025-03-14 11:24:25,337 - SwipeOnlyTest - INFO - 开始侧滑测试
+2025-03-14 11:24:25,337 - SwipeOnlyTest - INFO - 初始化SwipeOnlyTest
+2025-03-14 11:24:25,642 - SwipeOnlyTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:24:25,643 - SwipeOnlyTest - INFO - 仅测试方法1
+2025-03-14 11:24:25,643 - SwipeOnlyTest - INFO - 测试方法1: 从屏幕最右边中间位置超短距离、极短持续时间的侧滑
+2025-03-14 11:24:26,116 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/before_swipe_method1.png
+2025-03-14 11:24:26,117 - SwipeOnlyTest - INFO - 方法1 - 第1次侧滑
+2025-03-14 11:24:26,286 - SwipeOnlyTest - INFO - 执行从最右边中间位置超短距离极速侧滑: 1047,1188 -> 1015,1188
+2025-03-14 11:24:26,918 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method1_swipe_1.png
+2025-03-14 11:24:26,918 - SwipeOnlyTest - INFO - 方法1 - 第2次侧滑
+2025-03-14 11:24:27,130 - SwipeOnlyTest - INFO - 执行从最右边中间位置超短距离极速侧滑: 1047,1188 -> 1015,1188
+2025-03-14 11:24:27,781 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method1_swipe_2.png
+2025-03-14 11:24:27,782 - SwipeOnlyTest - INFO - 方法1 - 第3次侧滑
+2025-03-14 11:24:27,978 - SwipeOnlyTest - INFO - 执行从最右边中间位置超短距离极速侧滑: 1047,1188 -> 1015,1188
+2025-03-14 11:24:28,668 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method1_swipe_3.png
+2025-03-14 11:24:28,668 - SwipeOnlyTest - INFO - 方法1 - 第4次侧滑
+2025-03-14 11:24:28,798 - SwipeOnlyTest - INFO - 执行从最右边中间位置超短距离极速侧滑: 1047,1188 -> 1015,1188
+2025-03-14 11:24:29,765 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method1_swipe_4.png
+2025-03-14 11:24:29,765 - SwipeOnlyTest - INFO - 方法1 - 第5次侧滑
+2025-03-14 11:24:30,032 - SwipeOnlyTest - INFO - 执行从最右边中间位置超短距离极速侧滑: 1047,1188 -> 1015,1188
+2025-03-14 11:24:30,647 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method1_swipe_5.png
+2025-03-14 11:24:31,093 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/after_swipe_method1.png
+2025-03-14 11:24:31,093 - SwipeOnlyTest - INFO - 侧滑测试完成
+2025-03-14 11:24:34,192 - SwipeOnlyTest - INFO - 开始侧滑测试
+2025-03-14 11:24:34,192 - SwipeOnlyTest - INFO - 初始化SwipeOnlyTest
+2025-03-14 11:24:34,494 - SwipeOnlyTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:24:34,494 - SwipeOnlyTest - INFO - 仅测试方法2
+2025-03-14 11:24:34,494 - SwipeOnlyTest - INFO - 测试方法2: 从屏幕最右边中间位置短距离、短持续时间的侧滑
+2025-03-14 11:24:34,979 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/before_swipe_method2.png
+2025-03-14 11:24:34,979 - SwipeOnlyTest - INFO - 方法2 - 第1次侧滑
+2025-03-14 11:24:35,183 - SwipeOnlyTest - INFO - 执行从最右边中间位置短距离侧滑: 1026,1188 -> 972,1188
+2025-03-14 11:24:35,816 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method2_swipe_1.png
+2025-03-14 11:24:35,816 - SwipeOnlyTest - INFO - 方法2 - 第2次侧滑
+2025-03-14 11:24:35,956 - SwipeOnlyTest - INFO - 执行从最右边中间位置短距离侧滑: 1026,1188 -> 972,1188
+2025-03-14 11:24:36,587 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method2_swipe_2.png
+2025-03-14 11:24:36,588 - SwipeOnlyTest - INFO - 方法2 - 第3次侧滑
+2025-03-14 11:24:36,771 - SwipeOnlyTest - INFO - 执行从最右边中间位置短距离侧滑: 1026,1188 -> 972,1188
+2025-03-14 11:24:37,391 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method2_swipe_3.png
+2025-03-14 11:24:37,391 - SwipeOnlyTest - INFO - 方法2 - 第4次侧滑
+2025-03-14 11:24:37,540 - SwipeOnlyTest - INFO - 执行从最右边中间位置短距离侧滑: 1026,1188 -> 972,1188
+2025-03-14 11:24:38,278 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method2_swipe_4.png
+2025-03-14 11:24:38,278 - SwipeOnlyTest - INFO - 方法2 - 第5次侧滑
+2025-03-14 11:24:38,408 - SwipeOnlyTest - INFO - 执行从最右边中间位置短距离侧滑: 1026,1188 -> 972,1188
+2025-03-14 11:24:39,051 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method2_swipe_5.png
+2025-03-14 11:24:39,512 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/after_swipe_method2.png
+2025-03-14 11:24:39,512 - SwipeOnlyTest - INFO - 侧滑测试完成
+2025-03-14 11:24:47,372 - SwipeOnlyTest - INFO - 开始侧滑测试
+2025-03-14 11:24:47,372 - SwipeOnlyTest - INFO - 初始化SwipeOnlyTest
+2025-03-14 11:24:48,875 - SwipeOnlyTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:24:48,875 - SwipeOnlyTest - INFO - 仅测试方法3
+2025-03-14 11:24:48,875 - SwipeOnlyTest - INFO - 测试方法3: 从屏幕最右边中间位置中等距离、中等持续时间的侧滑
+2025-03-14 11:24:49,288 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/before_swipe_method3.png
+2025-03-14 11:24:49,288 - SwipeOnlyTest - INFO - 方法3 - 第1次侧滑
+2025-03-14 11:24:49,592 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:24:50,288 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_1.png
+2025-03-14 11:24:50,288 - SwipeOnlyTest - INFO - 方法3 - 第2次侧滑
+2025-03-14 11:24:50,510 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:24:51,219 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_2.png
+2025-03-14 11:24:51,219 - SwipeOnlyTest - INFO - 方法3 - 第3次侧滑
+2025-03-14 11:24:51,419 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:24:52,392 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_3.png
+2025-03-14 11:24:52,392 - SwipeOnlyTest - INFO - 方法3 - 第4次侧滑
+2025-03-14 11:24:52,602 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:24:53,338 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_4.png
+2025-03-14 11:24:53,340 - SwipeOnlyTest - INFO - 方法3 - 第5次侧滑
+2025-03-14 11:24:53,513 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:24:54,430 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_5.png
+2025-03-14 11:24:55,161 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/after_swipe_method3.png
+2025-03-14 11:24:55,162 - SwipeOnlyTest - INFO - 侧滑测试完成
+2025-03-14 11:25:06,503 - SwipeOnlyTest - INFO - 开始侧滑测试
+2025-03-14 11:25:06,504 - SwipeOnlyTest - INFO - 初始化SwipeOnlyTest
+2025-03-14 11:25:06,719 - SwipeOnlyTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:25:06,719 - SwipeOnlyTest - INFO - 仅测试方法4
+2025-03-14 11:25:06,720 - SwipeOnlyTest - INFO - 测试方法4: 从屏幕最右边中间位置快速连续短距离侧滑
+2025-03-14 11:25:07,158 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/before_swipe_method4.png
+2025-03-14 11:25:07,158 - SwipeOnlyTest - INFO - 方法4 - 第1次快速连续侧滑
+2025-03-14 11:25:07,401 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #1: 1047,1188 -> 1015,1188
+2025-03-14 11:25:07,616 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #2: 1047,1188 -> 1015,1188
+2025-03-14 11:25:07,847 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #3: 1047,1188 -> 1015,1188
+2025-03-14 11:25:08,574 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method4_multi_swipe_1.png
+2025-03-14 11:25:08,575 - SwipeOnlyTest - INFO - 方法4 - 第2次快速连续侧滑
+2025-03-14 11:25:08,732 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #1: 1047,1188 -> 1015,1188
+2025-03-14 11:25:09,041 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #2: 1047,1188 -> 1015,1188
+2025-03-14 11:25:09,252 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #3: 1047,1188 -> 1015,1188
+2025-03-14 11:25:10,443 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method4_multi_swipe_2.png
+2025-03-14 11:25:10,444 - SwipeOnlyTest - INFO - 方法4 - 第3次快速连续侧滑
+2025-03-14 11:25:10,697 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #1: 1047,1188 -> 1015,1188
+2025-03-14 11:25:10,975 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #2: 1047,1188 -> 1015,1188
+2025-03-14 11:25:11,254 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #3: 1047,1188 -> 1015,1188
+2025-03-14 11:25:11,982 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method4_multi_swipe_3.png
+2025-03-14 11:25:11,982 - SwipeOnlyTest - INFO - 方法4 - 第4次快速连续侧滑
+2025-03-14 11:25:12,138 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #1: 1047,1188 -> 1015,1188
+2025-03-14 11:25:12,359 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #2: 1047,1188 -> 1015,1188
+2025-03-14 11:25:12,568 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #3: 1047,1188 -> 1015,1188
+2025-03-14 11:25:13,631 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method4_multi_swipe_4.png
+2025-03-14 11:25:13,631 - SwipeOnlyTest - INFO - 方法4 - 第5次快速连续侧滑
+2025-03-14 11:25:13,746 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #1: 1047,1188 -> 1015,1188
+2025-03-14 11:25:13,959 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #2: 1047,1188 -> 1015,1188
+2025-03-14 11:25:14,170 - SwipeOnlyTest - INFO - 执行从最右边中间位置快速连续侧滑 #3: 1047,1188 -> 1015,1188
+2025-03-14 11:25:14,825 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method4_multi_swipe_5.png
+2025-03-14 11:25:15,185 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/after_swipe_method4.png
+2025-03-14 11:25:15,185 - SwipeOnlyTest - INFO - 侧滑测试完成
+2025-03-14 11:25:20,989 - SwipeOnlyTest - INFO - 开始侧滑测试
+2025-03-14 11:25:20,989 - SwipeOnlyTest - INFO - 初始化SwipeOnlyTest
+2025-03-14 11:25:21,216 - SwipeOnlyTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:25:21,216 - SwipeOnlyTest - INFO - 仅测试方法5
+2025-03-14 11:25:21,216 - SwipeOnlyTest - INFO - 测试方法5: 从屏幕最右边中间位置较长距离、快速侧滑
+2025-03-14 11:25:21,950 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/before_swipe_method5.png
+2025-03-14 11:25:21,951 - SwipeOnlyTest - INFO - 方法5 - 第1次侧滑
+2025-03-14 11:25:22,159 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离快速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:25:23,134 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_1.png
+2025-03-14 11:25:23,134 - SwipeOnlyTest - INFO - 方法5 - 第2次侧滑
+2025-03-14 11:25:23,286 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离快速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:25:24,234 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_2.png
+2025-03-14 11:25:24,235 - SwipeOnlyTest - INFO - 方法5 - 第3次侧滑
+2025-03-14 11:25:24,437 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离快速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:25:25,448 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_3.png
+2025-03-14 11:25:25,448 - SwipeOnlyTest - INFO - 方法5 - 第4次侧滑
+2025-03-14 11:25:25,586 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离快速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:25:26,371 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_4.png
+2025-03-14 11:25:26,371 - SwipeOnlyTest - INFO - 方法5 - 第5次侧滑
+2025-03-14 11:25:26,491 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离快速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:25:27,399 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_5.png
+2025-03-14 11:25:28,109 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/after_swipe_method5.png
+2025-03-14 11:25:28,110 - SwipeOnlyTest - INFO - 侧滑测试完成
+2025-03-14 11:27:05,402 - SwipeOnlyTest - INFO - 开始侧滑测试
+2025-03-14 11:27:05,402 - SwipeOnlyTest - INFO - 初始化SwipeOnlyTest
+2025-03-14 11:27:05,681 - SwipeOnlyTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:27:05,682 - SwipeOnlyTest - INFO - 仅测试方法3
+2025-03-14 11:27:05,682 - SwipeOnlyTest - INFO - 测试方法3: 从屏幕最右边中间位置中等距离、快速侧滑
+2025-03-14 11:27:06,506 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/before_swipe_method3.png
+2025-03-14 11:27:06,506 - SwipeOnlyTest - INFO - 方法3 - 第1次侧滑
+2025-03-14 11:27:06,722 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:27:07,735 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_1.png
+2025-03-14 11:27:07,736 - SwipeOnlyTest - INFO - 方法3 - 第2次侧滑
+2025-03-14 11:27:07,913 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:27:16,736 - SwipeOnlyTest - INFO - 开始侧滑测试
+2025-03-14 11:27:16,736 - SwipeOnlyTest - INFO - 初始化SwipeOnlyTest
+2025-03-14 11:27:16,846 - SwipeOnlyTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:27:16,846 - SwipeOnlyTest - INFO - 仅测试方法3
+2025-03-14 11:27:16,846 - SwipeOnlyTest - INFO - 测试方法3: 从屏幕最右边中间位置中等距离、快速侧滑
+2025-03-14 11:27:17,261 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/before_swipe_method3.png
+2025-03-14 11:27:17,262 - SwipeOnlyTest - INFO - 方法3 - 第1次侧滑
+2025-03-14 11:27:17,396 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:27:18,022 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_1.png
+2025-03-14 11:27:18,023 - SwipeOnlyTest - INFO - 方法3 - 第2次侧滑
+2025-03-14 11:27:18,126 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:27:19,088 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_2.png
+2025-03-14 11:27:19,088 - SwipeOnlyTest - INFO - 方法3 - 第3次侧滑
+2025-03-14 11:27:19,194 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:27:19,991 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_3.png
+2025-03-14 11:27:19,991 - SwipeOnlyTest - INFO - 方法3 - 第4次侧滑
+2025-03-14 11:27:20,091 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:27:37,314 - SwipeOnlyTest - INFO - 开始侧滑测试
+2025-03-14 11:27:37,315 - SwipeOnlyTest - INFO - 初始化SwipeOnlyTest
+2025-03-14 11:27:37,422 - SwipeOnlyTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:27:37,422 - SwipeOnlyTest - INFO - 仅测试方法5
+2025-03-14 11:27:37,423 - SwipeOnlyTest - INFO - 测试方法5: 从屏幕最右边中间位置较长距离、极速侧滑
+2025-03-14 11:27:37,841 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/before_swipe_method5.png
+2025-03-14 11:27:37,841 - SwipeOnlyTest - INFO - 方法5 - 第1次侧滑
+2025-03-14 11:27:37,908 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:27:38,554 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_1.png
+2025-03-14 11:27:38,554 - SwipeOnlyTest - INFO - 方法5 - 第2次侧滑
+2025-03-14 11:27:38,654 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:27:39,622 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_2.png
+2025-03-14 11:27:39,622 - SwipeOnlyTest - INFO - 方法5 - 第3次侧滑
+2025-03-14 11:27:39,723 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:27:40,555 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_3.png
+2025-03-14 11:27:40,556 - SwipeOnlyTest - INFO - 方法5 - 第4次侧滑
+2025-03-14 11:27:40,646 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:27:41,568 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_4.png
+2025-03-14 11:27:41,569 - SwipeOnlyTest - INFO - 方法5 - 第5次侧滑
+2025-03-14 11:27:41,655 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:27:42,578 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_5.png
+2025-03-14 11:27:43,338 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/after_swipe_method5.png
+2025-03-14 11:27:43,339 - SwipeOnlyTest - INFO - 侧滑测试完成
+2025-03-14 11:28:59,906 - SwipeOnlyTest - INFO - 开始侧滑测试
+2025-03-14 11:28:59,906 - SwipeOnlyTest - INFO - 初始化SwipeOnlyTest
+2025-03-14 11:29:00,149 - SwipeOnlyTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:29:00,149 - SwipeOnlyTest - INFO - 仅测试方法3
+2025-03-14 11:29:00,149 - SwipeOnlyTest - INFO - 测试方法3: 从屏幕最右边中间位置中等距离、超快速连续侧滑
+2025-03-14 11:29:00,636 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/before_swipe_method3.png
+2025-03-14 11:29:00,636 - SwipeOnlyTest - INFO - 方法3 - 第1次超快速侧滑
+2025-03-14 11:29:00,846 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:29:00,948 - SwipeOnlyTest - INFO - 方法3 - 第2次超快速侧滑
+2025-03-14 11:29:01,106 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:29:01,210 - SwipeOnlyTest - INFO - 方法3 - 第3次超快速侧滑
+2025-03-14 11:29:01,364 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:29:02,516 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_3.png
+2025-03-14 11:29:02,516 - SwipeOnlyTest - INFO - 方法3 - 第4次超快速侧滑
+2025-03-14 11:29:02,629 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:29:02,734 - SwipeOnlyTest - INFO - 方法3 - 第5次超快速侧滑
+2025-03-14 11:29:02,816 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:29:02,918 - SwipeOnlyTest - INFO - 方法3 - 第6次超快速侧滑
+2025-03-14 11:29:03,000 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:29:03,839 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_6.png
+2025-03-14 11:29:03,839 - SwipeOnlyTest - INFO - 方法3 - 第7次超快速侧滑
+2025-03-14 11:29:03,968 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:29:04,072 - SwipeOnlyTest - INFO - 方法3 - 第8次超快速侧滑
+2025-03-14 11:29:04,169 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:29:04,273 - SwipeOnlyTest - INFO - 方法3 - 第9次超快速侧滑
+2025-03-14 11:29:04,373 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:29:05,226 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method3_swipe_9.png
+2025-03-14 11:29:05,227 - SwipeOnlyTest - INFO - 方法3 - 第10次超快速侧滑
+2025-03-14 11:29:05,435 - SwipeOnlyTest - INFO - 执行从最右边中间位置中等距离超快速侧滑: 1058,1188 -> 950,1188
+2025-03-14 11:29:06,256 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/after_swipe_method3.png
+2025-03-14 11:29:06,257 - SwipeOnlyTest - INFO - 侧滑测试完成
+2025-03-14 11:29:12,489 - SwipeOnlyTest - INFO - 开始侧滑测试
+2025-03-14 11:29:12,489 - SwipeOnlyTest - INFO - 初始化SwipeOnlyTest
+2025-03-14 11:29:12,716 - SwipeOnlyTest - INFO - 设备屏幕尺寸: 1080x2376
+2025-03-14 11:29:12,716 - SwipeOnlyTest - INFO - 仅测试方法5
+2025-03-14 11:29:12,716 - SwipeOnlyTest - INFO - 测试方法5: 从屏幕最右边中间位置较长距离、超极速连续侧滑
+2025-03-14 11:29:13,173 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/before_swipe_method5.png
+2025-03-14 11:29:13,174 - SwipeOnlyTest - INFO - 方法5 - 第1次超极速侧滑
+2025-03-14 11:29:13,317 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离超极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:29:13,421 - SwipeOnlyTest - INFO - 方法5 - 第2次超极速侧滑
+2025-03-14 11:29:13,498 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离超极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:29:13,603 - SwipeOnlyTest - INFO - 方法5 - 第3次超极速侧滑
+2025-03-14 11:29:13,715 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离超极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:29:14,610 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_3.png
+2025-03-14 11:29:14,611 - SwipeOnlyTest - INFO - 方法5 - 第4次超极速侧滑
+2025-03-14 11:29:14,732 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离超极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:29:14,832 - SwipeOnlyTest - INFO - 方法5 - 第5次超极速侧滑
+2025-03-14 11:29:15,060 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离超极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:29:15,164 - SwipeOnlyTest - INFO - 方法5 - 第6次超极速侧滑
+2025-03-14 11:29:15,286 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离超极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:29:16,140 - SwipeOnlyTest - INFO - 截图已保存: swipe_screenshots/method5_swipe_6.png
+2025-03-14 11:29:16,140 - SwipeOnlyTest - INFO - 方法5 - 第7次超极速侧滑
+2025-03-14 11:29:16,244 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离超极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:29:16,348 - SwipeOnlyTest - INFO - 方法5 - 第8次超极速侧滑
+2025-03-14 11:29:16,426 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离超极速侧滑: 1069,1188 -> 907,1188
+2025-03-14 11:29:16,531 - SwipeOnlyTest - INFO - 方法5 - 第9次超极速侧滑
+2025-03-14 11:29:16,623 - SwipeOnlyTest - INFO - 执行从最右边中间位置较长距离超极速侧滑: 1069,1188 -> 907,1188
