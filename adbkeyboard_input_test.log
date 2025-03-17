@@ -1,0 +1,73 @@
+2025-03-17 21:27:24,260 - ADBKeyboardTester - INFO - ===== 开始测试ADBKeyboard输入 =====
+2025-03-17 21:27:24,260 - ADBKeyboardTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-17 21:27:24,273 - ADBKeyboardTester - INFO - 未检测到ADBKeyboard，正在尝试安装...
+2025-03-17 21:27:24,273 - ADBKeyboardTester - INFO - 找到APK文件，开始安装
+2025-03-17 21:27:35,402 - ADBKeyboardTester - INFO - 设置ADBKeyboard为默认输入法
+2025-03-17 21:27:35,506 - ADBKeyboardTester - INFO - 当前输入法: com.baidu.input/.ImeService
+2025-03-17 21:27:36,641 - ADBKeyboardTester - INFO - 清空输入框
+2025-03-17 21:27:36,650 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_CTRL_LEFT
+2025-03-17 21:27:36,906 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_A
+2025-03-17 21:27:37,572 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_DEL
+2025-03-17 21:27:38,240 - ADBKeyboardTester - INFO - 使用ADBKeyboard输入文本: 这是一个ADBKeyboard测试，输入中文内容：你好世界！
+2025-03-17 21:27:38,241 - ADBKeyboardTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "这是一个ADBKeyboard测试，输入中文内容：你好世界！"
+2025-03-17 21:27:38,348 - ADBKeyboardTester - INFO - 命令结果: Broadcasting: Intent { act=ADB_INPUT_TEXT flg=0x400000 (has extras) }
+Broadcast completed: result=0
+
+2025-03-17 21:27:39,349 - ADBKeyboardTester - INFO - 输入完成
+2025-03-17 21:27:41,350 - ADBKeyboardTester - INFO - 恢复之前的输入法: com.baidu.input/.ImeService
+2025-03-17 21:27:42,481 - ADBKeyboardTester - INFO - ===== ADBKeyboard测试完成 =====
+2025-03-17 21:30:32,989 - ADBKeyboardTester - INFO - ===== 开始测试ADBKeyboard输入 =====
+2025-03-17 21:30:32,999 - ADBKeyboardTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-17 21:30:33,012 - ADBKeyboardTester - INFO - 未检测到ADBKeyboard，正在尝试安装...
+2025-03-17 21:30:33,012 - ADBKeyboardTester - INFO - 找到APK文件，开始安装
+2025-03-17 21:30:41,007 - ADBKeyboardTester - INFO - 设置ADBKeyboard为默认输入法
+2025-03-17 21:30:41,101 - ADBKeyboardTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-17 21:30:42,211 - ADBKeyboardTester - INFO - 清空输入框
+2025-03-17 21:30:42,211 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_CTRL_LEFT
+2025-03-17 21:30:42,326 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_A
+2025-03-17 21:30:42,920 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_DEL
+2025-03-17 21:30:43,637 - ADBKeyboardTester - INFO - 使用ADBKeyboard输入文本: 这是一个ADBKeyboard测试，输入中文内容：你好世界！
+2025-03-17 21:30:43,637 - ADBKeyboardTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "这是一个ADBKeyboard测试，输入中文内容：你好世界！"
+2025-03-17 21:30:43,730 - ADBKeyboardTester - INFO - 命令结果: Broadcasting: Intent { act=ADB_INPUT_TEXT flg=0x400000 (has extras) }
+Broadcast completed: result=0
+
+2025-03-17 21:30:44,733 - ADBKeyboardTester - INFO - 输入完成
+2025-03-17 21:30:46,737 - ADBKeyboardTester - INFO - 恢复之前的输入法: com.android.adbkeyboard/.AdbIME
+2025-03-17 21:30:47,832 - ADBKeyboardTester - INFO - ===== ADBKeyboard测试完成 =====
+2025-03-17 21:31:33,246 - ADBKeyboardTester - INFO - ===== 开始测试ADBKeyboard输入 =====
+2025-03-17 21:31:33,256 - ADBKeyboardTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-17 21:31:33,270 - ADBKeyboardTester - INFO - 未检测到ADBKeyboard，正在尝试安装...
+2025-03-17 21:31:33,270 - ADBKeyboardTester - INFO - 找到APK文件，开始安装
+2025-03-17 21:31:34,437 - ADBKeyboardTester - INFO - 设置ADBKeyboard为默认输入法
+2025-03-17 21:31:34,592 - ADBKeyboardTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-17 21:31:35,698 - ADBKeyboardTester - INFO - 清空输入框
+2025-03-17 21:31:35,698 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_CTRL_LEFT
+2025-03-17 21:31:35,794 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_A
+2025-03-17 21:31:36,389 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_DEL
+2025-03-17 21:31:37,011 - ADBKeyboardTester - INFO - 使用ADBKeyboard输入文本: 这是一个ADBKeyboard测试，输入中文内容：你好世界！
+2025-03-17 21:31:37,011 - ADBKeyboardTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "这是一个ADBKeyboard测试，输入中文内容：你好世界！"
+2025-03-17 21:31:37,103 - ADBKeyboardTester - INFO - 命令结果: Broadcasting: Intent { act=ADB_INPUT_TEXT flg=0x400000 (has extras) }
+Broadcast completed: result=0
+
+2025-03-17 21:31:38,103 - ADBKeyboardTester - INFO - 输入完成
+2025-03-17 21:31:40,104 - ADBKeyboardTester - INFO - 恢复之前的输入法: com.android.adbkeyboard/.AdbIME
+2025-03-17 21:31:41,236 - ADBKeyboardTester - INFO - ===== ADBKeyboard测试完成 =====
+2025-03-17 21:32:26,598 - ADBKeyboardTester - INFO - ===== 开始测试ADBKeyboard输入 =====
+2025-03-17 21:32:26,598 - ADBKeyboardTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-17 21:32:26,701 - ADBKeyboardTester - INFO - 检测到ADBKeyboard已安装（通过ime list确认）
+2025-03-17 21:32:26,701 - ADBKeyboardTester - INFO - ADBKeyboard已安装，无需重新安装
+2025-03-17 21:32:26,702 - ADBKeyboardTester - INFO - 设置ADBKeyboard为默认输入法
+2025-03-17 21:32:26,821 - ADBKeyboardTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-17 21:32:26,822 - ADBKeyboardTester - INFO - 当前已经是ADBKeyboard输入法，无需切换
+2025-03-17 21:32:26,822 - ADBKeyboardTester - INFO - 清空输入框
+2025-03-17 21:32:26,822 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_CTRL_LEFT
+2025-03-17 21:32:26,957 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_A
+2025-03-17 21:32:27,607 - ADBKeyboardTester - INFO - 按下按键: KEYCODE_DEL
+2025-03-17 21:32:28,260 - ADBKeyboardTester - INFO - 使用ADBKeyboard输入文本: 这是一个ADBKeyboard测试，输入中文内容：你好世界！
+2025-03-17 21:32:28,260 - ADBKeyboardTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "这是一个ADBKeyboard测试，输入中文内容：你好世界！"
+2025-03-17 21:32:28,461 - ADBKeyboardTester - INFO - 命令结果: Broadcasting: Intent { act=ADB_INPUT_TEXT flg=0x400000 (has extras) }
+Broadcast completed: result=0
+
+2025-03-17 21:32:29,464 - ADBKeyboardTester - INFO - 文本输入广播命令成功发送
+2025-03-17 21:32:29,464 - ADBKeyboardTester - INFO - 输入完成
+2025-03-17 21:32:31,468 - ADBKeyboardTester - INFO - ===== ADBKeyboard测试完成 =====
