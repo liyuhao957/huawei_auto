@@ -181,11 +181,12 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
             
             for i, url in enumerate(image_urls):
                 if url:  # 确保URL不为空
+                    button_text = "防侧滑" if i == 0 else "拉回" if i == 1 else f"查看截图 {i+1}"
                     image_buttons.append({
                         "tag": "button",
                         "text": {
                             "tag": "plain_text",
-                            "content": f"查看截图 {i+1}"
+                            "content": button_text
                         },
                         "type": "primary",
                         "url": url
