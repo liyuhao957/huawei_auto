@@ -3317,3 +3317,5 @@
 2025-03-17 23:32:10,646 - QuickAppADBTester - INFO - 使用交互式卡片消息格式发送，包含2张图片链接
 2025-03-17 23:32:11,073 - QuickAppADBTester - INFO - 测试完成
 2025-03-17 23:32:11,073 - QuickAppADBTester - INFO - 定时任务已启动，按Ctrl+C可停止
+2025-03-17 23:33:15,915 - QuickAppADBTester - INFO - 用户中断，定时测试任务已停止
+2025-03-17 23:33:15,915 - QuickAppADBTester - INFO - 定时测试任务已结束

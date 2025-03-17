@@ -597,7 +597,7 @@ class QuickAppADBTester:
         # 4. 点击"快应用管理"选项
         logger.info("步骤4: 点击'快应用管理'选项")
         self.tap_by_percent(0.159, 0.696)  # 坐标: (172, 1654)
-        time.sleep(2)
+        time.sleep(5)  # 增加等待时间，从2秒增加到5秒，确保页面完全加载
         
         # 5. 点击"同意"按钮(如果出现)
         logger.info("步骤5: 检查并点击'同意'按钮(如果出现)")
@@ -605,8 +605,8 @@ class QuickAppADBTester:
         time.sleep(2)
         
         # 增加额外等待时间，确保应用市场稳定后再继续下一流程
-        logger.info("等待应用市场稳定 (3秒)")
-        time.sleep(3)
+        logger.info("等待应用市场稳定 (5秒)")
+        time.sleep(5)  # 从3秒增加到5秒
         
         logger.info("流程2执行完成: 通过应用市场管理快应用")
         return True
