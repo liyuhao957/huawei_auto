@@ -144,49 +144,100 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
     try:
         timestamp = str(int(time.time()))
         
-        # 无论是否有图片，统一使用post类型消息
-        logger.info(f"使用post类型消息发送" + (f"，包含{len(image_urls)}张图片链接" if image_urls and len(image_urls) > 0 else ""))
+        # 使用卡片消息格式
+        logger.info("使用交互式卡片消息格式发送" + (f"，包含{len(image_urls)}张图片链接" if image_urls and len(image_urls) > 0 else ""))
         
-        # 构建post消息内容
-        post_content = []
+        # 确定卡片颜色模板 - 成功为绿色，失败为红色
+        card_color = "green" if "成功" in content and "失败" not in content else "red"
         
-        # 添加文本内容
-        text_elements = [{"tag": "text", "text": content}]
-        post_content.append(text_elements)
+        # 构建元素列表
+        elements = []
+        
+        # 添加内容文本区域
+        elements.append({
+            "tag": "div",
+            "text": {
+                "tag": "lark_md",
+                "content": content
+            }
+        })
+        
+        # 如果有图片URL，添加分隔线和图片链接部分
+        if image_urls and len(image_urls) > 0:
+            # 添加分隔线
+            elements.append({"tag": "hr"})
+            
+            # 添加图片标题
+            elements.append({
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": "**📷 测试截图：**"
+                }
+            })
+            
+            # 为每张图片创建按钮
+            image_buttons = []
+            
+            for i, url in enumerate(image_urls):
+                if url:  # 确保URL不为空
+                    image_buttons.append({
+                        "tag": "button",
+                        "text": {
+                            "tag": "plain_text",
+                            "content": f"查看截图 {i+1}"
+                        },
+                        "type": "primary",
+                        "url": url
+                    })
+            
+            # 添加图片按钮区域
+            elements.append({
+                "tag": "action",
+                "actions": image_buttons
+            })
+        
+        # 添加分隔线
+        elements.append({"tag": "hr"})
+        
+        # 添加时间戳注释
+        elements.append({
+            "tag": "note",
+            "elements": [
+                {
+                    "tag": "plain_text",
+                    "content": f"测试时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+                }
+            ]
+        })
         
         # 如果需要@所有人，添加@所有人元素
         if mention_all:
-            at_elements = [{"tag": "at", "user_id": "all"}]
-            post_content.append(at_elements)
-        
-        # 如果有图片URL，为每张图片添加超链接
-        if image_urls and len(image_urls) > 0:
-            # 添加空行
-            post_content.append([{"tag": "text", "text": "\n截图:"}])
-            
-            # 添加图片链接
-            for i, url in enumerate(image_urls):
-                if url:  # 确保URL不为空
-                    link_elements = [
-                        {"tag": "text", "text": f"截图 {i+1}: "},
-                        {"tag": "a", "text": f"查看截图 {i+1}", "href": url}
-                    ]
-                    post_content.append(link_elements)
-        
-        # 添加时间戳
-        time_elements = [{"tag": "text", "text": f"\n测试时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"}]
-        post_content.append(time_elements)
+            # 在最前面添加@所有人元素
+            at_element = {
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": "<at id=all></at> 请注意："
+                }
+            }
+            elements.insert(0, at_element)
         
         # 构建完整消息
         msg = {
-            "msg_type": "post",
-            "content": {
-                "post": {
-                    "zh_cn": {
-                        "title": title,
-                        "content": post_content
-                    }
-                }
+            "msg_type": "interactive",
+            "card": {
+                "config": {
+                    "wide_screen_mode": True
+                },
+                "header": {
+                    "title": {
+                        "tag": "plain_text",
+                        "content": title
+                    },
+                    "template": card_color
+                },
+                "elements": elements
             }
         }
         
