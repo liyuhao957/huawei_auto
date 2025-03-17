@@ -1,0 +1,106 @@
+2025-03-17 18:29:52,439 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-17 18:29:52,439 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-17 18:29:52,439 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-17 18:29:52,439 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-17 18:29:52,439 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-17 18:29:52,439 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 18:29:52,439 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 18:29:53,627 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-17 18:29:53,628 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-17 18:29:53,748 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-17 18:29:55,754 - QuickAppADBTester - INFO - 步骤3: 点击搜索框
+2025-03-17 18:29:55,754 - QuickAppADBTester - INFO - 点击坐标: (276, 515)
+2025-03-17 18:29:56,861 - QuickAppADBTester - INFO - 步骤4: 输入'应用和服务'
+2025-03-17 18:29:56,862 - QuickAppADBTester - INFO - 输入文本: 应用和服务
+2025-03-17 18:29:57,946 - QuickAppADBTester - INFO - 按下回车键
+2025-03-17 18:29:57,946 - QuickAppADBTester - INFO - 按下按键: 66
+2025-03-17 18:30:00,028 - QuickAppADBTester - INFO - 步骤5: 点击搜索结果'应用和服务'
+2025-03-17 18:30:00,029 - QuickAppADBTester - INFO - 点击坐标: (254, 418)
+2025-03-17 18:30:28,448 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-17 18:30:28,448 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-17 18:30:28,449 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-17 18:30:28,449 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-17 18:30:28,449 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-17 18:30:28,449 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 18:30:28,449 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 18:30:29,557 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-17 18:30:29,558 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-17 18:30:29,664 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-17 18:30:31,668 - QuickAppADBTester - INFO - 步骤3: 点击搜索框
+2025-03-17 18:30:31,668 - QuickAppADBTester - INFO - 点击坐标: (276, 515)
+2025-03-17 18:30:32,749 - QuickAppADBTester - INFO - 步骤4: 输入'应用和服务'
+2025-03-17 18:30:32,750 - QuickAppADBTester - INFO - 输入文本: 应用和服务
+2025-03-17 18:30:33,823 - QuickAppADBTester - INFO - 按下回车键
+2025-03-17 18:30:33,824 - QuickAppADBTester - INFO - 按下按键: 66
+2025-03-17 18:32:24,503 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-17 18:32:24,503 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-17 18:32:24,503 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-17 18:32:24,503 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-17 18:32:24,503 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-17 18:32:24,503 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 18:32:24,503 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 18:32:25,672 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-17 18:32:25,672 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-17 18:32:25,766 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-17 18:32:41,894 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-17 18:32:41,894 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-17 18:32:41,894 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-17 18:32:41,894 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-17 18:32:41,894 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-17 18:32:41,894 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 18:32:41,894 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 18:32:43,032 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-17 18:32:43,033 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-17 18:32:43,144 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-17 18:32:45,150 - QuickAppADBTester - INFO - 步骤3-5: 直接点击界面上的'应用和服务'选项
+2025-03-17 18:32:45,151 - QuickAppADBTester - INFO - 点击坐标: (254, 418)
+2025-03-17 18:32:47,276 - QuickAppADBTester - INFO - 步骤6: 点击'应用管理'
+2025-03-17 18:32:47,276 - QuickAppADBTester - INFO - 点击坐标: (239, 377)
+2025-03-17 18:32:49,382 - QuickAppADBTester - INFO - 步骤7-9: 点击'快应用中心'选项
+2025-03-17 18:32:49,383 - QuickAppADBTester - INFO - 点击坐标: (261, 574)
+2025-03-17 18:32:51,499 - QuickAppADBTester - INFO - 步骤10: 向下滑动到底部
+2025-03-17 18:32:51,499 - QuickAppADBTester - INFO - 滑动: (490, 1401) -> (334, 1900)
+2025-03-17 18:32:52,949 - QuickAppADBTester - INFO - 滑动: (490, 1401) -> (334, 1900)
+2025-03-17 18:32:54,420 - QuickAppADBTester - INFO - 步骤11: 点击'存储'
+2025-03-17 18:32:54,420 - QuickAppADBTester - INFO - 点击坐标: (156, 1021)
+2025-03-17 18:32:56,611 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-17 18:32:56,611 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-17 18:32:56,611 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-17 18:32:56,611 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-17 18:32:56,611 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-17 18:32:56,612 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 18:32:56,612 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 18:32:57,727 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-17 18:32:57,728 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-17 18:32:57,848 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-17 18:32:59,852 - QuickAppADBTester - INFO - 步骤3-5: 直接点击界面上的'应用和服务'选项
+2025-03-17 18:32:59,853 - QuickAppADBTester - INFO - 点击坐标: (254, 418)
+2025-03-17 18:33:04,112 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-17 18:33:04,112 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-17 18:33:04,112 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-17 18:33:04,112 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-17 18:33:04,112 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-17 18:33:04,112 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 18:33:04,112 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 18:33:05,193 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-17 18:33:05,193 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-17 18:33:05,308 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-17 18:33:07,311 - QuickAppADBTester - INFO - 步骤3-5: 直接点击界面上的'应用和服务'选项
+2025-03-17 18:33:07,311 - QuickAppADBTester - INFO - 点击坐标: (254, 418)
+2025-03-17 18:33:09,416 - QuickAppADBTester - INFO - 步骤6: 点击'应用管理'
+2025-03-17 18:33:09,417 - QuickAppADBTester - INFO - 点击坐标: (239, 377)
+2025-03-17 18:33:11,488 - QuickAppADBTester - INFO - 步骤7-9: 点击'快应用中心'选项
+2025-03-17 18:33:11,489 - QuickAppADBTester - INFO - 点击坐标: (261, 574)
+2025-03-17 18:33:13,667 - QuickAppADBTester - INFO - 步骤10: 向下滑动到底部
+2025-03-17 18:33:13,668 - QuickAppADBTester - INFO - 滑动: (490, 1401) -> (334, 1900)
+2025-03-17 18:33:15,155 - QuickAppADBTester - INFO - 滑动: (490, 1401) -> (334, 1900)
+2025-03-17 18:33:16,615 - QuickAppADBTester - INFO - 步骤11: 点击'存储'
+2025-03-17 18:33:16,616 - QuickAppADBTester - INFO - 点击坐标: (156, 1021)
+2025-03-17 18:33:17,768 - QuickAppADBTester - INFO - 步骤12: 点击'删除数据'
+2025-03-17 18:33:17,769 - QuickAppADBTester - INFO - 点击坐标: (555, 1271)

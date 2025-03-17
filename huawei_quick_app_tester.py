@@ -551,7 +551,7 @@ class QuickAppTester:
         time.sleep(0.5)
         
         # 输入搜索文本
-        self.device.send_keys("买乐多")
+        self.device.send_keys("优购")
         time.sleep(1)
         
         # 按下回车键执行搜索
