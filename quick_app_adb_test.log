@@ -630,3 +630,272 @@
 2025-03-17 21:54:00,319 - QuickAppADBTester - INFO - 流程4执行完成: 清空手机里的全部应用
 2025-03-17 21:54:00,320 - QuickAppADBTester - INFO - 所有流程执行完成。结果: 流程1: True, 流程2: True, 流程3: True, 流程4: True
 2025-03-17 21:54:00,320 - QuickAppADBTester - INFO - 测试完成
+2025-03-17 22:09:51,333 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-17 22:09:51,343 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-17 22:09:51,343 - QuickAppADBTester - INFO - 确保ADBKeyboard被设置为默认输入法
+2025-03-17 22:09:51,344 - QuickAppADBTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-17 22:09:51,481 - QuickAppADBTester - INFO - 检测到ADBKeyboard已安装（通过ime list确认）
+2025-03-17 22:09:51,655 - QuickAppADBTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-17 22:09:51,655 - QuickAppADBTester - INFO - 当前已经是ADBKeyboard输入法，无需切换
+2025-03-17 22:09:51,656 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-17 22:09:51,656 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-17 22:09:51,656 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-17 22:09:51,656 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 22:09:51,656 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 22:09:52,823 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-17 22:09:52,824 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-17 22:09:52,957 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-17 22:09:54,958 - QuickAppADBTester - INFO - 步骤3: 点击搜索框
+2025-03-17 22:09:54,958 - QuickAppADBTester - INFO - 点击坐标: (276, 515)
+2025-03-17 22:09:56,058 - QuickAppADBTester - INFO - 步骤4: 输入'应用和服务'
+2025-03-17 22:09:56,058 - QuickAppADBTester - INFO - 输入文本: 应用和服务
+2025-03-17 22:09:56,059 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-17 22:09:56,059 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "应用和服务"
+2025-03-17 22:09:56,148 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-17 22:09:58,149 - QuickAppADBTester - INFO - 步骤5: 点击搜索结果'应用和服务'
+2025-03-17 22:09:58,149 - QuickAppADBTester - INFO - 点击坐标: (254, 418)
+2025-03-17 22:10:00,333 - QuickAppADBTester - INFO - 步骤6: 点击'应用管理'
+2025-03-17 22:10:00,334 - QuickAppADBTester - INFO - 点击坐标: (239, 377)
+2025-03-17 22:10:02,429 - QuickAppADBTester - INFO - 步骤7: 点击搜索框
+2025-03-17 22:10:02,429 - QuickAppADBTester - INFO - 点击坐标: (239, 354)
+2025-03-17 22:10:03,542 - QuickAppADBTester - INFO - 步骤8: 输入'快应用中心'
+2025-03-17 22:10:03,542 - QuickAppADBTester - INFO - 输入文本: 快应用中心
+2025-03-17 22:10:03,543 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-17 22:10:03,543 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "快应用中心"
+2025-03-17 22:10:03,632 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-17 22:10:05,634 - QuickAppADBTester - INFO - 步骤9: 点击搜索结果'快应用中心'
+2025-03-17 22:10:05,634 - QuickAppADBTester - INFO - 点击坐标: (261, 574)
+2025-03-17 22:10:07,863 - QuickAppADBTester - INFO - 步骤10: 向上滑动显示更多内容
+2025-03-17 22:10:07,863 - QuickAppADBTester - INFO - 滑动: (490, 1900) -> (490, 950)
+2025-03-17 22:10:09,290 - QuickAppADBTester - INFO - 滑动: (490, 1663) -> (490, 712)
+2025-03-17 22:10:10,758 - QuickAppADBTester - INFO - 步骤11: 点击'存储'
+2025-03-17 22:10:10,758 - QuickAppADBTester - INFO - 点击坐标: (156, 1021)
+2025-03-17 22:10:11,923 - QuickAppADBTester - INFO - 步骤12: 点击'删除数据'
+2025-03-17 22:10:11,923 - QuickAppADBTester - INFO - 点击坐标: (555, 1271)
+2025-03-17 22:10:13,042 - QuickAppADBTester - INFO - 步骤13: 点击确认对话框中的'确定'按钮
+2025-03-17 22:10:13,042 - QuickAppADBTester - INFO - 点击坐标: (757, 2214)
+2025-03-17 22:10:15,244 - QuickAppADBTester - INFO - 流程1执行完成: 清除快应用中心数据
+2025-03-17 22:10:15,244 - QuickAppADBTester - INFO - ===== 开始执行流程2: 通过应用市场管理快应用 =====
+2025-03-17 22:10:15,244 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-17 22:10:15,245 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 22:10:15,245 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 22:10:16,429 - QuickAppADBTester - INFO - 步骤2: 打开应用市场
+2025-03-17 22:10:16,429 - QuickAppADBTester - INFO - 运行命令: adb shell am start -n com.huawei.appmarket/.MainActivity
+2025-03-17 22:10:16,557 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { cmp=com.huawei.appmarket/.MainActivity }
+
+2025-03-17 22:10:21,558 - QuickAppADBTester - INFO - 步骤3: 点击'我的'选项卡
+2025-03-17 22:10:21,558 - QuickAppADBTester - INFO - 点击坐标: (965, 2247)
+2025-03-17 22:10:23,718 - QuickAppADBTester - INFO - 步骤4: 点击'快应用管理'选项
+2025-03-17 22:10:23,718 - QuickAppADBTester - INFO - 点击坐标: (171, 1653)
+2025-03-17 22:10:25,853 - QuickAppADBTester - INFO - 步骤5: 检查并点击'同意'按钮(如果出现)
+2025-03-17 22:10:25,853 - QuickAppADBTester - INFO - 点击坐标: (735, 2226)
+2025-03-17 22:10:27,958 - QuickAppADBTester - INFO - 等待应用市场稳定 (3秒)
+2025-03-17 22:10:30,959 - QuickAppADBTester - INFO - 流程2执行完成: 通过应用市场管理快应用
+2025-03-17 22:10:30,959 - QuickAppADBTester - INFO - ===== 开始执行流程3: 搜索并打开快应用进行测试 =====
+2025-03-17 22:10:30,960 - QuickAppADBTester - INFO - 步骤1: 点击搜索框
+2025-03-17 22:10:30,960 - QuickAppADBTester - INFO - 点击坐标: (326, 354)
+2025-03-17 22:10:32,151 - QuickAppADBTester - INFO - 步骤2: 输入'优购'
+2025-03-17 22:10:32,151 - QuickAppADBTester - INFO - 输入文本: 优购
+2025-03-17 22:10:32,152 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-17 22:10:32,152 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "优购"
+2025-03-17 22:10:32,262 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-17 22:10:34,265 - QuickAppADBTester - INFO - 步骤3: 按下回车键
+2025-03-17 22:10:34,265 - QuickAppADBTester - INFO - 按下回车键
+2025-03-17 22:10:34,266 - QuickAppADBTester - INFO - 按下按键: 66
+2025-03-17 22:10:36,581 - QuickAppADBTester - INFO - 步骤4: 点击搜索结果旁边的'打开'按钮
+2025-03-17 22:10:36,581 - QuickAppADBTester - INFO - 点击坐标: (860, 370)
+2025-03-17 22:10:44,766 - QuickAppADBTester - INFO - 步骤5: 准备执行10次侧滑
+2025-03-17 22:10:44,766 - QuickAppADBTester - INFO - 步骤6: 执行10次侧滑操作
+2025-03-17 22:10:44,767 - QuickAppADBTester - INFO - 第1次侧滑
+2025-03-17 22:10:44,767 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:10:45,063 - QuickAppADBTester - INFO - 第2次侧滑
+2025-03-17 22:10:45,063 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:10:45,384 - QuickAppADBTester - INFO - 第3次侧滑
+2025-03-17 22:10:45,384 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:10:45,712 - QuickAppADBTester - INFO - 第4次侧滑
+2025-03-17 22:10:45,712 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:10:45,976 - QuickAppADBTester - INFO - 第5次侧滑
+2025-03-17 22:10:45,977 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:10:46,253 - QuickAppADBTester - INFO - 第6次侧滑
+2025-03-17 22:10:46,254 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:10:46,482 - QuickAppADBTester - INFO - 第7次侧滑
+2025-03-17 22:10:46,483 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:10:46,728 - QuickAppADBTester - INFO - 第8次侧滑
+2025-03-17 22:10:46,728 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:10:47,003 - QuickAppADBTester - INFO - 第9次侧滑
+2025-03-17 22:10:47,003 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:10:47,308 - QuickAppADBTester - INFO - 第10次侧滑
+2025-03-17 22:10:47,308 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:10:49,616 - QuickAppADBTester - INFO - 步骤7: 检查当前应用
+2025-03-17 22:10:49,616 - QuickAppADBTester - INFO - 运行命令: adb shell dumpsys window | grep mCurrentFocus
+2025-03-17 22:10:49,628 - QuickAppADBTester - INFO - 命令输出: 
+2025-03-17 22:10:49,628 - QuickAppADBTester - INFO - 当前应用: 
+2025-03-17 22:10:49,629 - QuickAppADBTester - INFO - 步骤8: 截图记录侧滑后状态
+2025-03-17 22:10:49,629 - QuickAppADBTester - INFO - 截图: screenshots/after_swipe_20250317_221049.png
+2025-03-17 22:10:51,014 - QuickAppADBTester - INFO - 步骤9: 按Home键
+2025-03-17 22:10:51,014 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 22:10:51,015 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 22:11:01,219 - QuickAppADBTester - INFO - 步骤10: 再次检查当前应用
+2025-03-17 22:11:01,220 - QuickAppADBTester - INFO - 运行命令: adb shell dumpsys window | grep mCurrentFocus
+2025-03-17 22:11:01,232 - QuickAppADBTester - INFO - 命令输出: 
+2025-03-17 22:11:01,232 - QuickAppADBTester - INFO - 按Home后当前应用: 
+2025-03-17 22:11:01,233 - QuickAppADBTester - INFO - 步骤11: 再次截图记录按Home后状态
+2025-03-17 22:11:01,233 - QuickAppADBTester - INFO - 截图: screenshots/after_home_20250317_221101.png
+2025-03-17 22:11:02,556 - QuickAppADBTester - INFO - 流程3执行完成: 搜索并打开快应用进行测试
+2025-03-17 22:11:02,556 - QuickAppADBTester - INFO - ===== 开始执行流程4: 清空手机里的全部应用 =====
+2025-03-17 22:11:02,556 - QuickAppADBTester - INFO - 步骤1: 强制停止快应用
+2025-03-17 22:11:02,557 - QuickAppADBTester - INFO - 运行命令: adb shell am force-stop com.huawei.fastapp
+2025-03-17 22:11:03,018 - QuickAppADBTester - INFO - 命令输出: 
+2025-03-17 22:11:04,018 - QuickAppADBTester - INFO - 步骤2: 按Home键
+2025-03-17 22:11:04,019 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 22:11:04,019 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 22:11:05,139 - QuickAppADBTester - INFO - 步骤3: 打开最近任务列表
+2025-03-17 22:11:05,139 - QuickAppADBTester - INFO - 打开最近任务列表
+2025-03-17 22:11:05,140 - QuickAppADBTester - INFO - 按下按键: KEYCODE_APP_SWITCH
+2025-03-17 22:11:07,256 - QuickAppADBTester - INFO - 步骤4: 点击底部中间清除按钮
+2025-03-17 22:11:07,256 - QuickAppADBTester - INFO - 点击坐标: (540, 2147)
+2025-03-17 22:11:08,423 - QuickAppADBTester - INFO - 步骤5: 按Home键回到桌面
+2025-03-17 22:11:08,424 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 22:11:08,424 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 22:11:09,555 - QuickAppADBTester - INFO - 流程4执行完成: 清空手机里的全部应用
+2025-03-17 22:11:09,555 - QuickAppADBTester - INFO - 所有流程执行完成。结果: 流程1: True, 流程2: True, 流程3: True, 流程4: True
+2025-03-17 22:11:09,556 - QuickAppADBTester - INFO - 测试完成
+2025-03-17 22:19:24,523 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-17 22:19:24,524 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-17 22:19:24,524 - QuickAppADBTester - INFO - 确保ADBKeyboard被设置为默认输入法
+2025-03-17 22:19:24,525 - QuickAppADBTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-17 22:19:24,669 - QuickAppADBTester - INFO - 检测到ADBKeyboard已安装（通过ime list确认）
+2025-03-17 22:19:24,852 - QuickAppADBTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-17 22:19:24,852 - QuickAppADBTester - INFO - 当前已经是ADBKeyboard输入法，无需切换
+2025-03-17 22:19:24,853 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-17 22:19:24,853 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-17 22:19:24,853 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-17 22:19:24,853 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 22:19:24,854 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 22:19:26,044 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-17 22:19:26,044 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-17 22:19:26,174 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-17 22:19:28,175 - QuickAppADBTester - INFO - 步骤3: 点击搜索框
+2025-03-17 22:19:28,175 - QuickAppADBTester - INFO - 点击坐标: (276, 515)
+2025-03-17 22:19:29,287 - QuickAppADBTester - INFO - 步骤4: 输入'应用和服务'
+2025-03-17 22:19:29,287 - QuickAppADBTester - INFO - 输入文本: 应用和服务
+2025-03-17 22:19:29,288 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-17 22:19:29,288 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "应用和服务"
+2025-03-17 22:19:29,386 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-17 22:19:31,387 - QuickAppADBTester - INFO - 步骤5: 点击搜索结果'应用和服务'
+2025-03-17 22:19:31,387 - QuickAppADBTester - INFO - 点击坐标: (254, 418)
+2025-03-17 22:19:33,582 - QuickAppADBTester - INFO - 步骤6: 点击'应用管理'
+2025-03-17 22:19:33,582 - QuickAppADBTester - INFO - 点击坐标: (239, 377)
+2025-03-17 22:19:35,677 - QuickAppADBTester - INFO - 步骤7: 点击搜索框
+2025-03-17 22:19:35,677 - QuickAppADBTester - INFO - 点击坐标: (239, 354)
+2025-03-17 22:19:36,788 - QuickAppADBTester - INFO - 步骤8: 输入'快应用中心'
+2025-03-17 22:19:36,788 - QuickAppADBTester - INFO - 输入文本: 快应用中心
+2025-03-17 22:19:36,788 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-17 22:19:36,789 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "快应用中心"
+2025-03-17 22:19:36,980 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-17 22:19:38,980 - QuickAppADBTester - INFO - 步骤9: 点击搜索结果'快应用中心'
+2025-03-17 22:19:38,981 - QuickAppADBTester - INFO - 点击坐标: (261, 574)
+2025-03-17 22:19:41,173 - QuickAppADBTester - INFO - 步骤10: 向上滑动显示更多内容
+2025-03-17 22:19:41,173 - QuickAppADBTester - INFO - 滑动: (490, 1900) -> (490, 950)
+2025-03-17 22:19:42,605 - QuickAppADBTester - INFO - 滑动: (490, 1663) -> (490, 712)
+2025-03-17 22:19:44,065 - QuickAppADBTester - INFO - 步骤11: 点击'存储'
+2025-03-17 22:19:44,065 - QuickAppADBTester - INFO - 点击坐标: (156, 1021)
+2025-03-17 22:19:45,252 - QuickAppADBTester - INFO - 步骤12: 点击'删除数据'
+2025-03-17 22:19:45,252 - QuickAppADBTester - INFO - 点击坐标: (555, 1271)
+2025-03-17 22:19:46,374 - QuickAppADBTester - INFO - 步骤13: 点击确认对话框中的'确定'按钮
+2025-03-17 22:19:46,374 - QuickAppADBTester - INFO - 点击坐标: (757, 2214)
+2025-03-17 22:19:48,536 - QuickAppADBTester - INFO - 流程1执行完成: 清除快应用中心数据
+2025-03-17 22:19:48,536 - QuickAppADBTester - INFO - ===== 开始执行流程2: 通过应用市场管理快应用 =====
+2025-03-17 22:19:48,536 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-17 22:19:48,537 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 22:19:48,537 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 22:19:49,680 - QuickAppADBTester - INFO - 步骤2: 打开应用市场
+2025-03-17 22:19:49,680 - QuickAppADBTester - INFO - 运行命令: adb shell am start -n com.huawei.appmarket/.MainActivity
+2025-03-17 22:19:49,808 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { cmp=com.huawei.appmarket/.MainActivity }
+
+2025-03-17 22:19:54,808 - QuickAppADBTester - INFO - 步骤3: 点击'我的'选项卡
+2025-03-17 22:19:54,809 - QuickAppADBTester - INFO - 点击坐标: (965, 2247)
+2025-03-17 22:19:56,979 - QuickAppADBTester - INFO - 步骤4: 点击'快应用管理'选项
+2025-03-17 22:19:56,980 - QuickAppADBTester - INFO - 点击坐标: (171, 1653)
+2025-03-17 22:19:59,162 - QuickAppADBTester - INFO - 步骤5: 检查并点击'同意'按钮(如果出现)
+2025-03-17 22:19:59,162 - QuickAppADBTester - INFO - 点击坐标: (735, 2226)
+2025-03-17 22:20:01,277 - QuickAppADBTester - INFO - 等待应用市场稳定 (3秒)
+2025-03-17 22:20:04,278 - QuickAppADBTester - INFO - 流程2执行完成: 通过应用市场管理快应用
+2025-03-17 22:20:04,278 - QuickAppADBTester - INFO - ===== 开始执行流程3: 搜索并打开快应用进行测试 =====
+2025-03-17 22:20:04,279 - QuickAppADBTester - INFO - 步骤1: 点击搜索框
+2025-03-17 22:20:04,279 - QuickAppADBTester - INFO - 点击坐标: (326, 354)
+2025-03-17 22:20:05,483 - QuickAppADBTester - INFO - 步骤2: 输入'优购'
+2025-03-17 22:20:05,483 - QuickAppADBTester - INFO - 输入文本: 优购
+2025-03-17 22:20:05,483 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-17 22:20:05,483 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "优购"
+2025-03-17 22:20:05,592 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-17 22:20:07,593 - QuickAppADBTester - INFO - 步骤3: 按下回车键
+2025-03-17 22:20:07,593 - QuickAppADBTester - INFO - 按下回车键
+2025-03-17 22:20:07,594 - QuickAppADBTester - INFO - 按下按键: 66
+2025-03-17 22:20:09,905 - QuickAppADBTester - INFO - 步骤4: 点击搜索结果旁边的'打开'按钮
+2025-03-17 22:20:09,906 - QuickAppADBTester - INFO - 点击坐标: (860, 370)
+2025-03-17 22:20:18,110 - QuickAppADBTester - INFO - 步骤5: 准备执行10次侧滑
+2025-03-17 22:20:18,110 - QuickAppADBTester - INFO - 步骤6: 执行10次侧滑操作
+2025-03-17 22:20:18,111 - QuickAppADBTester - INFO - 第1次侧滑
+2025-03-17 22:20:18,111 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:20:18,528 - QuickAppADBTester - INFO - 第2次侧滑
+2025-03-17 22:20:18,528 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:20:18,769 - QuickAppADBTester - INFO - 第3次侧滑
+2025-03-17 22:20:18,770 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:20:19,013 - QuickAppADBTester - INFO - 第4次侧滑
+2025-03-17 22:20:19,013 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:20:19,281 - QuickAppADBTester - INFO - 第5次侧滑
+2025-03-17 22:20:19,282 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:20:19,572 - QuickAppADBTester - INFO - 第6次侧滑
+2025-03-17 22:20:19,572 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:20:19,814 - QuickAppADBTester - INFO - 第7次侧滑
+2025-03-17 22:20:19,815 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:20:20,058 - QuickAppADBTester - INFO - 第8次侧滑
+2025-03-17 22:20:20,058 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:20:20,339 - QuickAppADBTester - INFO - 第9次侧滑
+2025-03-17 22:20:20,339 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:20:20,603 - QuickAppADBTester - INFO - 第10次侧滑
+2025-03-17 22:20:20,603 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-17 22:20:22,839 - QuickAppADBTester - INFO - 步骤7: 检查当前应用
+2025-03-17 22:20:22,839 - QuickAppADBTester - INFO - 运行命令: adb shell dumpsys window | grep mCurrentFocus
+2025-03-17 22:20:22,852 - QuickAppADBTester - INFO - 命令输出: 
+2025-03-17 22:20:22,852 - QuickAppADBTester - INFO - 当前应用: 
+2025-03-17 22:20:22,852 - QuickAppADBTester - INFO - 步骤8: 截图记录侧滑后状态
+2025-03-17 22:20:22,852 - QuickAppADBTester - INFO - 截图: screenshots/after_swipe_20250317_222022.png
+2025-03-17 22:20:25,685 - QuickAppADBTester - INFO - 上传截图到图床: screenshots/after_swipe_20250317_222022.png
+2025-03-17 22:20:25,685 - QuickAppADBTester - INFO - 开始上传图片到Stardots空间'huawei': screenshots/after_swipe_20250317_222022.png
+2025-03-17 22:20:27,914 - QuickAppADBTester - INFO - 图片上传成功: https://i.stardots.io/huawei/after_swipe_20250317_222022.png
+2025-03-17 22:20:27,915 - QuickAppADBTester - INFO - 步骤9: 按Home键
+2025-03-17 22:20:27,915 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 22:20:27,915 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 22:20:38,039 - QuickAppADBTester - INFO - 步骤10: 再次检查当前应用
+2025-03-17 22:20:38,039 - QuickAppADBTester - INFO - 运行命令: adb shell dumpsys window | grep mCurrentFocus
+2025-03-17 22:20:38,051 - QuickAppADBTester - INFO - 命令输出: 
+2025-03-17 22:20:38,051 - QuickAppADBTester - INFO - 按Home后当前应用: 
+2025-03-17 22:20:38,052 - QuickAppADBTester - INFO - 步骤11: 再次截图记录按Home后状态
+2025-03-17 22:20:38,052 - QuickAppADBTester - INFO - 截图: screenshots/after_home_20250317_222038.png
+2025-03-17 22:20:40,374 - QuickAppADBTester - INFO - 上传截图到图床: screenshots/after_home_20250317_222038.png
+2025-03-17 22:20:40,375 - QuickAppADBTester - INFO - 开始上传图片到Stardots空间'huawei': screenshots/after_home_20250317_222038.png
+2025-03-17 22:20:41,895 - QuickAppADBTester - INFO - 图片上传成功: https://i.stardots.io/huawei/after_home_20250317_222038.png
+2025-03-17 22:20:41,896 - QuickAppADBTester - INFO - 流程3执行完成: 搜索并打开快应用进行测试
+2025-03-17 22:20:41,896 - QuickAppADBTester - INFO - ===== 开始执行流程4: 清空手机里的全部应用 =====
+2025-03-17 22:20:41,896 - QuickAppADBTester - INFO - 步骤1: 强制停止快应用
+2025-03-17 22:20:41,897 - QuickAppADBTester - INFO - 运行命令: adb shell am force-stop com.huawei.fastapp
+2025-03-17 22:20:42,366 - QuickAppADBTester - INFO - 命令输出: 
+2025-03-17 22:20:43,368 - QuickAppADBTester - INFO - 步骤2: 按Home键
+2025-03-17 22:20:43,369 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 22:20:43,369 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 22:20:44,485 - QuickAppADBTester - INFO - 步骤3: 打开最近任务列表
+2025-03-17 22:20:44,485 - QuickAppADBTester - INFO - 打开最近任务列表
+2025-03-17 22:20:44,486 - QuickAppADBTester - INFO - 按下按键: KEYCODE_APP_SWITCH
+2025-03-17 22:20:46,593 - QuickAppADBTester - INFO - 步骤4: 点击底部中间清除按钮
+2025-03-17 22:20:46,594 - QuickAppADBTester - INFO - 点击坐标: (540, 2147)
+2025-03-17 22:20:47,774 - QuickAppADBTester - INFO - 步骤5: 按Home键回到桌面
+2025-03-17 22:20:47,774 - QuickAppADBTester - INFO - 按下Home键
+2025-03-17 22:20:47,775 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-17 22:20:48,927 - QuickAppADBTester - INFO - 流程4执行完成: 清空手机里的全部应用
+2025-03-17 22:20:48,928 - QuickAppADBTester - INFO - 所有流程执行完成。结果: 流程1: True, 流程2: True, 流程3: True, 流程4: True
+2025-03-17 22:20:48,928 - QuickAppADBTester - INFO - 使用交互式卡片消息格式发送，包含2张图片链接
+2025-03-17 22:20:49,583 - QuickAppADBTester - INFO - 测试完成

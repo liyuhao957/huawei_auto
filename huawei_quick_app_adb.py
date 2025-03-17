@@ -5,13 +5,22 @@
 Huawei Quick App ADB-based Automation Script
 通过ADB命令和坐标点击实现的快应用自动化测试脚本
 使用ADBKeyboard输入法实现中文输入
+支持飞书通知和图片上传功能
 """
 
 import subprocess
 import time
 import logging
 import os
+import requests
+import json
+import hashlib
+import base64
+import hmac
 from datetime import datetime
+import random
+import string
+import argparse
 
 # 配置日志
 logging.basicConfig(
@@ -31,9 +40,257 @@ SCREENSHOTS_DIR = "screenshots"  # 存储截图的目录
 if not os.path.exists(SCREENSHOTS_DIR):
     os.makedirs(SCREENSHOTS_DIR)
 
+# 飞书机器人配置
+FEISHU_WEBHOOK_URL = "https://open.feishu.cn/open-apis/bot/v2/hook/2e9f09a8-4cec-4475-a6a8-4da61c4a874c"  # 替换为您的飞书机器人webhook URL
+FEISHU_SECRET = "YOUR_SECRET"  # 替换为您的飞书机器人签名密钥，如果没有设置签名可以留空
+
+# Stardots图床配置
+STARDOTS_API_KEY = "a4a15dc3-f394-4340-8749-311eb09cab9d"
+STARDOTS_API_SECRET = "YJiDe7jRLEURX4HxD5PINBMBHJvxjNdMTzuK08GAnAAg68gKebanBFcIYPu5xZ1sd21c2Db7JS5dmF1T0v6GjuDAM2L6UDO46B54wdazIiJuHrbfqHZRKEE9Vjbz4QMkHvzK4gSyjZe88opI6fvfTvVbeiXffvuDqQUGNt5c8tzj0jnQvS0BRXQRezRy8cYWc4Z0zm4z1Ktmk5V70h4UVUrd3oIyxMBHxdYdzJUnERzXLZ9QXiq5xG3Sg5IIAmU"
+STARDOTS_API_URL = "https://api.stardots.io"  # 基础URL
+STARDOTS_SPACE = "huawei"  # 设置空间名称为huawei
+
 # 设备屏幕尺寸
 SCREEN_WIDTH = 1080
 SCREEN_HEIGHT = 2376
+
+def upload_image_to_stardots(image_path):
+    """
+    上传图片到Stardots图床
+    
+    Args:
+        image_path: 图片文件路径
+    
+    Returns:
+        str: 上传成功返回图片URL，失败返回None
+    """
+    if not os.path.exists(image_path):
+        logger.error(f"图片文件不存在: {image_path}")
+        return None
+    
+    try:
+        logger.info(f"开始上传图片到Stardots空间'{STARDOTS_SPACE}': {image_path}")
+        
+        # 生成时间戳（秒）
+        timestamp = str(int(time.time()))
+        
+        # 生成4-20个字符的随机字符串作为nonce
+        nonce = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(10))
+        
+        # 构建签名内容字符串：timestamp|secret|nonce
+        sign_str = f"{timestamp}|{STARDOTS_API_SECRET}|{nonce}"
+        
+        # 计算MD5签名并转为大写
+        sign = hashlib.md5(sign_str.encode('utf-8')).hexdigest().upper()
+        
+        # 准备请求头
+        headers = {
+            "x-stardots-timestamp": timestamp,
+            "x-stardots-nonce": nonce,
+            "x-stardots-key": STARDOTS_API_KEY,
+            "x-stardots-sign": sign
+        }
+        
+        # 准备文件和空间参数
+        files = {
+            'file': (os.path.basename(image_path), open(image_path, 'rb'), 'image/png')
+        }
+        
+        data = {
+            'space': STARDOTS_SPACE
+        }
+        
+        # 完整的上传URL
+        upload_url = f"{STARDOTS_API_URL}/openapi/file/upload"
+        
+        # 发送请求
+        response = requests.put(upload_url, headers=headers, files=files, data=data)
+        
+        # 检查响应
+        if response.status_code == 200:
+            result = response.json()
+            if result.get("success"):
+                image_url = result.get("data", {}).get("url")
+                logger.info(f"图片上传成功: {image_url}")
+                return image_url
+            else:
+                logger.warning(f"图片上传失败: {result.get('message')}")
+                return None
+        else:
+            logger.warning(f"图片上传请求失败，状态码: {response.status_code}, 响应内容: {response.text}")
+            return None
+    except Exception as e:
+        logger.error(f"上传图片到Stardots时出错: {str(e)}")
+        
+        # 打印更详细的错误信息以便调试
+        import traceback
+        logger.error(f"详细错误: {traceback.format_exc()}")
+        
+        return None
+
+def send_feishu_notification(title, content, mention_user=None, mention_all=False, image_urls=None):
+    """
+    发送飞书机器人通知
+    
+    Args:
+        title: 通知标题
+        content: 通知内容
+        mention_user: 要@的用户ID，如果为None则不@任何人
+        mention_all: 是否@所有人
+        image_urls: 图片URL列表，如果为None则不发送图片
+    
+    Returns:
+        bool: 是否发送成功
+    """
+    if not FEISHU_WEBHOOK_URL or FEISHU_WEBHOOK_URL == "https://open.feishu.cn/open-apis/bot/v2/hook/YOUR_WEBHOOK_URL":
+        logger.warning("飞书机器人webhook URL未配置，跳过通知发送")
+        return False
+    
+    try:
+        timestamp = str(int(time.time()))
+        
+        # 使用卡片消息格式
+        logger.info("使用交互式卡片消息格式发送" + (f"，包含{len(image_urls)}张图片链接" if image_urls and len(image_urls) > 0 else ""))
+        
+        # 确定卡片颜色模板 - 成功为绿色，失败为红色
+        card_color = "green" if "成功" in content and "失败" not in content else "red"
+        
+        # 构建元素列表
+        elements = []
+        
+        # 添加内容文本区域
+        elements.append({
+            "tag": "div",
+            "text": {
+                "tag": "lark_md",
+                "content": content
+            }
+        })
+        
+        # 如果有图片URL，添加分隔线和图片链接部分
+        if image_urls and len(image_urls) > 0:
+            # 添加分隔线
+            elements.append({"tag": "hr"})
+            
+            # 添加图片标题
+            elements.append({
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": "**📷 测试截图：**"
+                }
+            })
+            
+            # 为每张图片创建按钮
+            image_buttons = []
+            
+            for i, url in enumerate(image_urls):
+                if url:  # 确保URL不为空
+                    button_text = "防侧滑" if i == 0 else "拉回" if i == 1 else f"查看截图 {i+1}"
+                    image_buttons.append({
+                        "tag": "button",
+                        "text": {
+                            "tag": "plain_text",
+                            "content": button_text
+                        },
+                        "type": "primary",
+                        "url": url
+                    })
+            
+            # 添加图片按钮区域
+            elements.append({
+                "tag": "action",
+                "actions": image_buttons
+            })
+        
+        # 添加分隔线
+        elements.append({"tag": "hr"})
+        
+        # 添加时间戳注释
+        elements.append({
+            "tag": "note",
+            "elements": [
+                {
+                    "tag": "plain_text",
+                    "content": f"测试时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+                }
+            ]
+        })
+        
+        # 如果需要@所有人，添加@所有人元素
+        if mention_all:
+            # 在最前面添加@所有人元素
+            at_element = {
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": "<at id=all></at> 请注意："
+                }
+            }
+            elements.insert(0, at_element)
+        
+        # 构建完整消息
+        msg = {
+            "msg_type": "interactive",
+            "card": {
+                "config": {
+                    "wide_screen_mode": True
+                },
+                "header": {
+                    "title": {
+                        "tag": "plain_text",
+                        "content": title
+                    },
+                    "template": card_color
+                },
+                "elements": elements
+            }
+        }
+        
+        # 打印构建的消息结构，用于调试
+        logger.info(f"构建的消息结构: {json.dumps(msg, ensure_ascii=False)}")
+        
+        # 如果设置了签名密钥，则计算签名
+        headers = {"Content-Type": "application/json"}
+        if FEISHU_SECRET and FEISHU_SECRET != "YOUR_SECRET":
+            # 计算签名
+            string_to_sign = f"{timestamp}\n{FEISHU_SECRET}"
+            sign = base64.b64encode(hmac.new(FEISHU_SECRET.encode('utf-8'), string_to_sign.encode('utf-8'), digestmod=hashlib.sha256).digest()).decode('utf-8')
+            
+            # 添加签名到请求头
+            headers.update({
+                "timestamp": timestamp,
+                "sign": sign
+            })
+        
+        # 发送请求
+        response = requests.post(FEISHU_WEBHOOK_URL, headers=headers, data=json.dumps(msg))
+        
+        # 检查响应
+        if response.status_code == 200:
+            result = response.json()
+            if result.get("code") == 0:
+                logger.info(f"飞书通知发送成功: {title}")
+                return True
+            else:
+                logger.warning(f"飞书通知发送失败: {result.get('msg')}")
+                # 打印更多响应信息以便调试
+                logger.warning(f"响应详情: {json.dumps(result, ensure_ascii=False)}")
+                return False
+        else:
+            logger.warning(f"飞书通知发送失败，状态码: {response.status_code}")
+            try:
+                error_info = response.json()
+                logger.warning(f"错误详情: {json.dumps(error_info, ensure_ascii=False)}")
+            except:
+                logger.warning(f"响应内容: {response.text}")
+            return False
+    except Exception as e:
+        logger.error(f"飞书通知发送异常: {str(e)}")
+        # 打印详细的异常堆栈
+        import traceback
+        logger.error(f"详细错误: {traceback.format_exc()}")
+        return False
 
 class QuickAppADBTester:
     """使用ADB命令和坐标点击的快应用测试器"""
@@ -171,8 +428,16 @@ class QuickAppADBTester:
         logger.info("打开最近任务列表")
         self.press_key("KEYCODE_APP_SWITCH")
         
-    def take_screenshot(self, name=None):
-        """截取屏幕截图"""
+    def take_screenshot(self, name=None, upload=False):
+        """截取屏幕截图，并可选择上传到图床
+        
+        Args:
+            name: 截图文件名（不含扩展名），如果为None则使用时间戳
+            upload: 是否上传截图到图床
+            
+        Returns:
+            tuple: (本地文件路径, 如果上传则返回图床URL，否则为None)
+        """
         if not name:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             name = f"screenshot_{timestamp}"
@@ -185,7 +450,13 @@ class QuickAppADBTester:
         subprocess.run(f"adb pull /sdcard/{name}.png {filename}", shell=True)
         subprocess.run(f"adb shell rm /sdcard/{name}.png", shell=True)
         
-        return filename
+        # 如果需要上传到图床
+        image_url = None
+        if upload and os.path.exists(filename):
+            logger.info(f"上传截图到图床: {filename}")
+            image_url = upload_image_to_stardots(filename)
+            
+        return filename, image_url
         
     def run_shell_command(self, command):
         """运行shell命令并返回输出"""
@@ -385,7 +656,7 @@ class QuickAppADBTester:
         # 8. 截图记录状态
         logger.info("步骤8: 截图记录侧滑后状态")
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.take_screenshot(f"after_swipe_{timestamp}")
+        self.swipe_screenshot_path, self.swipe_screenshot_url = self.take_screenshot(f"after_swipe_{timestamp}", upload=True)
         
         # 9. 按Home键
         logger.info("步骤9: 按Home键")
@@ -400,7 +671,7 @@ class QuickAppADBTester:
         # 11. 再次截图记录状态
         logger.info("步骤11: 再次截图记录按Home后状态")
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.take_screenshot(f"after_home_{timestamp}")
+        self.home_screenshot_path, self.home_screenshot_url = self.take_screenshot(f"after_home_{timestamp}", upload=True)
         
         logger.info("流程3执行完成: 搜索并打开快应用进行测试")
         return True
@@ -437,9 +708,23 @@ class QuickAppADBTester:
         logger.info("流程4执行完成: 清空手机里的全部应用")
         return True
     
-    def run_all_flows(self):
-        """执行所有流程"""
+    def run_all_flows(self, send_notification=True):
+        """执行所有流程
+        
+        Args:
+            send_notification: 是否在执行完成后发送飞书通知
+            
+        Returns:
+            bool: 所有流程是否都成功执行
+        """
         logger.info("开始执行所有流程")
+        
+        # 用于记录测试截图URL
+        self.swipe_screenshot_url = None
+        self.home_screenshot_url = None
+        test_start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        success = False
+        error_msg = None
         
         try:
             # 流程1: 清除快应用中心数据
@@ -454,25 +739,69 @@ class QuickAppADBTester:
             # 流程4: 清空手机里的全部应用
             result4 = self.clear_all_apps()
             
+            success = all([result1, result2, result3, result4])
             logger.info(f"所有流程执行完成。结果: 流程1: {result1}, 流程2: {result2}, 流程3: {result3}, 流程4: {result4}")
-            return all([result1, result2, result3, result4])
+            return success
         
         except Exception as e:
-            logger.error(f"执行流程时出错: {str(e)}")
+            error_msg = str(e)
+            logger.error(f"执行流程时出错: {error_msg}")
+            # 详细的异常信息
+            import traceback
+            logger.error(f"详细错误: {traceback.format_exc()}")
             return False
         
         finally:
             # 恢复原始输入法
             self.restore_original_input_method()
+            
+            # 如果需要发送飞书通知
+            if send_notification:
+                test_end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                
+                if success:
+                    title = "✅ 快应用自动化测试成功"
+                    content = f"**快应用防侧滑和拉回测试成功完成！**\n\n" \
+                              f"- 开始时间: {test_start_time}\n" \
+                              f"- 结束时间: {test_end_time}\n" \
+                              f"- 测试设备: 华为设备\n\n" \
+                              f"**✅ 成功执行了所有测试流程:**\n" \
+                              f"1. 清除快应用中心数据: {'✅ 成功' if result1 else '❌ 失败'}\n" \
+                              f"2. 通过应用市场管理快应用: {'✅ 成功' if result2 else '❌ 失败'}\n" \
+                              f"3. 搜索并打开快应用进行测试: {'✅ 成功' if result3 else '❌ 失败'}\n" \
+                              f"4. 清空手机里的全部应用: {'✅ 成功' if result4 else '❌ 失败'}"
+                else:
+                    title = "❌ 快应用自动化测试失败"
+                    content = f"**快应用防侧滑和拉回测试执行失败！**\n\n" \
+                              f"- 开始时间: {test_start_time}\n" \
+                              f"- 结束时间: {test_end_time}\n" \
+                              f"- 测试设备: 华为设备\n\n" \
+                              f"**❌ 错误信息:** {error_msg or '未知错误'}"
+                
+                # 收集截图URL
+                image_urls = []
+                if self.swipe_screenshot_url:
+                    image_urls.append(self.swipe_screenshot_url)
+                if self.home_screenshot_url:
+                    image_urls.append(self.home_screenshot_url)
+                
+                # 发送飞书通知
+                send_feishu_notification(title, content, mention_all=not success, image_urls=image_urls)
 
 def main():
     """主函数"""
+    # 创建命令行参数解析器
+    parser = argparse.ArgumentParser(description='Huawei快应用ADB自动化测试脚本')
+    parser.add_argument('--no-notification', action='store_true', help='禁用飞书通知')
+    parser.add_argument('--upload-screenshots', action='store_true', help='上传截图到图床')
+    args = parser.parse_args()
+    
     logger.info("启动快应用ADB测试")
     
     tester = QuickAppADBTester()
     
     # 执行所有流程
-    tester.run_all_flows()
+    tester.run_all_flows(send_notification=not args.no_notification)
     
     logger.info("测试完成")
 
