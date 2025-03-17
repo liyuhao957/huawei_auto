@@ -851,6 +851,7 @@ class QuickAppTester:
         logger.info("步骤1: 按下Home键")
         self.device.press("home")
         time.sleep(1)
+        input("按回车继续执行步骤2...")
         
         # 2. 打开设置应用 - 使用intent方式
         logger.info("步骤2: 打开设置应用")
@@ -878,6 +879,7 @@ class QuickAppTester:
                     logger.warning("未找到设置图标，尝试点击可能的位置")
                     self.device.click(self.screen_width * 0.5, self.screen_height * 0.2)
                 time.sleep(2)
+        input("按回车继续执行步骤3...")
         
         # 3. 点击搜索框（搜索设置项）
         logger.info("步骤3: 点击搜索框")
@@ -994,6 +996,7 @@ class QuickAppTester:
             # 尝试直接点击屏幕顶部区域
             self.device.click(self.screen_width * 0.5, self.screen_height * 0.1)
             time.sleep(1.5)
+        input("按回车继续执行步骤4...")
         
         # 4. 输入"应用和服务"
         logger.info("步骤4: 输入'应用和服务'")
@@ -1018,27 +1021,27 @@ class QuickAppTester:
                 time.sleep(2)
             except Exception as e2:
                 logger.error(f"使用adb shell命令输入文本也失败: {str(e2)}")
+        input("按回车继续执行步骤5...")
         
-        # 5. 点击搜索结果"应用和服务"
-        logger.info("步骤5: 点击搜索结果'应用和服务'")
-        app_service = self.device(text="应用和服务")
-        if app_service.exists:
-            app_service.click()
-        else:
-            logger.warning("未找到'应用和服务'，尝试点击第一个搜索结果")
-            self.device.click(self.screen_width * 0.5, self.screen_height * 0.25)
-        time.sleep(2)
+        # 5. 点击搜索结果进入应用和服务界面
+        logger.info("步骤5: 点击搜索结果进入应用和服务界面")
+        logger.info("使用坐标点击'应用和服务'")
+        # 使用更精确的坐标点击应用和服务选项
+        self.device.click(self.screen_width * 0.196, self.screen_height * 0.163)
+        time.sleep(3)  # 等待3秒确保界面加载完成
         
-        # 6. 点击"应用管理"
-        logger.info("步骤6: 点击'应用管理'")
-        # 由于clickable为false，尝试多种方法
+        # 6. 点击应用管理选项
+        logger.info("步骤6: 点击'应用管理'选项")
         app_mgmt = self.device(text="应用管理")
         if app_mgmt.exists:
+            logger.info("找到'应用管理'选项，点击")
             app_mgmt.click()
         else:
-            logger.warning("未找到'应用管理'，尝试使用坐标点击")
+            logger.info("未找到'应用管理'，尝试使用坐标点击")
+            # 使用更精确的坐标点击应用管理选项
             self.device.click(self.screen_width * 0.196, self.screen_height * 0.163)
         time.sleep(2)
+        input("按回车继续执行步骤7...")
         
         # 7. 点击搜索框（搜索应用）
         logger.info("步骤7: 点击'搜索应用'框")
@@ -1100,6 +1103,7 @@ class QuickAppTester:
             # 尝试直接点击屏幕顶部区域
             self.device.click(self.screen_width * 0.5, self.screen_height * 0.1)
             time.sleep(1.5)
+        input("按回车继续执行步骤8...")
         
         # 8. 输入"快应用中心"
         logger.info("步骤8: 输入'快应用中心'")
@@ -1114,6 +1118,7 @@ class QuickAppTester:
         # 按下回车键执行搜索
         self.device.press("enter")
         time.sleep(2)
+        input("按回车继续执行步骤9...")
         
         # 9. 直接使用intent跳转到快应用中心详情页面
         logger.info("步骤9: 使用intent跳转到快应用中心详情页面")
@@ -1155,6 +1160,7 @@ class QuickAppTester:
                 logger.warning("未找到'快应用中心'文本，尝试点击可能的位置")
                 self.device.click(self.screen_width * 0.5, self.screen_height * 0.38)
                 time.sleep(3)
+        input("按回车继续执行步骤10...")
         
         # 10. 向下滑动到最底部
         logger.info("步骤10: 向下滑动查找'存储'")
@@ -1173,6 +1179,7 @@ class QuickAppTester:
             # 如果是最后一次滑动还没找到，记录日志
             if i == 3 and not self.device(text="存储").exists:
                 logger.warning("多次滑动后仍未找到'存储'选项")
+        input("按回车继续执行步骤11...")
         
         # 11. 点击存储
         logger.info("步骤11: 点击'存储'")
@@ -1183,6 +1190,7 @@ class QuickAppTester:
             logger.warning("未找到'存储'，尝试使用文本搜索")
             self.device(text="存储").click()
         time.sleep(1)
+        input("按回车继续执行步骤12...")
         
         # 12. 点击删除数据
         logger.info("步骤12: 点击'删除数据'")
@@ -1193,6 +1201,7 @@ class QuickAppTester:
             logger.warning("未找到'删除数据'，尝试使用文本搜索")
             self.device(text="删除数据").click()
         time.sleep(1)
+        input("按回车继续执行步骤13...")
         
         # 13. 点击确定
         logger.info("步骤13: 点击确认对话框中的'确定'")
