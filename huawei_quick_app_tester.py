@@ -17,6 +17,8 @@ import hashlib
 import base64
 import hmac
 from datetime import datetime
+import random
+import string
 
 # 配置日志
 logging.basicConfig(
@@ -41,7 +43,87 @@ if not os.path.exists(SCREENSHOTS_DIR):
 FEISHU_WEBHOOK_URL = "https://open.feishu.cn/open-apis/bot/v2/hook/2e9f09a8-4cec-4475-a6a8-4da61c4a874c"  # 替换为您的飞书机器人webhook URL
 FEISHU_SECRET = "YOUR_SECRET"  # 替换为您的飞书机器人签名密钥，如果没有设置签名可以留空
 
-def send_feishu_notification(title, content, mention_user=None, mention_all=False):
+# Stardots图床配置
+STARDOTS_API_KEY = "a4a15dc3-f394-4340-8749-311eb09cab9d"
+STARDOTS_API_SECRET = "YJiDe7jRLEURX4HxD5PINBMBHJvxjNdMTzuK08GAnAAg68gKebanBFcIYPu5xZ1sd21c2Db7JS5dmF1T0v6GjuDAM2L6UDO46B54wdazIiJuHrbfqHZRKEE9Vjbz4QMkHvzK4gSyjZe88opI6fvfTvVbeiXffvuDqQUGNt5c8tzj0jnQvS0BRXQRezRy8cYWc4Z0zm4z1Ktmk5V70h4UVUrd3oIyxMBHxdYdzJUnERzXLZ9QXiq5xG3Sg5IIAmU"
+STARDOTS_API_URL = "https://api.stardots.io"  # 基础URL
+STARDOTS_SPACE = "huawei"  # 设置空间名称为huawei
+
+def upload_image_to_stardots(image_path):
+    """
+    上传图片到Stardots图床
+    
+    Args:
+        image_path: 图片文件路径
+    
+    Returns:
+        str: 上传成功返回图片URL，失败返回None
+    """
+    if not os.path.exists(image_path):
+        logger.error(f"图片文件不存在: {image_path}")
+        return None
+    
+    try:
+        logger.info(f"开始上传图片到Stardots空间'{STARDOTS_SPACE}': {image_path}")
+        
+        # 生成时间戳（秒）
+        timestamp = str(int(time.time()))
+        
+        # 生成4-20个字符的随机字符串作为nonce
+        nonce = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(10))
+        
+        # 构建签名内容字符串：timestamp|secret|nonce
+        sign_str = f"{timestamp}|{STARDOTS_API_SECRET}|{nonce}"
+        
+        # 计算MD5签名并转为大写
+        sign = hashlib.md5(sign_str.encode('utf-8')).hexdigest().upper()
+        
+        # 准备请求头
+        headers = {
+            "x-stardots-timestamp": timestamp,
+            "x-stardots-nonce": nonce,
+            "x-stardots-key": STARDOTS_API_KEY,
+            "x-stardots-sign": sign
+        }
+        
+        # 准备文件和空间参数
+        files = {
+            'file': (os.path.basename(image_path), open(image_path, 'rb'), 'image/png')
+        }
+        
+        data = {
+            'space': STARDOTS_SPACE
+        }
+        
+        # 完整的上传URL
+        upload_url = f"{STARDOTS_API_URL}/openapi/file/upload"
+        
+        # 发送请求
+        response = requests.put(upload_url, headers=headers, files=files, data=data)
+        
+        # 检查响应
+        if response.status_code == 200:
+            result = response.json()
+            if result.get("success"):
+                image_url = result.get("data", {}).get("url")
+                logger.info(f"图片上传成功: {image_url}")
+                return image_url
+            else:
+                logger.warning(f"图片上传失败: {result.get('message')}")
+                return None
+        else:
+            logger.warning(f"图片上传请求失败，状态码: {response.status_code}, 响应内容: {response.text}")
+            return None
+    except Exception as e:
+        logger.error(f"上传图片到Stardots时出错: {str(e)}")
+        
+        # 打印更详细的错误信息以便调试
+        import traceback
+        logger.error(f"详细错误: {traceback.format_exc()}")
+        
+        return None
+
+def send_feishu_notification(title, content, mention_user=None, mention_all=False, image_urls=None):
     """
     发送飞书机器人通知
     
@@ -50,6 +132,7 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
         content: 通知内容
         mention_user: 要@的用户ID，如果为None则不@任何人
         mention_all: 是否@所有人
+        image_urls: 图片URL列表，如果为None则不发送图片
     
     Returns:
         bool: 是否发送成功
@@ -61,56 +144,54 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
     try:
         timestamp = str(int(time.time()))
         
-        # 使用卡片消息格式
-        msg = {
-            "msg_type": "interactive",
-            "card": {
-                "config": {
-                    "wide_screen_mode": True
-                },
-                "header": {
-                    "title": {
-                        "tag": "plain_text",
-                        "content": title
-                    },
-                    "template": "green" if "成功" in content or "通过" in content else "red"
-                },
-                "elements": [
-                    {
-                        "tag": "div",
-                        "text": {
-                            "tag": "lark_md",
-                            "content": content
-                        }
-                    }
-                ]
-            }
-        }
+        # 无论是否有图片，统一使用post类型消息
+        logger.info(f"使用post类型消息发送" + (f"，包含{len(image_urls)}张图片链接" if image_urls and len(image_urls) > 0 else ""))
+        
+        # 构建post消息内容
+        post_content = []
+        
+        # 添加文本内容
+        text_elements = [{"tag": "text", "text": content}]
+        post_content.append(text_elements)
         
         # 如果需要@所有人，添加@所有人元素
         if mention_all:
-            # 在卡片顶部添加@所有人元素
-            at_element = {
-                "tag": "div",
-                "text": {
-                    "tag": "lark_md",
-                    "content": "<at id=all></at>"
+            at_elements = [{"tag": "at", "user_id": "all"}]
+            post_content.append(at_elements)
+        
+        # 如果有图片URL，为每张图片添加超链接
+        if image_urls and len(image_urls) > 0:
+            # 添加空行
+            post_content.append([{"tag": "text", "text": "\n截图:"}])
+            
+            # 添加图片链接
+            for i, url in enumerate(image_urls):
+                if url:  # 确保URL不为空
+                    link_elements = [
+                        {"tag": "text", "text": f"截图 {i+1}: "},
+                        {"tag": "a", "text": f"查看截图 {i+1}", "href": url}
+                    ]
+                    post_content.append(link_elements)
+        
+        # 添加时间戳
+        time_elements = [{"tag": "text", "text": f"\n测试时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"}]
+        post_content.append(time_elements)
+        
+        # 构建完整消息
+        msg = {
+            "msg_type": "post",
+            "content": {
+                "post": {
+                    "zh_cn": {
+                        "title": title,
+                        "content": post_content
+                    }
                 }
             }
-            # 将@所有人元素插入到元素列表的最前面
-            msg["card"]["elements"].insert(0, at_element)
+        }
         
-        # 添加时间戳注释
-        msg["card"]["elements"].append({"tag": "hr"})
-        msg["card"]["elements"].append({
-            "tag": "note",
-            "elements": [
-                {
-                    "tag": "plain_text",
-                    "content": f"测试时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-                }
-            ]
-        })
+        # 打印构建的消息结构，用于调试
+        logger.info(f"构建的消息结构: {json.dumps(msg, ensure_ascii=False)}")
         
         # 如果设置了签名密钥，则计算签名
         headers = {"Content-Type": "application/json"}
@@ -136,12 +217,22 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
                 return True
             else:
                 logger.warning(f"飞书通知发送失败: {result.get('msg')}")
+                # 打印更多响应信息以便调试
+                logger.warning(f"响应详情: {json.dumps(result, ensure_ascii=False)}")
                 return False
         else:
             logger.warning(f"飞书通知发送失败，状态码: {response.status_code}")
+            try:
+                error_info = response.json()
+                logger.warning(f"错误详情: {json.dumps(error_info, ensure_ascii=False)}")
+            except:
+                logger.warning(f"响应内容: {response.text}")
             return False
     except Exception as e:
         logger.error(f"飞书通知发送异常: {str(e)}")
+        # 打印详细的异常堆栈
+        import traceback
+        logger.error(f"详细错误: {traceback.format_exc()}")
         return False
 
 class QuickAppTester:
@@ -521,7 +612,11 @@ class QuickAppTester:
         
         # 滑动10次后立即截图
         logger.info("滑动10次后立即截图")
-        self.take_screenshot("after_10_swipes")
+        after_10_swipes_image_url = upload_image_to_stardots(self.take_screenshot("after_10_swipes"))
+        if after_10_swipes_image_url:
+            logger.info(f"侧滑后截图上传成功: {after_10_swipes_image_url}")
+        else:
+            logger.error("侧滑后截图上传失败")
         
         # 6. 按Home键返回桌面
         logger.info("步骤6: 按Home键返回桌面")
@@ -579,9 +674,14 @@ class QuickAppTester:
         
         # 检测完快应用是否在前台运行后立即截图
         logger.info("检测完快应用是否在前台运行后立即截图")
-        self.take_screenshot("after_foreground_check")
+        after_foreground_check_image_url = upload_image_to_stardots(self.take_screenshot("after_foreground_check"))
+        if after_foreground_check_image_url:
+            logger.info(f"前台检测后截图上传成功: {after_foreground_check_image_url}")
+        else:
+            logger.error("前台检测后截图上传失败")
         
         logger.info("流程3执行完成")
+        
         return test_results
         
     def manage_quick_apps_via_market(self):
@@ -783,15 +883,14 @@ class QuickAppTester:
             logger.info("方法4: 尝试使用tap_center方法")
             try:
                 bounds = search_box.info.get('bounds', {})
-                if bounds:
-                    center_x = (bounds.get('left', 0) + bounds.get('right', 0)) // 2
-                    center_y = (bounds.get('top', 0) + bounds.get('bottom', 0)) // 2
-                    logger.info(f"搜索框中心点: ({center_x}, {center_y})")
-                    self.device.click(center_x, center_y)
-                    time.sleep(1.5)
-                    if self.device(focused=True).exists:
-                        logger.info("通过点击中心点，搜索框已获得焦点")
-                        search_clicked = True
+                center_x = (bounds.get('left', 0) + bounds.get('right', 0)) // 2
+                center_y = (bounds.get('top', 0) + bounds.get('bottom', 0)) // 2
+                logger.info(f"搜索框中心点: ({center_x}, {center_y})")
+                self.device.click(center_x, center_y)
+                time.sleep(1.5)
+                if self.device(focused=True).exists:
+                    logger.info("通过点击中心点，搜索框已获得焦点")
+                    search_clicked = True
             except Exception as e:
                 logger.warning(f"使用tap_center方法失败: {str(e)}")
         
@@ -1165,6 +1264,27 @@ def run_test():
         # 判断是否需要@所有人
         need_mention = not 防侧滑_success or not 拉回_success
         
+        # 上传截图到Stardots图床
+        image_urls = []
+        try:
+            # 上传侧滑后的截图
+            swipe_screenshot = f"{SCREENSHOTS_DIR}/after_10_swipes.png"
+            if os.path.exists(swipe_screenshot):
+                swipe_image_url = upload_image_to_stardots(swipe_screenshot)
+                if swipe_image_url:
+                    image_urls.append(swipe_image_url)
+                    logger.info(f"侧滑后截图上传成功: {swipe_image_url}")
+            
+            # 上传前台检测后的截图
+            foreground_screenshot = f"{SCREENSHOTS_DIR}/after_foreground_check.png"
+            if os.path.exists(foreground_screenshot):
+                foreground_image_url = upload_image_to_stardots(foreground_screenshot)
+                if foreground_image_url:
+                    image_urls.append(foreground_image_url)
+                    logger.info(f"前台检测后截图上传成功: {foreground_image_url}")
+        except Exception as e:
+            logger.error(f"上传截图时出错: {str(e)}")
+        
         # 发送飞书通知，如果测试失败则@所有人
         if need_mention:
             # 构建简洁的失败通知内容
@@ -1175,16 +1295,16 @@ def run_test():
             else:
                 content = "**防侧滑和拉回测试均失败，请及时处理！**\n\n**防侧滑**: ❌ **失败**\n\n**拉回**: ❌ **失败**"
             
-            # 使用卡片消息格式发送并@所有人
-            send_feishu_notification(title, content, mention_all=True)
+            # 使用卡片消息格式发送并@所有人，包含截图
+            send_feishu_notification(title, content, mention_all=True, image_urls=image_urls)
         else:
-            # 测试全部成功，使用卡片消息格式发送
+            # 测试全部成功，使用卡片消息格式发送，包含截图
             content = f"""
 **防侧滑**: {防侧滑_icon} **{('成功' if 防侧滑_success else '失败')}**
 
 **拉回**: {拉回_icon} **{('成功' if 拉回_success else '失败')}**
 """
-            send_feishu_notification(title, content)
+            send_feishu_notification(title, content, image_urls=image_urls)
         
         return final_result
     except Exception as e:
