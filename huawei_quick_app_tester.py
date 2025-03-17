@@ -664,7 +664,8 @@ class QuickAppTester:
         
         # 滑动10次后立即截图
         logger.info("滑动10次后立即截图")
-        after_10_swipes_image_url = upload_image_to_stardots(self.take_screenshot("after_10_swipes"))
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        after_10_swipes_image_url = upload_image_to_stardots(self.take_screenshot(f"after_10_swipes_{timestamp}"))
         if after_10_swipes_image_url:
             logger.info(f"侧滑后截图上传成功: {after_10_swipes_image_url}")
         else:
@@ -726,7 +727,8 @@ class QuickAppTester:
         
         # 检测完快应用是否在前台运行后立即截图
         logger.info("检测完快应用是否在前台运行后立即截图")
-        after_foreground_check_image_url = upload_image_to_stardots(self.take_screenshot("after_foreground_check"))
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        after_foreground_check_image_url = upload_image_to_stardots(self.take_screenshot(f"after_foreground_check_{timestamp}"))
         if after_foreground_check_image_url:
             logger.info(f"前台检测后截图上传成功: {after_foreground_check_image_url}")
         else:
@@ -1319,21 +1321,29 @@ def run_test():
         # 上传截图到Stardots图床
         image_urls = []
         try:
-            # 上传侧滑后的截图
-            swipe_screenshot = f"{SCREENSHOTS_DIR}/after_10_swipes.png"
-            if os.path.exists(swipe_screenshot):
-                swipe_image_url = upload_image_to_stardots(swipe_screenshot)
-                if swipe_image_url:
-                    image_urls.append(swipe_image_url)
-                    logger.info(f"侧滑后截图上传成功: {swipe_image_url}")
+            # 查找最新的侧滑后截图
+            swipe_screenshots = [file for file in os.listdir(SCREENSHOTS_DIR) if file.startswith("after_10_swipes_") and file.endswith(".png")]
+            if swipe_screenshots:
+                # 按文件名排序，取最新的一个
+                latest_swipe_screenshot = sorted(swipe_screenshots)[-1]
+                swipe_screenshot = f"{SCREENSHOTS_DIR}/{latest_swipe_screenshot}"
+                if os.path.exists(swipe_screenshot):
+                    swipe_image_url = upload_image_to_stardots(swipe_screenshot)
+                    if swipe_image_url:
+                        image_urls.append(swipe_image_url)
+                        logger.info(f"侧滑后截图上传成功: {swipe_image_url}")
             
-            # 上传前台检测后的截图
-            foreground_screenshot = f"{SCREENSHOTS_DIR}/after_foreground_check.png"
-            if os.path.exists(foreground_screenshot):
-                foreground_image_url = upload_image_to_stardots(foreground_screenshot)
-                if foreground_image_url:
-                    image_urls.append(foreground_image_url)
-                    logger.info(f"前台检测后截图上传成功: {foreground_image_url}")
+            # 查找最新的前台检测后截图
+            foreground_screenshots = [file for file in os.listdir(SCREENSHOTS_DIR) if file.startswith("after_foreground_check_") and file.endswith(".png")]
+            if foreground_screenshots:
+                # 按文件名排序，取最新的一个
+                latest_foreground_screenshot = sorted(foreground_screenshots)[-1]
+                foreground_screenshot = f"{SCREENSHOTS_DIR}/{latest_foreground_screenshot}"
+                if os.path.exists(foreground_screenshot):
+                    foreground_image_url = upload_image_to_stardots(foreground_screenshot)
+                    if foreground_image_url:
+                        image_urls.append(foreground_image_url)
+                        logger.info(f"前台检测后截图上传成功: {foreground_image_url}")
         except Exception as e:
             logger.error(f"上传截图时出错: {str(e)}")
         
