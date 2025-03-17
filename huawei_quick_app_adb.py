@@ -6,6 +6,7 @@ Huawei Quick App ADB-based Automation Script
 通过ADB命令和坐标点击实现的快应用自动化测试脚本
 使用ADBKeyboard输入法实现中文输入
 支持飞书通知和图片上传功能
+支持定时自动执行功能
 """
 
 import subprocess
@@ -21,6 +22,7 @@ from datetime import datetime
 import random
 import string
 import argparse
+import schedule
 
 # 配置日志
 logging.basicConfig(
@@ -788,6 +790,22 @@ class QuickAppADBTester:
                 # 发送飞书通知
                 send_feishu_notification(title, content, mention_all=not success, image_urls=image_urls)
 
+def run_automated_test(no_notification=False, upload_screenshots=False):
+    """执行自动化测试
+    
+    Args:
+        no_notification: 是否禁用飞书通知
+        upload_screenshots: 是否上传截图到图床
+    """
+    logger.info("启动快应用ADB测试")
+    
+    tester = QuickAppADBTester()
+    
+    # 执行所有流程
+    tester.run_all_flows(send_notification=not no_notification)
+    
+    logger.info("测试完成")
+
 def main():
     """主函数"""
     # 创建命令行参数解析器
@@ -796,14 +814,32 @@ def main():
     parser.add_argument('--upload-screenshots', action='store_true', help='上传截图到图床')
     args = parser.parse_args()
     
-    logger.info("启动快应用ADB测试")
+    logger.info("启动定时任务模式，每30分钟执行一次测试")
     
-    tester = QuickAppADBTester()
+    # 先执行一次测试
+    run_automated_test(no_notification=args.no_notification, upload_screenshots=args.upload_screenshots)
     
-    # 执行所有流程
-    tester.run_all_flows(send_notification=not args.no_notification)
+    # 设置定时任务，每30分钟执行一次
+    schedule.every(30).minutes.do(
+        run_automated_test, 
+        no_notification=args.no_notification, 
+        upload_screenshots=args.upload_screenshots
+    )
     
-    logger.info("测试完成")
+    # 持续运行定时任务
+    try:
+        logger.info("定时任务已启动，按Ctrl+C可停止")
+        while True:
+            schedule.run_pending()
+            time.sleep(1)  # 短暂休眠，避免CPU占用过高
+    except KeyboardInterrupt:
+        logger.info("用户中断，定时测试任务已停止")
+    except Exception as e:
+        logger.error(f"定时任务异常: {str(e)}")
+        import traceback
+        logger.error(f"详细错误: {traceback.format_exc()}")
+    finally:
+        logger.info("定时测试任务已结束")
 
 if __name__ == "__main__":
     main() 
