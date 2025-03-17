@@ -615,6 +615,12 @@ class QuickAppADBTester:
         """流程3: 搜索并打开快应用进行测试"""
         logger.info("===== 开始执行流程3: 搜索并打开快应用进行测试 =====")
         
+        # 用于存储测试结果
+        test_results = {
+            "防侧滑": False,
+            "拉回": False
+        }
+        
         # 1. 点击搜索框
         logger.info("步骤1: 点击搜索框")
         self.tap_by_percent(0.302, 0.149)  # 坐标: (326, 353)
@@ -652,8 +658,14 @@ class QuickAppADBTester:
         
         # 7. 检查当前应用
         logger.info("步骤7: 检查当前应用")
-        current_app = self.run_shell_command("adb shell dumpsys window | grep mCurrentFocus")
-        logger.info(f"当前应用: {current_app}")
+        is_quick_app = self.is_quick_app_running("优购")
+        
+        if is_quick_app:
+            logger.info("侧滑拦截成功：快应用仍在前台运行")
+            test_results["防侧滑"] = True
+        else:
+            logger.warning("侧滑拦截失败：快应用已不在前台运行")
+            test_results["防侧滑"] = False
         
         # 8. 截图记录状态
         logger.info("步骤8: 截图记录侧滑后状态")
@@ -667,8 +679,14 @@ class QuickAppADBTester:
         
         # 10. 再次检查当前应用
         logger.info("步骤10: 再次检查当前应用")
-        current_app = self.run_shell_command("adb shell dumpsys window | grep mCurrentFocus")
-        logger.info(f"按Home后当前应用: {current_app}")
+        is_quick_app = self.is_quick_app_running("优购")
+        
+        if is_quick_app:
+            logger.info("拉回成功：按Home键后快应用仍在前台运行")
+            test_results["拉回"] = True
+        else:
+            logger.warning("拉回失败：按Home键后快应用已不在前台运行")
+            test_results["拉回"] = False
         
         # 11. 再次截图记录状态
         logger.info("步骤11: 再次截图记录按Home后状态")
@@ -676,7 +694,8 @@ class QuickAppADBTester:
         self.home_screenshot_path, self.home_screenshot_url = self.take_screenshot(f"after_home_{timestamp}", upload=True)
         
         logger.info("流程3执行完成: 搜索并打开快应用进行测试")
-        return True
+        # 返回详细的测试结果，而不仅仅是布尔值
+        return test_results
     
     def clear_all_apps(self):
         """流程4: 清空手机里的全部应用"""
@@ -728,21 +747,44 @@ class QuickAppADBTester:
         success = False
         error_msg = None
         
+        # 详细测试结果
+        detailed_results = {
+            "流程1_清除快应用中心数据": False,
+            "流程2_通过应用市场管理快应用": False,
+            "流程3_防侧滑测试": False,
+            "流程3_拉回测试": False, 
+            "流程4_清空手机里的全部应用": False
+        }
+        
         try:
             # 流程1: 清除快应用中心数据
             result1 = self.clear_quick_app_center_data()
+            detailed_results["流程1_清除快应用中心数据"] = result1
             
             # 流程2: 通过应用市场管理快应用
             result2 = self.manage_quick_apps_via_market()
+            detailed_results["流程2_通过应用市场管理快应用"] = result2
             
             # 流程3: 搜索并打开快应用进行测试
+            # 现在返回的是包含"防侧滑"和"拉回"结果的字典
             result3 = self.search_and_open_quick_app()
+            detailed_results["流程3_防侧滑测试"] = result3["防侧滑"]
+            detailed_results["流程3_拉回测试"] = result3["拉回"]
             
             # 流程4: 清空手机里的全部应用
             result4 = self.clear_all_apps()
+            detailed_results["流程4_清空手机里的全部应用"] = result4
             
-            success = all([result1, result2, result3, result4])
-            logger.info(f"所有流程执行完成。结果: 流程1: {result1}, 流程2: {result2}, 流程3: {result3}, 流程4: {result4}")
+            # 判断整体测试是否成功
+            success = all([
+                detailed_results["流程1_清除快应用中心数据"],
+                detailed_results["流程2_通过应用市场管理快应用"],
+                detailed_results["流程3_防侧滑测试"],
+                detailed_results["流程3_拉回测试"],
+                detailed_results["流程4_清空手机里的全部应用"]
+            ])
+            
+            logger.info(f"所有流程执行完成。详细结果: {detailed_results}")
             return success
         
         except Exception as e:
@@ -768,17 +810,41 @@ class QuickAppADBTester:
                               f"- 结束时间: {test_end_time}\n" \
                               f"- 测试设备: 华为设备\n\n" \
                               f"**✅ 成功执行了所有测试流程:**\n" \
-                              f"1. 清除快应用中心数据: {'✅ 成功' if result1 else '❌ 失败'}\n" \
-                              f"2. 通过应用市场管理快应用: {'✅ 成功' if result2 else '❌ 失败'}\n" \
-                              f"3. 搜索并打开快应用进行测试: {'✅ 成功' if result3 else '❌ 失败'}\n" \
-                              f"4. 清空手机里的全部应用: {'✅ 成功' if result4 else '❌ 失败'}"
+                              f"1. 清除快应用中心数据: {'✅ 成功' if detailed_results['流程1_清除快应用中心数据'] else '❌ 失败'}\n" \
+                              f"2. 通过应用市场管理快应用: {'✅ 成功' if detailed_results['流程2_通过应用市场管理快应用'] else '❌ 失败'}\n" \
+                              f"3. 快应用功能测试: \n" \
+                              f"   - 防侧滑测试: {'✅ 成功' if detailed_results['流程3_防侧滑测试'] else '❌ 失败'}\n" \
+                              f"   - 拉回测试: {'✅ 成功' if detailed_results['流程3_拉回测试'] else '❌ 失败'}\n" \
+                              f"4. 清空手机里的全部应用: {'✅ 成功' if detailed_results['流程4_清空手机里的全部应用'] else '❌ 失败'}"
                 else:
+                    # 确定哪个测试失败了
+                    failure_reasons = []
+                    if not detailed_results["流程1_清除快应用中心数据"]:
+                        failure_reasons.append("清除快应用中心数据失败")
+                    if not detailed_results["流程2_通过应用市场管理快应用"]:
+                        failure_reasons.append("通过应用市场管理快应用失败")
+                    if not detailed_results["流程3_防侧滑测试"]:
+                        failure_reasons.append("快应用防侧滑测试失败")
+                    if not detailed_results["流程3_拉回测试"]:
+                        failure_reasons.append("快应用拉回测试失败")
+                    if not detailed_results["流程4_清空手机里的全部应用"]:
+                        failure_reasons.append("清空手机里的全部应用失败")
+                    
+                    failure_summary = "、".join(failure_reasons)
+                    
                     title = "❌ 快应用自动化测试失败"
-                    content = f"**快应用防侧滑和拉回测试执行失败！**\n\n" \
+                    content = f"**快应用测试执行失败！失败项目：{failure_summary}**\n\n" \
                               f"- 开始时间: {test_start_time}\n" \
                               f"- 结束时间: {test_end_time}\n" \
                               f"- 测试设备: 华为设备\n\n" \
-                              f"**❌ 错误信息:** {error_msg or '未知错误'}"
+                              f"**测试结果详情:**\n" \
+                              f"1. 清除快应用中心数据: {'✅ 成功' if detailed_results['流程1_清除快应用中心数据'] else '❌ 失败'}\n" \
+                              f"2. 通过应用市场管理快应用: {'✅ 成功' if detailed_results['流程2_通过应用市场管理快应用'] else '❌ 失败'}\n" \
+                              f"3. 快应用功能测试: \n" \
+                              f"   - 防侧滑测试: {'✅ 成功' if detailed_results['流程3_防侧滑测试'] else '❌ 失败'}\n" \
+                              f"   - 拉回测试: {'✅ 成功' if detailed_results['流程3_拉回测试'] else '❌ 失败'}\n" \
+                              f"4. 清空手机里的全部应用: {'✅ 成功' if detailed_results['流程4_清空手机里的全部应用'] else '❌ 失败'}\n\n" \
+                              f"**{'❌ 错误信息:' if error_msg else ''}** {error_msg or ''}"
                 
                 # 收集截图URL
                 image_urls = []
@@ -789,6 +855,35 @@ class QuickAppADBTester:
                 
                 # 发送飞书通知
                 send_feishu_notification(title, content, mention_all=not success, image_urls=image_urls)
+
+    def is_quick_app_running(self, app_name=None):
+        """
+        检查快应用是否在前台运行
+        
+        使用dumpsys activity activities命令检查mResumedActivity
+        只有处于Resumed状态的应用才是真正的前台应用
+        
+        Args:
+            app_name: 可选，指定要检查的快应用名称（此方法中不使用）
+            
+        Returns:
+            bool: 如果快应用在前台运行则返回True，否则返回False
+        """
+        logger.info("检查快应用是否在前台运行")
+        
+        # 使用经过测试的方法：检查前台应用状态
+        cmd = "adb shell \"dumpsys activity activities | grep -A 1 'mResumedActivity'\""
+        output = self.run_shell_command(cmd)
+        
+        # 只有处于Resumed状态的应用才是真正的前台应用
+        is_foreground = "com.huawei.fastapp" in output and "Resumed" in output
+        
+        if is_foreground:
+            logger.info("✅ 检测到华为快应用正在前台运行")
+        else:
+            logger.info("❌ 未检测到华为快应用在前台运行")
+            
+        return is_foreground
 
 def run_automated_test(no_notification=False, upload_screenshots=False):
     """执行自动化测试
