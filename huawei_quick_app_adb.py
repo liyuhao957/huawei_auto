@@ -7,6 +7,7 @@ Huawei Quick App ADB-based Automation Script
 使用ADBKeyboard输入法实现中文输入
 支持飞书通知和图片上传功能
 支持定时自动执行功能
+集成scrcpy录制功能
 """
 
 import subprocess
@@ -23,6 +24,20 @@ import random
 import string
 import argparse
 import schedule
+import signal
+import sys
+import shutil  # 用于检查命令是否存在
+
+# 获取当前脚本所在目录
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# 截图保存目录
+SCREENSHOTS_DIR = os.path.join(SCRIPT_DIR, "screenshots")
+# 视频保存目录
+VIDEOS_DIR = os.path.join(SCRIPT_DIR, "videos")
+
+# 确保目录存在
+os.makedirs(SCREENSHOTS_DIR, exist_ok=True)
+os.makedirs(VIDEOS_DIR, exist_ok=True)
 
 # 配置日志
 logging.basicConfig(
@@ -35,94 +50,200 @@ logging.basicConfig(
 )
 logger = logging.getLogger("QuickAppADBTester")
 
-# 配置
-SCREENSHOTS_DIR = "screenshots"  # 存储截图的目录
-
-# 如果截图目录不存在，则创建
-if not os.path.exists(SCREENSHOTS_DIR):
-    os.makedirs(SCREENSHOTS_DIR)
-
 # 飞书机器人配置
 FEISHU_WEBHOOK_URL = "https://open.feishu.cn/open-apis/bot/v2/hook/2e9f09a8-4cec-4475-a6a8-4da61c4a874c"  # 替换为您的飞书机器人webhook URL
 FEISHU_SECRET = "YOUR_SECRET"  # 替换为您的飞书机器人签名密钥，如果没有设置签名可以留空
 
-# Stardots图床配置
-STARDOTS_API_KEY = "a4a15dc3-f394-4340-8749-311eb09cab9d"
-STARDOTS_API_SECRET = "YJiDe7jRLEURX4HxD5PINBMBHJvxjNdMTzuK08GAnAAg68gKebanBFcIYPu5xZ1sd21c2Db7JS5dmF1T0v6GjuDAM2L6UDO46B54wdazIiJuHrbfqHZRKEE9Vjbz4QMkHvzK4gSyjZe88opI6fvfTvVbeiXffvuDqQUGNt5c8tzj0jnQvS0BRXQRezRy8cYWc4Z0zm4z1Ktmk5V70h4UVUrd3oIyxMBHxdYdzJUnERzXLZ9QXiq5xG3Sg5IIAmU"
-STARDOTS_API_URL = "https://api.stardots.io"  # 基础URL
-STARDOTS_SPACE = "huawei"  # 设置空间名称为huawei
+# Telegram配置 (替换Stardots配置)
+TELEGRAM_BOT_TOKEN = "7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg"
+TELEGRAM_CHAT_ID = "-1002505009144"  # 您的Telegram频道/群组ID
 
 # 设备屏幕尺寸
 SCREEN_WIDTH = 1080
 SCREEN_HEIGHT = 2376
 
-def upload_image_to_stardots(image_path):
+# scrcpy录制相关配置
+SCRCPY_CONFIG = {
+    'display': False,         # 不显示屏幕
+    'bitrate': '2M',          # 较低比特率，提高稳定性
+    'max_size': '720',        # 最大分辨率
+    'codec': 'h264',          # 使用H.264编码，更稳定
+    'max_fps': '20'           # 限制帧率，确保稳定性
+}
+
+# 全局变量用于处理scrcpy录制
+scrcpy_recording_process = None
+current_video_path = None
+
+# 全局配置
+DEFAULT_CONFIG = {
+    'duration': 0,  # 默认0表示无限录制，直到手动停止
+    'upload_screenshots': True,
+    'telegram_bot_token': '7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg',
+    'telegram_chat_id': '5748280607'
+}
+
+# 检查系统中是否安装了命令
+def check_command_exists(command):
     """
-    上传图片到Stardots图床
+    检查系统是否安装了指定的命令
     
     Args:
-        image_path: 图片文件路径
+        command: 要检查的命令名称
     
     Returns:
-        str: 上传成功返回图片URL，失败返回None
+        bool: 如果命令存在则返回True，否则返回False
     """
-    if not os.path.exists(image_path):
-        logger.error(f"图片文件不存在: {image_path}")
+    return shutil.which(command) is not None
+
+# 检查ffmpeg是否可用
+def check_ffmpeg_available():
+    """
+    检查系统中是否安装了ffmpeg
+    
+    Returns:
+        bool: 如果ffmpeg可用则返回True，否则返回False
+    """
+    if not check_command_exists('ffmpeg'):
+        logger.warning("系统中未找到ffmpeg，视频修复功能将不可用")
+        return False
+    
+    try:
+        # 检查ffmpeg版本
+        result = subprocess.run(['ffmpeg', '-version'], 
+                               capture_output=True, 
+                               text=True, 
+                               check=True)
+        logger.info(f"检测到ffmpeg: {result.stdout.splitlines()[0]}")
+        return True
+    except Exception as e:
+        logger.warning(f"ffmpeg检测失败: {str(e)}")
+        return False
+
+def kill_scrcpy_processes():
+    """优雅地终止所有正在运行的scrcpy进程"""
+    try:
+        logger.info("尝试优雅地终止所有scrcpy进程")
+        
+        # 1. 先尝试发送HOME键，帮助scrcpy能够优雅退出
+        try:
+            subprocess.run("adb shell input keyevent KEYCODE_HOME", shell=True, timeout=2)
+            time.sleep(1)
+        except Exception:
+            pass
+        
+        # 2. 尝试使用pkill发送SIGINT信号 (等同于Ctrl+C)
+        if os.name == 'nt':  # Windows
+            # Windows没有SIGINT的直接方式，尝试taskkill /F
+            logger.info("Windows平台：使用taskkill")
+            subprocess.run("taskkill /IM scrcpy.exe", shell=True)  # 先不用/F，尝试优雅关闭
+            time.sleep(2)
+        else:  # Linux/Mac
+            logger.info("Linux/Mac平台：先发送SIGINT信号")
+            subprocess.run("pkill -2 scrcpy", shell=True)  # -2表示SIGINT
+            time.sleep(3)  # 给进程3秒钟处理SIGINT
+            
+            # 检查是否还有进程存在
+            check = subprocess.run("pgrep scrcpy", shell=True, capture_output=True)
+            if check.returncode == 0:  # 有进程存在
+                logger.info("SIGINT未能终止全部进程，尝试SIGTERM")
+                subprocess.run("pkill scrcpy", shell=True)  # 默认是SIGTERM
+                time.sleep(2)
+        
+        # 3. 强制终止残留进程 - 最后手段
+        if os.name == 'nt':  # Windows
+            subprocess.run("taskkill /F /IM scrcpy.exe", shell=True)
+        else:  # Linux/Mac
+            # 检查是否还有残留进程
+            check = subprocess.run("pgrep scrcpy", shell=True, capture_output=True)
+            if check.returncode == 0:  # 有进程存在
+                logger.warning("使用SIGKILL强制终止残留进程")
+                subprocess.run("pkill -9 scrcpy", shell=True)
+        
+        # 4. 确保scrcpy-server也被终止
+        try:
+            subprocess.run("adb shell pkill scrcpy-server", shell=True, timeout=2)
+        except Exception:
+            pass
+        
+        # 5. 给进程一些时间完全退出
+        time.sleep(2)
+        
+        logger.info("所有scrcpy进程已终止")
+        return True
+    except Exception as e:
+        logger.warning(f"终止scrcpy进程出错: {str(e)}")
+        return False
+
+def upload_to_telegram(file_path):
+    """
+    上传文件(图片或视频)到Telegram
+    
+    Args:
+        file_path: 文件路径
+    
+    Returns:
+        str: 上传成功返回文件URL，失败返回None
+    """
+    if not os.path.exists(file_path):
+        logger.error(f"文件不存在: {file_path}")
         return None
     
     try:
-        logger.info(f"开始上传图片到Stardots空间'{STARDOTS_SPACE}': {image_path}")
+        logger.info(f"开始上传文件到Telegram: {file_path}")
         
-        # 生成时间戳（秒）
-        timestamp = str(int(time.time()))
+        # 判断是图片还是视频
+        file_ext = os.path.splitext(file_path)[1].lower()
+        is_video = file_ext in ['.mp4', '.avi', '.mov', '.3gp']
         
-        # 生成4-20个字符的随机字符串作为nonce
-        nonce = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(10))
+        # 构建API URL
+        api_method = 'sendVideo' if is_video else 'sendPhoto'
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/{api_method}"
         
-        # 构建签名内容字符串：timestamp|secret|nonce
-        sign_str = f"{timestamp}|{STARDOTS_API_SECRET}|{nonce}"
+        # 准备请求参数
+        param_name = 'video' if is_video else 'photo'
         
-        # 计算MD5签名并转为大写
-        sign = hashlib.md5(sign_str.encode('utf-8')).hexdigest().upper()
-        
-        # 准备请求头
-        headers = {
-            "x-stardots-timestamp": timestamp,
-            "x-stardots-nonce": nonce,
-            "x-stardots-key": STARDOTS_API_KEY,
-            "x-stardots-sign": sign
-        }
-        
-        # 准备文件和空间参数
-        files = {
-            'file': (os.path.basename(image_path), open(image_path, 'rb'), 'image/png')
-        }
-        
-        data = {
-            'space': STARDOTS_SPACE
-        }
-        
-        # 完整的上传URL
-        upload_url = f"{STARDOTS_API_URL}/openapi/file/upload"
-        
-        # 发送请求
-        response = requests.put(upload_url, headers=headers, files=files, data=data)
+        with open(file_path, 'rb') as file:
+            files = {param_name: file}
+            data = {'chat_id': TELEGRAM_CHAT_ID}
+            
+            # 发送POST请求
+            logger.info(f"发送请求到 {api_method}...")
+            response = requests.post(url, files=files, data=data)
         
         # 检查响应
         if response.status_code == 200:
             result = response.json()
-            if result.get("success"):
-                image_url = result.get("data", {}).get("url")
-                logger.info(f"图片上传成功: {image_url}")
-                return image_url
-            else:
-                logger.warning(f"图片上传失败: {result.get('message')}")
-                return None
+            if result.get("ok"):
+                # 获取文件ID
+                file_id = None
+                if is_video:
+                    file_id = result["result"]["video"]["file_id"]
+                else:
+                    # 获取最大尺寸的图片
+                    photo_sizes = result["result"]["photo"]
+                    file_id = max(photo_sizes, key=lambda x: x["width"])["file_id"]
+                
+                # 获取文件路径
+                file_path_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getFile?file_id={file_id}"
+                file_path_response = requests.get(file_path_url)
+                
+                if file_path_response.status_code == 200:
+                    file_path_result = file_path_response.json()
+                    if file_path_result.get("ok"):
+                        file_path = file_path_result["result"]["file_path"]
+                        # 构建下载URL
+                        download_url = f"https://api.telegram.org/file/bot{TELEGRAM_BOT_TOKEN}/{file_path}"
+                        logger.info(f"文件上传成功! 下载URL: {download_url}")
+                        return download_url
+            
+            logger.warning("文件上传成功，但无法获取URL")
+            return None
         else:
-            logger.warning(f"图片上传请求失败，状态码: {response.status_code}, 响应内容: {response.text}")
+            logger.warning(f"文件上传请求失败，状态码: {response.status_code}, 响应内容: {response.text}")
             return None
     except Exception as e:
-        logger.error(f"上传图片到Stardots时出错: {str(e)}")
+        logger.error(f"上传文件到Telegram时出错: {str(e)}")
         
         # 打印更详细的错误信息以便调试
         import traceback
@@ -545,36 +666,123 @@ class QuickAppADBTester:
         
         return result
         
-    def take_screenshot(self, name=None, upload=False):
-        """截取屏幕截图，并可选择上传到图床
+    def take_screenshot(self, name=None, upload=True):
+        """截图并保存到指定目录
         
         Args:
-            name: 截图文件名（不含扩展名），如果为None则使用时间戳
-            upload: 是否上传截图到图床
+            name: 截图名称，不包含扩展名。如果为None，则使用时间戳
+            upload: 是否上传截图
             
         Returns:
-            tuple: (本地文件路径, 如果上传则返回图床URL，否则为None)
+            str: 截图保存的路径
         """
-        if not name:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            name = f"screenshot_{timestamp}"
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        if name:
+            screenshot_name = f"{name}_{timestamp}.png"
+        else:
+            screenshot_name = f"screenshot_{timestamp}.png"
         
-        filename = f"{SCREENSHOTS_DIR}/{name}.png"
-        logger.info(f"截图: {filename}")
+        screenshot_path = os.path.join(SCREENSHOTS_DIR, screenshot_name)
+        logger.info(f"正在截图: {screenshot_path}")
         
-        # 使用ADB命令截图
-        subprocess.run(f"adb shell screencap -p /sdcard/{name}.png", shell=True)
-        subprocess.run(f"adb pull /sdcard/{name}.png {filename}", shell=True)
-        subprocess.run(f"adb shell rm /sdcard/{name}.png", shell=True)
-        
-        # 如果需要上传到图床
-        image_url = None
-        if upload and os.path.exists(filename):
-            logger.info(f"上传截图到图床: {filename}")
-            image_url = upload_image_to_stardots(filename)
+        try:
+            subprocess.run(f"adb shell screencap -p /sdcard/{screenshot_name}", shell=True, check=True)
+            subprocess.run(f"adb pull /sdcard/{screenshot_name} {screenshot_path}", shell=True, check=True)
+            subprocess.run(f"adb shell rm /sdcard/{screenshot_name}", shell=True)
             
-        return filename, image_url
+            if upload and os.path.exists(screenshot_path):
+                logger.info(f"上传截图到Telegram: {screenshot_path}")
+                url = upload_to_telegram(screenshot_path)
+                logger.info(f"截图上传成功: {url}")
+                return screenshot_path, url
+            
+            return screenshot_path, None
+        except Exception as e:
+            logger.error(f"截图失败: {e}")
+            return None, None
+    
+    def record_screen(self, duration=90, name=None, upload=True):
+        """录制屏幕视频并保存
         
+        Args:
+            duration: 录制时长(秒)，最大180秒
+            name: 视频名称，不包含扩展名。如果为None，则使用时间戳
+            upload: 是否上传视频
+            
+        Returns:
+            tuple: (视频路径, 视频URL)，如果失败则返回(None, None)
+        """
+        # 限制最大录制时长为180秒（手机可能有限制）
+        if duration > 180:
+            duration = 180
+            logger.warning(f"录制时长超过最大值，已调整为180秒")
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        if name:
+            video_name = f"{name}_{timestamp}"
+        else:
+            video_name = f"screen_record_{timestamp}"
+        
+        device_video_path = f"/sdcard/{video_name}.mp4"
+        local_video_path = os.path.join(VIDEOS_DIR, f"{video_name}.mp4")
+        
+        logger.info(f"开始录制屏幕: {local_video_path}, 时长: {duration}秒")
+        
+        try:
+            # 启动录屏进程
+            record_process = subprocess.Popen(
+                f"adb shell screenrecord --time-limit {duration} {device_video_path}", 
+                shell=True
+            )
+            
+            logger.info(f"录制进程已启动，等待{duration}秒完成...")
+            
+            # 等待录制完成
+            try:
+                record_process.wait(timeout=duration + 5)  # 等待稍长一点，确保录制完成
+            except subprocess.TimeoutExpired:
+                logger.warning("录制进程超时，尝试强制结束")
+                subprocess.run("adb shell killall screenrecord", shell=True)
+                record_process.terminate()
+            
+            # 等待一下确保文件写入完成
+            time.sleep(2)
+            
+            # 检查录制文件是否存在
+            check_result = subprocess.run(
+                f"adb shell ls {device_video_path}", 
+                shell=True, capture_output=True, text=True
+            )
+            
+            if "No such file" in check_result.stdout or "not found" in check_result.stdout:
+                logger.error(f"录制的视频文件在设备上不存在: {device_video_path}")
+                return None, None
+            
+            # 将视频从设备复制到本地
+            subprocess.run(f"adb pull {device_video_path} {local_video_path}", shell=True, check=True)
+            subprocess.run(f"adb shell rm {device_video_path}", shell=True)
+            
+            logger.info(f"屏幕录制完成: {local_video_path}")
+            
+            # 如果需要上传视频
+            if upload and os.path.exists(local_video_path) and os.path.getsize(local_video_path) > 0:
+                logger.info(f"上传视频到Telegram: {local_video_path}")
+                url = upload_to_telegram(local_video_path)
+                if url:
+                    logger.info(f"视频上传成功: {url}")
+                    return local_video_path, url
+                else:
+                    logger.error("视频上传失败")
+                    return local_video_path, None
+            
+            return local_video_path, None
+        
+        except Exception as e:
+            logger.error(f"录制屏幕失败: {str(e)}")
+            import traceback
+            logger.error(f"错误详情: {traceback.format_exc()}")
+            return None, None
+            
     def run_shell_command(self, command):
         """运行shell命令并返回输出"""
         logger.info(f"运行命令: {command}")
@@ -855,12 +1063,30 @@ class QuickAppADBTester:
         """
         logger.info("开始执行所有流程")
         
-        # 用于记录测试截图URL
+        # 用于记录测试截图URL和视频URL
         self.swipe_screenshot_url = None
         self.home_screenshot_url = None
+        self.test_video_url = None
         test_start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         success = False
         error_msg = None
+        
+        # 开始录屏 - 使用scrcpy代替原来的ADB screenrecord
+        video_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        video_name = f"test_flow_{video_timestamp}"
+        logger.info(f"开始使用scrcpy录制测试流程视频: {video_name}.mp4")
+        
+        # 启动前先确保设备处于唤醒状态
+        self.ensure_screen_on()
+        
+        # 启动scrcpy录制，预留3秒稳定缓冲
+        video_path = start_scrcpy_recording(video_name)
+        if not video_path:
+            logger.warning("无法启动scrcpy录制，将继续测试但没有录制")
+        else:
+            # 录制启动后，先延迟3秒再开始测试，确保录制稳定
+            logger.info("录制已启动，等待3秒确保录制稳定...")
+            time.sleep(3)
         
         # 详细测试结果
         detailed_results = {
@@ -910,6 +1136,13 @@ class QuickAppADBTester:
             ])
             
             logger.info(f"所有流程执行完成。详细结果: {detailed_results}")
+            
+            # 测试完成后，先按Home键回到桌面，然后等待5秒，确保录制内容完整
+            # 这有助于scrcpy录制的正常结束
+            logger.info("测试完成，按Home键回到桌面...")
+            self.press_home()
+            time.sleep(5)  # 测试结束后预留5秒安全缓冲
+            
             return success
         
         except Exception as e:
@@ -923,6 +1156,23 @@ class QuickAppADBTester:
         finally:
             # 恢复原始输入法
             self.restore_original_input_method()
+            
+            # 再次回到桌面，以确保录制能够干净地结束
+            try:
+                logger.info("测试完成，最后回到桌面...")
+                self.press_home()
+                time.sleep(2)
+            except Exception:
+                pass
+            
+            # 停止scrcpy录制并获取视频 - 先确保按了Home键
+            logger.info("测试完成，停止scrcpy录制...")
+            video_path, video_url = stop_scrcpy_recording(upload_to_tg=True)
+            if video_url:
+                self.test_video_url = video_url
+                logger.info(f"测试视频已上传到Telegram，URL: {video_url}")
+            else:
+                logger.warning("无法获取测试视频URL，可能是录制或上传失败")
             
             # 如果需要发送飞书通知
             if send_notification:
@@ -969,12 +1219,14 @@ class QuickAppADBTester:
                               f"5. 清空手机里的全部应用: {'✅ 成功' if detailed_results['流程4_清空手机里的全部应用'] else '❌ 失败'}\n\n" \
                               f"**{'❌ 错误信息:' if error_msg else ''}** {error_msg or ''}"
                 
-                # 收集截图URL
+                # 收集所有媒体URL
                 image_urls = []
                 if self.swipe_screenshot_url:
                     image_urls.append(self.swipe_screenshot_url)
                 if self.home_screenshot_url:
                     image_urls.append(self.home_screenshot_url)
+                if self.test_video_url:
+                    image_urls.append(self.test_video_url)
                 
                 # 发送飞书通知
                 send_feishu_notification(title, content, mention_all=not success, image_urls=image_urls)
@@ -1037,13 +1289,26 @@ def main():
     parser.add_argument('--upload-screenshots', action='store_true', help='上传截图到图床')
     args = parser.parse_args()
     
+    # 注册终止处理
+    def signal_handler(sig, frame):
+        logger.info("接收到终止信号，正在优雅退出...")
+        if scrcpy_recording_process is not None:
+            logger.info("终止录制进程...")
+            stop_scrcpy_recording(upload_to_tg=False)
+        logger.info("脚本已终止")
+        sys.exit(0)
+    
+    # 注册信号处理程序
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    
     logger.info("启动定时任务模式，每30分钟执行一次测试")
     
     # 先执行一次测试
     run_automated_test(no_notification=args.no_notification, upload_screenshots=args.upload_screenshots)
     
     # 设置定时任务，每30分钟执行一次
-    schedule.every(30).minutes.do(
+    schedule.every(1).minutes.do(
         run_automated_test, 
         no_notification=args.no_notification, 
         upload_screenshots=args.upload_screenshots
@@ -1062,7 +1327,536 @@ def main():
         import traceback
         logger.error(f"详细错误: {traceback.format_exc()}")
     finally:
+        # 确保任何正在运行的录制进程都被正确关闭
+        if scrcpy_recording_process is not None:
+            logger.info("清理录制进程...")
+            stop_scrcpy_recording(upload_to_tg=False)
         logger.info("定时测试任务已结束")
 
+def start_scrcpy_recording(filename=None):
+    """
+    开始使用scrcpy录制设备屏幕
+    
+    Args:
+        filename: 输出文件名，不包含扩展名。如果为None，则使用时间戳
+            
+    Returns:
+        str: 视频文件路径
+    """
+    global scrcpy_recording_process, current_video_path
+    
+    # 确保之前的录制已停止
+    kill_scrcpy_processes()
+    
+    # 确保视频目录存在
+    os.makedirs(VIDEOS_DIR, exist_ok=True)
+    
+    # 确保设备连接正常
+    try:
+        logger.info("检查设备连接状态...")
+        check_result = subprocess.run("adb devices", shell=True, capture_output=True, text=True, timeout=5)
+        device_output = check_result.stdout.strip()
+        
+        if "device" not in device_output or len(device_output.splitlines()) <= 1:
+            logger.error("未检测到已连接的设备，无法开始录制")
+            return None
+        
+        logger.info(f"设备连接正常: {device_output}")
+    except Exception as e:
+        logger.error(f"检查设备连接时出错: {e}")
+        return None
+    
+    # 生成输出文件名
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    if not filename:
+        filename = f"recording_{timestamp}"
+    
+    # 确保文件名有.mp4后缀
+    if not filename.lower().endswith('.mp4'):
+        filename += '.mp4'
+    
+    # 设置完整的输出路径
+    output_path = os.path.join(VIDEOS_DIR, filename)
+    
+    # 如果同名文件已存在，先删除
+    if os.path.exists(output_path):
+        try:
+            os.remove(output_path)
+            logger.info(f"已删除同名的旧文件: {output_path}")
+        except Exception as e:
+            logger.warning(f"删除旧文件时出错: {e}")
+    
+    current_video_path = output_path
+    
+    # 使设备保持唤醒状态，避免录制过程中休眠
+    try:
+        subprocess.run("adb shell input keyevent KEYCODE_WAKEUP", shell=True, timeout=2)
+        time.sleep(1)
+    except Exception:
+        pass
+    
+    # 构建scrcpy命令 - 使用经过验证的参数配置
+    cmd = [
+        "scrcpy",
+        f"--record={output_path}",
+        "--no-playback",          # 只录制不显示
+        "--video-codec=h265",     # 使用H.265编码器(更好的质量)
+        "--max-size=720",         # 限制分辨率
+        "--max-fps=15",           # 帧率15fps提高稳定性
+        "--time-limit=120",       # 限制录制时间为120秒(避免无法正常结束)
+        "--video-bit-rate=8M",    # 使用8Mbps的比特率
+        "--record-format=mp4",    # 确保使用mp4格式
+        "--power-off-on-close",   # 关闭scrcpy时关闭设备屏幕
+        "--no-audio"              # 禁用音频
+    ]
+    
+    logger.info(f"开始录制，输出文件: {output_path}")
+    logger.info(f"使用命令: {' '.join(cmd)}")
+    
+    # 启动录制进程
+    try:
+        scrcpy_recording_process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        
+        # 检查进程是否立即退出
+        time.sleep(2)
+        if scrcpy_recording_process.poll() is not None:
+            stderr = scrcpy_recording_process.stderr.read() if scrcpy_recording_process.stderr else ""
+            logger.error(f"scrcpy进程立即退出，退出码: {scrcpy_recording_process.returncode}")
+            if stderr:
+                logger.error(f"错误输出: {stderr}")
+                # 尝试解析常见的错误，如参数问题
+                if "--no-display" in stderr and "--no-playback" in cmd:
+                    logger.error("检测到参数不兼容：您的scrcpy版本可能不支持--no-display，尝试使用--no-playback")
+                elif "unrecognized option" in stderr:
+                    logger.error("检测到不支持的选项，可能需要更新scrcpy或调整参数")
+            
+            scrcpy_recording_process = None
+            current_video_path = None
+            return None
+            
+        logger.info("录制已开始...")
+        
+        # 额外检查：确认录制进程是否稳定运行
+        time.sleep(3)  # 再等待3秒
+        if scrcpy_recording_process.poll() is not None:
+            logger.error(f"scrcpy进程开始后不久退出，退出码: {scrcpy_recording_process.returncode}")
+            stderr = scrcpy_recording_process.stderr.read() if scrcpy_recording_process.stderr else ""
+            if stderr:
+                logger.error(f"错误输出: {stderr}")
+            scrcpy_recording_process = None
+            current_video_path = None
+            return None
+            
+        # 开启一个后台线程监控录制状态
+        def check_recording_status():
+            start_time = time.time()
+            while scrcpy_recording_process and scrcpy_recording_process.poll() is None:
+                elapsed = time.time() - start_time
+                # 每30秒记录一次状态
+                if int(elapsed) % 30 == 0 and int(elapsed) > 0:
+                    logger.info(f"录制进行中，已录制约 {int(elapsed)} 秒")
+                time.sleep(1)
+                
+        import threading
+        monitor_thread = threading.Thread(target=check_recording_status)
+        monitor_thread.daemon = True
+        monitor_thread.start()
+        
+        logger.info("录制状态监控已启动")
+        return output_path
+    except Exception as e:
+        logger.error(f"启动录制时出错: {str(e)}")
+        import traceback
+        logger.error(f"详细错误: {traceback.format_exc()}")
+        if scrcpy_recording_process is not None and scrcpy_recording_process.poll() is None:
+            logger.info("尝试清理失败的录制进程...")
+            stop_scrcpy_recording(upload_to_tg=False)
+        return None
+
+def stop_scrcpy_recording(upload_to_tg=True):
+    """
+    停止scrcpy录制并处理录制的视频
+    
+    Args:
+        upload_to_tg: 是否上传到Telegram
+    
+    Returns:
+        tuple: (视频文件路径, 视频URL)，如果失败则返回(None, None)
+    """
+    global scrcpy_recording_process, current_video_path
+    
+    video_url = None
+    
+    if scrcpy_recording_process is None or current_video_path is None:
+        logger.warning("没有正在进行的录制进程，无法停止")
+        return None, None
+    
+    logger.info("停止录制...")
+    
+    try:
+        # 检查进程是否已经退出
+        if scrcpy_recording_process.poll() is not None:
+            logger.info(f"录制进程已经退出，退出码: {scrcpy_recording_process.returncode}")
+            stderr = scrcpy_recording_process.stderr.read() if scrcpy_recording_process.stderr else ""
+            if stderr:
+                logger.info(f"stderr输出: {stderr}")
+        else:
+            # 1. 先按多次HOME键以确保应用回到桌面状态，这有助于scrcpy正确结束录制
+            logger.info("发送HOME键序列")
+            for i in range(3):
+                subprocess.run("adb shell input keyevent KEYCODE_HOME", shell=True, timeout=2)
+                time.sleep(0.5)
+            
+            # 2. 让设备屏幕休眠，这也有助于scrcpy优雅地结束录制
+            logger.info("让设备屏幕休眠")
+            subprocess.run("adb shell input keyevent KEYCODE_POWER", shell=True, timeout=2)
+            time.sleep(2)
+            
+            # 3. 使用SIGINT信号(等同于按Ctrl+C) - 这是最优雅的方式，允许scrcpy完成MP4文件的正确写入
+            logger.info("发送SIGINT信号 (Ctrl+C)")
+            scrcpy_recording_process.send_signal(signal.SIGINT)
+            
+            # 4. 增加等待时间，给予更多时间处理SIGINT
+            logger.info("等待SIGINT生效，这可能需要10-15秒...")
+            max_wait = 15  # 增加到15秒
+            wait_interval = 1
+            
+            for i in range(max_wait):
+                if scrcpy_recording_process.poll() is not None:
+                    logger.info(f"进程在接收SIGINT后成功退出，用时{i+1}秒")
+                    break
+                logger.info(f"等待进程退出... ({i+1}/{max_wait})")
+                time.sleep(wait_interval)
+            
+            # 5. 如果SIGINT未能终止进程，尝试通过ADB命令停止server
+            if scrcpy_recording_process.poll() is None:
+                logger.info("SIGINT未能终止进程，尝试通过ADB停止scrcpy服务端")
+                server_cmds = [
+                    "adb shell am force-stop com.genymobile.scrcpy",  # 尝试停止scrcpy应用
+                    "adb shell pkill -l 2 scrcpy-server",             # 发送INT信号给服务端
+                    "adb shell pkill scrcpy-server"                   # 尝试终止服务端
+                ]
+                
+                for cmd in server_cmds:
+                    logger.info(f"执行: {cmd}")
+                    subprocess.run(cmd, shell=True, timeout=2)
+                    time.sleep(2)
+                    if scrcpy_recording_process.poll() is not None:
+                        logger.info("服务端停止后，进程成功退出")
+                        break
+            
+            # 6. 如果仍未退出，使用SIGTERM - 更温和的终止信号
+            if scrcpy_recording_process.poll() is None:
+                logger.info("尝试通过SIGTERM终止进程")
+                scrcpy_recording_process.terminate()
+                
+                # 给SIGTERM更多时间生效
+                for i in range(10):  # 10秒等待
+                    if scrcpy_recording_process.poll() is not None:
+                        logger.info(f"进程在接收SIGTERM后成功退出，用时{i+1}秒")
+                        break
+                    logger.info(f"等待SIGTERM生效... ({i+1}/10)")
+                    time.sleep(1)
+                
+                # 7. 仅在万不得已的情况下使用SIGKILL，因为它会导致录制文件损坏
+                if scrcpy_recording_process.poll() is None:
+                    logger.warning("所有温和的尝试都失败，不得不使用SIGKILL强制终止进程")
+                    logger.warning("这可能导致录制文件损坏(moov atom丢失)，录制可能无法播放")
+                    scrcpy_recording_process.kill()
+                    time.sleep(2)
+            
+            # 获取退出状态
+            exit_code = scrcpy_recording_process.wait(timeout=1)
+            logger.info(f"录制进程已退出，退出码: {exit_code}")
+            
+            stderr = scrcpy_recording_process.stderr.read() if scrcpy_recording_process.stderr else ""
+            if stderr:
+                logger.info(f"stderr输出: {stderr}")
+        
+        # 8. 增加更长的等待时间，确保文件系统缓存刷新和文件写入完成
+        logger.info("等待10秒确保文件写入完成...")
+        time.sleep(10)  # 从5秒增加到10秒
+        
+        # 9. 检查文件是否存在及其完整性
+        if os.path.exists(current_video_path):
+            file_size = os.path.getsize(current_video_path) / (1024 * 1024)  # MB
+            logger.info(f"录制文件: {current_video_path} (大小: {file_size:.2f}MB)")
+            
+            # 10. 使用ffmpeg快速检查文件完整性，如果不完整再尝试修复
+            logger.info("预检查文件完整性...")
+            probe_cmd = [
+                "ffprobe", "-v", "error",
+                "-show_entries", "format=duration",
+                "-of", "default=noprint_wrappers=1:nokey=1",
+                current_video_path
+            ]
+            
+            try:
+                probe_result = subprocess.run(probe_cmd, capture_output=True, text=True, timeout=5)
+                if probe_result.returncode == 0:
+                    duration = probe_result.stdout.strip()
+                    logger.info(f"录制文件完整，时长: {duration}秒，无需修复")
+                else:
+                    logger.warning(f"文件可能损坏: {probe_result.stderr}")
+                    # 尝试使用ffmpeg修复
+                    fix_mp4_file(current_video_path)
+            except Exception as e:
+                logger.warning(f"预检查文件完整性时出错: {e}")
+                # 继续尝试修复
+                fix_mp4_file(current_video_path)
+            
+            # 11. 如果需要上传到Telegram
+            if upload_to_tg:
+                logger.info("上传视频到Telegram...")
+                video_url = upload_to_telegram(current_video_path)
+                if video_url:
+                    logger.info(f"视频已上传，URL: {video_url}")
+                else:
+                    logger.warning("视频上传失败")
+            
+            return current_video_path, video_url
+        else:
+            logger.error(f"录制文件不存在: {current_video_path}")
+            return None, None
+    
+    except Exception as e:
+        logger.error(f"停止录制时出错: {str(e)}")
+        import traceback
+        logger.error(f"详细错误: {traceback.format_exc()}")
+        return None, None
+    finally:
+        # 确保杀死所有scrcpy进程，但在这之前先尝试优雅地关闭它们
+        kill_scrcpy_processes()
+        scrcpy_recording_process = None
+
+def fix_mp4_file(file_path):
+    """尝试修复MP4文件"""
+    try:
+        # 检查ffmpeg是否可用
+        if not check_ffmpeg_available():
+            logger.warning("ffmpeg不可用，跳过文件修复")
+            return
+        
+        logger.info("使用ffmpeg分析文件")
+        # 检查文件是否需要修复
+        probe_cmd = [
+            "ffprobe", "-v", "error",
+            "-show_entries", "format=duration",
+            "-of", "default=noprint_wrappers=1:nokey=1",
+            file_path
+        ]
+        probe_result = subprocess.run(probe_cmd, capture_output=True, text=True)
+        
+        if probe_result.returncode == 0:
+            # 文件正常，只需优化
+            duration = probe_result.stdout.strip()
+            logger.info(f"文件正常，时长: {duration}秒")
+            
+            # 添加faststart标记
+            fixed_path = f"{file_path}.fixed.mp4"
+            logger.info("优化文件")
+            subprocess.run([
+                "ffmpeg", "-v", "warning",
+                "-i", file_path,
+                "-c", "copy",
+                "-movflags", "faststart",
+                "-y", fixed_path
+            ])
+            
+            # 替换原文件
+            if os.path.exists(fixed_path) and os.path.getsize(fixed_path) > 0:
+                os.rename(file_path, f"{file_path}.bak")
+                os.rename(fixed_path, file_path)
+                logger.info("文件优化完成")
+        else:
+            # 文件损坏，尝试修复
+            logger.warning(f"文件可能损坏: {probe_result.stderr}")
+            
+            # 尝试重编码
+            fixed_path = f"{file_path}.fixed.mp4"
+            logger.info("尝试重编码修复文件")
+            result = subprocess.run([
+                "ffmpeg", "-v", "warning",
+                "-fflags", "+genpts+igndts",
+                "-i", file_path,
+                "-c:v", "libx264", "-preset", "ultrafast",
+                "-crf", "23",
+                "-movflags", "+faststart",
+                "-y", fixed_path
+            ], capture_output=True, text=True)
+            
+            if result.returncode == 0 and os.path.exists(fixed_path) and os.path.getsize(fixed_path) > 0:
+                os.rename(file_path, f"{file_path}.bak")
+                os.rename(fixed_path, file_path)
+                logger.info("文件修复完成")
+                
+                # 再次检查文件是否可用
+                check_result = subprocess.run([
+                    "ffprobe", "-v", "error",
+                    "-show_entries", "format=duration",
+                    "-of", "default=noprint_wrappers=1:nokey=1",
+                    file_path
+                ], capture_output=True, text=True)
+                
+                if check_result.returncode == 0:
+                    duration = check_result.stdout.strip()
+                    logger.info(f"修复成功，文件时长: {duration}秒")
+                else:
+                    logger.warning(f"修复后文件仍有问题: {check_result.stderr}")
+            else:
+                logger.error(f"修复失败: {result.stderr}")
+    
+    except Exception as e:
+        logger.error(f"修复文件时出错: {e}")
+
+def check_device_connected():
+    """
+    检查是否有Android设备连接
+    
+    Returns:
+        bool: 如果有设备连接则返回True，否则返回False
+    """
+    try:
+        result = subprocess.run(
+            ['adb', 'devices'], 
+            capture_output=True, 
+            text=True, 
+            check=True
+        )
+        output = result.stdout
+        
+        # 检查输出中是否包含至少一个设备
+        lines = output.strip().split('\n')
+        if len(lines) <= 1:  # 只有标题行，没有设备
+            return False
+            
+        for line in lines[1:]:  # 跳过第一行（标题行）
+            if line.strip() and not line.endswith('offline') and not line.endswith('unauthorized'):
+                return True
+                
+        return False
+    except Exception as e:
+        logger.error(f"检查设备连接时出错: {str(e)}")
+        return False
+
+def test_scrcpy_recording(duration=15):
+    """
+    测试scrcpy录制功能
+    
+    Args:
+        duration: 录制时长(秒)，0表示无限制(需要手动Ctrl+C中断)
+        
+    Returns:
+        tuple: (成功状态, 修复后的视频路径)
+    """
+    logger.info("="*50)
+    logger.info("开始测试scrcpy录制功能")
+    logger.info("="*50)
+    
+    # 确保设备已连接
+    if not check_device_connected():
+        logger.error("未找到已连接的设备，无法进行录制测试")
+        return False, None
+    
+    # 生成文件名
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"test_scrcpy_{timestamp}.mp4"
+    
+    # 开始录制
+    logger.info(f"开始录制，时长: {duration if duration > 0 else '无限制'} 秒")
+    video_path = start_scrcpy_recording(filename)
+    
+    if not video_path:
+        logger.error("启动录制失败")
+        return False, None
+    
+    try:
+        if duration > 0:
+            # 等待指定时长
+            logger.info(f"录制中... {duration}秒")
+            time.sleep(duration)
+        else:
+            # 无限录制，等待用户中断
+            logger.info("无限录制中，按Ctrl+C停止...")
+            while True:
+                time.sleep(1)
+    except KeyboardInterrupt:
+        logger.info("用户中断，停止录制")
+    finally:
+        # 停止录制
+        logger.info("停止录制")
+        video_path, video_url = stop_scrcpy_recording(upload_to_tg=False)
+        
+        if not video_path or not os.path.exists(video_path):
+            logger.error("录制失败，未生成视频文件")
+            return False, None
+        
+        # 获取录制文件信息
+        file_size_mb = os.path.getsize(video_path) / (1024 * 1024)
+        logger.info(f"录制完成: {video_path} (大小: {file_size_mb:.2f}MB)")
+        
+        # 使用ffmpeg修复视频
+        logger.info("尝试使用ffmpeg修复视频...")
+        
+        # 创建修复后的文件路径
+        file_dir = os.path.dirname(video_path)
+        file_name = os.path.basename(video_path)
+        file_name_no_ext = os.path.splitext(file_name)[0]
+        fixed_video_path = os.path.join(file_dir, f"{file_name_no_ext}_fixed.mp4")
+        
+        try:
+            # 使用ffmpeg修复视频并添加faststart标志
+            cmd = [
+                "ffmpeg", "-v", "warning",
+                "-i", video_path,
+                "-c", "copy",
+                "-movflags", "faststart",
+                "-y", fixed_video_path
+            ]
+            
+            logger.info(f"执行命令: {' '.join(cmd)}")
+            result = subprocess.run(cmd, check=False, capture_output=True, text=True)
+            
+            if result.returncode == 0 and os.path.exists(fixed_video_path):
+                fixed_size_mb = os.path.getsize(fixed_video_path) / (1024 * 1024)
+                logger.info(f"视频修复成功: {fixed_video_path} (大小: {fixed_size_mb:.2f}MB)")
+                logger.info("="*50)
+                logger.info("测试完成，scrcpy录制功能正常")
+                logger.info("="*50)
+                return True, fixed_video_path
+            else:
+                logger.error(f"视频修复失败: {result.stderr}")
+                logger.info("="*50)
+                logger.info("测试完成，原始视频可用但修复失败")
+                logger.info("="*50)
+                return True, video_path
+        except Exception as e:
+            logger.error(f"视频修复过程出错: {str(e)}")
+            logger.info("="*50)
+            logger.info("测试完成，原始视频可用但修复出错")
+            logger.info("="*50)
+            return True, video_path
+    
+    return False, None
+
+# 如果直接运行该脚本，则测试scrcpy录制功能
 if __name__ == "__main__":
-    main() 
+    # 检查命令行参数
+    import argparse
+    parser = argparse.ArgumentParser(description="华为快应用自动化测试工具")
+    parser.add_argument("--test-scrcpy", action="store_true", help="测试scrcpy录制功能")
+    parser.add_argument("-d", "--duration", type=int, default=15, help="录制时长(秒)，0表示无限制")
+    args = parser.parse_args()
+    
+    if args.test_scrcpy:
+        # 测试scrcpy录制功能
+        test_scrcpy_recording(args.duration)
+    else:
+        # 默认运行所有自动化流程
+        tester = QuickAppADBTester()
+        tester.run_all_flows() 
