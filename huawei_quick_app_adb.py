@@ -1308,7 +1308,7 @@ def main():
     run_automated_test(no_notification=args.no_notification, upload_screenshots=args.upload_screenshots)
     
     # 设置定时任务，每30分钟执行一次
-    schedule.every(1).minutes.do(
+    schedule.every(30).minutes.do(
         run_automated_test, 
         no_notification=args.no_notification, 
         upload_screenshots=args.upload_screenshots
@@ -1857,6 +1857,5 @@ if __name__ == "__main__":
         # 测试scrcpy录制功能
         test_scrcpy_recording(args.duration)
     else:
-        # 默认运行所有自动化流程
-        tester = QuickAppADBTester()
-        tester.run_all_flows() 
+        # 启动定时任务
+        main() 
