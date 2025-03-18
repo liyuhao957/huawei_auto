@@ -1,0 +1,205 @@
+2025-03-18 09:31:16,566 - ScreenUtils - INFO - 初始化屏幕工具类
+2025-03-18 09:31:16,567 - ScreenUtils - INFO - 检查屏幕状态 (综合多种方法)
+2025-03-18 09:31:16,567 - ScreenUtils - INFO - 使用dumpsys检查屏幕状态
+2025-03-18 09:31:16,567 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:31:16,818 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:31:17,012 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:31:17,246 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=false
+
+2025-03-18 09:31:17,246 - ScreenUtils - INFO - 方法3: 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-18 09:31:17,246 - ScreenUtils - INFO - 通过截图检查屏幕状态
+2025-03-18 09:31:17,247 - ScreenUtils - INFO - 运行命令: adb shell screencap -p /sdcard/screen_check_1742261477.png
+2025-03-18 09:31:18,143 - ScreenUtils - INFO - 运行命令: adb pull /sdcard/screen_check_1742261477.png /tmp/screen_check_1742261477.png
+2025-03-18 09:31:18,203 - ScreenUtils - WARNING - 命令错误: /sdcard/screen_check_1742261477.png: 1 file pulled, 0 skipped. 1.1 MB/s (15427 bytes in 0.013s)
+
+2025-03-18 09:31:18,203 - ScreenUtils - INFO - 截图文件大小: 15427 字节
+2025-03-18 09:31:18,203 - ScreenUtils - INFO - 运行命令: adb shell rm /sdcard/screen_check_1742261477.png
+2025-03-18 09:31:18,327 - ScreenUtils - INFO - 屏幕状态为熄屏 (截图文件过小或全黑)
+2025-03-18 09:31:18,328 - ScreenUtils - INFO - 通过检查活动判断屏幕状态
+2025-03-18 09:31:18,328 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:31:18,433 - ScreenUtils - INFO - 未检测到前台应用活动，屏幕可能是熄屏状态
+2025-03-18 09:31:18,434 - ScreenUtils - INFO - 检测结果统计 - 亮屏: 0, 熄屏: 3, 总方法数: 3
+2025-03-18 09:31:18,434 - ScreenUtils - INFO - 最终判断: 屏幕处于熄屏状态
+2025-03-18 09:31:18,434 - ScreenUtils - INFO - 检查屏幕状态 (综合多种方法)
+2025-03-18 09:31:18,434 - ScreenUtils - INFO - 使用dumpsys检查屏幕状态
+2025-03-18 09:31:18,434 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:31:18,620 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:31:18,821 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:31:19,021 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=false
+
+2025-03-18 09:31:19,021 - ScreenUtils - INFO - 方法3: 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-18 09:31:19,021 - ScreenUtils - INFO - 通过截图检查屏幕状态
+2025-03-18 09:31:19,021 - ScreenUtils - INFO - 运行命令: adb shell screencap -p /sdcard/screen_check_1742261479.png
+2025-03-18 09:31:19,869 - ScreenUtils - INFO - 运行命令: adb pull /sdcard/screen_check_1742261479.png /tmp/screen_check_1742261479.png
+2025-03-18 09:31:19,916 - ScreenUtils - WARNING - 命令错误: /sdcard/screen_check_1742261479.png: 1 file pulled, 0 skipped. 3.7 MB/s (15427 bytes in 0.004s)
+
+2025-03-18 09:31:19,917 - ScreenUtils - INFO - 截图文件大小: 15427 字节
+2025-03-18 09:31:19,917 - ScreenUtils - INFO - 运行命令: adb shell rm /sdcard/screen_check_1742261479.png
+2025-03-18 09:31:20,028 - ScreenUtils - INFO - 屏幕状态为熄屏 (截图文件过小或全黑)
+2025-03-18 09:31:20,028 - ScreenUtils - INFO - 通过检查活动判断屏幕状态
+2025-03-18 09:31:20,028 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:31:20,145 - ScreenUtils - INFO - 未检测到前台应用活动，屏幕可能是熄屏状态
+2025-03-18 09:31:20,145 - ScreenUtils - INFO - 检测结果统计 - 亮屏: 0, 熄屏: 3, 总方法数: 3
+2025-03-18 09:31:20,145 - ScreenUtils - INFO - 最终判断: 屏幕处于熄屏状态
+2025-03-18 09:31:20,146 - ScreenUtils - INFO - 开始尝试唤醒屏幕...
+2025-03-18 09:31:20,146 - ScreenUtils - INFO - 检查屏幕状态 (综合多种方法)
+2025-03-18 09:31:20,146 - ScreenUtils - INFO - 使用dumpsys检查屏幕状态
+2025-03-18 09:31:20,146 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:31:20,357 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:31:20,577 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:31:20,774 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=false
+
+2025-03-18 09:31:20,774 - ScreenUtils - INFO - 方法3: 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-18 09:31:20,774 - ScreenUtils - INFO - 通过截图检查屏幕状态
+2025-03-18 09:31:20,774 - ScreenUtils - INFO - 运行命令: adb shell screencap -p /sdcard/screen_check_1742261480.png
+2025-03-18 09:31:21,670 - ScreenUtils - INFO - 运行命令: adb pull /sdcard/screen_check_1742261480.png /tmp/screen_check_1742261480.png
+2025-03-18 09:31:21,728 - ScreenUtils - WARNING - 命令错误: /sdcard/screen_check_1742261480.png: 1 file pulled, 0 skipped. 1.5 MB/s (15427 bytes in 0.010s)
+
+2025-03-18 09:31:21,728 - ScreenUtils - INFO - 截图文件大小: 15427 字节
+2025-03-18 09:31:21,728 - ScreenUtils - INFO - 运行命令: adb shell rm /sdcard/screen_check_1742261480.png
+2025-03-18 09:31:21,831 - ScreenUtils - INFO - 屏幕状态为熄屏 (截图文件过小或全黑)
+2025-03-18 09:31:21,831 - ScreenUtils - INFO - 通过检查活动判断屏幕状态
+2025-03-18 09:31:21,831 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:31:21,905 - ScreenUtils - INFO - 未检测到前台应用活动，屏幕可能是熄屏状态
+2025-03-18 09:31:21,906 - ScreenUtils - INFO - 检测结果统计 - 亮屏: 0, 熄屏: 3, 总方法数: 3
+2025-03-18 09:31:21,906 - ScreenUtils - INFO - 最终判断: 屏幕处于熄屏状态
+2025-03-18 09:31:21,906 - ScreenUtils - INFO - 唤醒尝试 #1
+2025-03-18 09:31:21,906 - ScreenUtils - INFO - 方法1: 使用电源键唤醒
+2025-03-18 09:31:21,906 - ScreenUtils - INFO - 按下按键: KEYCODE_POWER
+2025-03-18 09:31:21,906 - ScreenUtils - INFO - 运行命令: adb shell input keyevent KEYCODE_POWER
+2025-03-18 09:33:21,998 - ScreenUtils - INFO - 初始化屏幕工具类
+2025-03-18 09:33:21,998 - ScreenUtils - INFO - 开始逐个尝试不同方法检查屏幕状态
+2025-03-18 09:33:21,998 - ScreenUtils - INFO - 使用dumpsys检查屏幕状态
+2025-03-18 09:33:21,998 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:33:22,189 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:33:22,383 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:33:22,564 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=false
+
+2025-03-18 09:33:22,564 - ScreenUtils - INFO - 方法3: 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-18 09:33:26,041 - ScreenUtils - INFO - 通过检查活动判断屏幕状态
+2025-03-18 09:33:26,042 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:33:26,119 - ScreenUtils - INFO - 未检测到前台应用活动，屏幕可能是熄屏状态
+2025-03-18 09:33:27,362 - ScreenUtils - INFO - 最终判断: 屏幕处于熄屏状态
+2025-03-18 09:33:27,363 - ScreenUtils - INFO - 开始逐个尝试不同方法检查屏幕状态
+2025-03-18 09:33:27,363 - ScreenUtils - INFO - 使用dumpsys检查屏幕状态
+2025-03-18 09:33:27,363 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:33:27,613 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:33:27,824 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:33:28,040 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=false
+
+2025-03-18 09:33:28,040 - ScreenUtils - INFO - 方法3: 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-18 09:33:35,251 - ScreenUtils - INFO - 通过检查活动判断屏幕状态
+2025-03-18 09:33:35,252 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:33:35,359 - ScreenUtils - INFO - 未检测到前台应用活动，屏幕可能是熄屏状态
+2025-03-18 09:33:37,349 - ScreenUtils - INFO - 最终判断: 屏幕处于熄屏状态
+2025-03-18 09:33:37,349 - ScreenUtils - INFO - 开始尝试唤醒屏幕...
+2025-03-18 09:33:37,350 - ScreenUtils - INFO - 开始逐个尝试不同方法检查屏幕状态
+2025-03-18 09:33:37,350 - ScreenUtils - INFO - 使用dumpsys检查屏幕状态
+2025-03-18 09:33:37,350 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:33:37,609 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:33:37,768 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:33:37,982 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=false
+
+2025-03-18 09:33:37,983 - ScreenUtils - INFO - 方法3: 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-18 09:33:41,758 - ScreenUtils - INFO - 通过检查活动判断屏幕状态
+2025-03-18 09:33:41,758 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:33:41,847 - ScreenUtils - INFO - 未检测到前台应用活动，屏幕可能是熄屏状态
+2025-03-18 09:33:44,806 - ScreenUtils - INFO - 最终判断: 屏幕处于熄屏状态
+2025-03-18 09:33:44,807 - ScreenUtils - INFO - 按下按键: KEYCODE_POWER
+2025-03-18 09:33:44,807 - ScreenUtils - INFO - 运行命令: adb shell input keyevent KEYCODE_POWER
+2025-03-18 09:33:50,759 - ScreenUtils - INFO - 按下按键: KEYCODE_WAKEUP
+2025-03-18 09:33:50,760 - ScreenUtils - INFO - 运行命令: adb shell input keyevent KEYCODE_WAKEUP
+2025-03-18 09:34:05,142 - ScreenUtils - INFO - 初始化屏幕工具类
+2025-03-18 09:34:05,142 - ScreenUtils - INFO - 开始逐个尝试不同方法检查屏幕状态
+2025-03-18 09:34:05,142 - ScreenUtils - INFO - 使用dumpsys检查屏幕状态
+2025-03-18 09:34:05,142 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:34:05,422 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:34:05,612 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:34:05,843 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=false
+
+2025-03-18 09:34:05,844 - ScreenUtils - INFO - 方法3: 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-18 09:34:20,402 - ScreenUtils - INFO - 通过检查活动判断屏幕状态
+2025-03-18 09:34:20,403 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:34:20,580 - ScreenUtils - INFO - 未检测到前台应用活动，屏幕可能是熄屏状态
+2025-03-18 09:34:22,019 - ScreenUtils - INFO - 最终判断: 屏幕处于熄屏状态
+2025-03-18 09:34:22,020 - ScreenUtils - INFO - 开始逐个尝试不同方法检查屏幕状态
+2025-03-18 09:34:22,020 - ScreenUtils - INFO - 使用dumpsys检查屏幕状态
+2025-03-18 09:34:22,020 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:34:22,281 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:34:22,483 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:34:22,670 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=false
+
+2025-03-18 09:34:22,671 - ScreenUtils - INFO - 方法3: 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-18 09:34:33,858 - ScreenUtils - INFO - 初始化屏幕工具类
+2025-03-18 09:34:33,858 - ScreenUtils - INFO - 开始逐个尝试不同方法检查屏幕状态
+2025-03-18 09:34:33,858 - ScreenUtils - INFO - 使用dumpsys检查屏幕状态
+2025-03-18 09:34:33,858 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:34:34,039 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:34:34,223 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:34:34,414 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=true
+
+2025-03-18 09:34:34,415 - ScreenUtils - INFO - 方法3: 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-18 09:34:36,809 - ScreenUtils - INFO - 通过检查活动判断屏幕状态
+2025-03-18 09:34:36,809 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:34:36,915 - ScreenUtils - INFO - 命令输出:     mResumedActivity: ActivityRecord{f776e58 u0 com.huawei.android.launcher/.unihome.UniHomeLauncher t7}
+    * Task{180a1ed #7 type=home A=10093:com.huawei.android.launcher U=0 rootTaskId=1 visible=tr...
+2025-03-18 09:34:36,916 - ScreenUtils - INFO - 检测到前台应用活动: mResumedActivity: ActivityRecord{f776e58 u0 com.hu...
+2025-03-18 09:34:36,916 - ScreenUtils - INFO - 屏幕状态为亮屏 (有前台应用活动)
+2025-03-18 09:34:37,588 - ScreenUtils - INFO - 最终判断: 屏幕处于亮屏状态
+2025-03-18 09:34:37,588 - ScreenUtils - INFO - 开始逐个尝试不同方法检查屏幕状态
+2025-03-18 09:34:37,588 - ScreenUtils - INFO - 使用dumpsys检查屏幕状态
+2025-03-18 09:34:37,589 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:34:37,831 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:34:38,019 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:34:38,217 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=true
+
+2025-03-18 09:34:38,217 - ScreenUtils - INFO - 方法3: 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-18 09:34:39,014 - ScreenUtils - INFO - 通过检查活动判断屏幕状态
+2025-03-18 09:34:39,014 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:34:39,113 - ScreenUtils - INFO - 命令输出:     mResumedActivity: ActivityRecord{f776e58 u0 com.huawei.android.launcher/.unihome.UniHomeLauncher t7}
+    * Task{180a1ed #7 type=home A=10093:com.huawei.android.launcher U=0 rootTaskId=1 visible=tr...
+2025-03-18 09:34:39,114 - ScreenUtils - INFO - 检测到前台应用活动: mResumedActivity: ActivityRecord{f776e58 u0 com.hu...
+2025-03-18 09:34:39,114 - ScreenUtils - INFO - 屏幕状态为亮屏 (有前台应用活动)
+2025-03-18 09:36:26,062 - ScreenUtils - INFO - 初始化屏幕工具类
+2025-03-18 09:36:26,062 - ScreenUtils - INFO - 开始检查屏幕状态
+2025-03-18 09:36:26,062 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:36:26,251 - ScreenUtils - INFO - 检测方法1: 屏幕状态为熄屏或无法确定 (Display Power state≠ON)
+2025-03-18 09:36:31,432 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:36:31,662 - ScreenUtils - INFO - 检测方法2: 无法确定屏幕状态 (未找到mScreenOn标志)
+2025-03-18 09:36:32,897 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:36:33,100 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=false
+
+2025-03-18 09:36:33,101 - ScreenUtils - INFO - 检测方法3: 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-18 09:36:35,694 - ScreenUtils - INFO - 运行命令: adb shell dumpsys display | grep 'mState'
+2025-03-18 09:36:35,867 - ScreenUtils - INFO - 命令输出:     mState=OFF
+  mStateChangeInProgress=false
+
+2025-03-18 09:36:35,868 - ScreenUtils - INFO - 检测方法4: 屏幕状态为熄屏 (Display State=OFF)
+2025-03-18 09:36:39,721 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:36:39,862 - ScreenUtils - INFO - 检测方法5: 未检测到前台应用活动，屏幕可能是熄屏状态
+2025-03-18 09:36:43,445 - ScreenUtils - INFO - 最终判断: 屏幕处于熄屏状态
+2025-03-18 09:36:43,446 - ScreenUtils - INFO - 开始尝试唤醒屏幕...
+2025-03-18 09:36:43,446 - ScreenUtils - INFO - 按下按键: KEYCODE_POWER
+2025-03-18 09:36:43,446 - ScreenUtils - INFO - 运行命令: adb shell input keyevent KEYCODE_POWER
+2025-03-18 09:36:50,984 - ScreenUtils - INFO - 成功使用电源键唤醒
+2025-03-18 09:37:25,123 - ScreenUtils - INFO - 初始化屏幕工具类
+2025-03-18 09:37:25,123 - ScreenUtils - INFO - 开始检查屏幕状态
+2025-03-18 09:37:25,123 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'Display Power' | grep -q 'state=ON'
+2025-03-18 09:37:25,335 - ScreenUtils - INFO - 检测方法1: 屏幕状态为熄屏或无法确定 (Display Power state≠ON)
+2025-03-18 09:37:27,813 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mScreenOn='
+2025-03-18 09:37:28,057 - ScreenUtils - INFO - 检测方法2: 无法确定屏幕状态 (未找到mScreenOn标志)
+2025-03-18 09:37:29,773 - ScreenUtils - INFO - 运行命令: adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'
+2025-03-18 09:37:30,056 - ScreenUtils - INFO - 命令输出:   mHoldingDisplaySuspendBlocker=true
+
+2025-03-18 09:37:30,056 - ScreenUtils - INFO - 检测方法3: 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-18 09:37:30,947 - ScreenUtils - INFO - 运行命令: adb shell dumpsys display | grep 'mState'
+2025-03-18 09:37:31,058 - ScreenUtils - INFO - 命令输出:     mState=ON
+  mStateChangeInProgress=false
+
+2025-03-18 09:37:31,059 - ScreenUtils - INFO - 检测方法4: 屏幕状态为亮屏 (Display State=ON)
+2025-03-18 09:37:31,982 - ScreenUtils - INFO - 运行命令: adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'
+2025-03-18 09:37:32,106 - ScreenUtils - INFO - 命令输出:     mResumedActivity: ActivityRecord{f776e58 u0 com.huawei.android.launcher/.unihome.UniHomeLauncher t7}
+    * Task{180a1ed #7 type=home A=10093:com.huawei.android.launcher U=0 rootTaskId=1 visible=tr...
+2025-03-18 09:37:32,106 - ScreenUtils - INFO - 检测到前台应用活动: mResumedActivity: ActivityRecord{f776e58 u0 com.hu...
+2025-03-18 09:37:32,107 - ScreenUtils - INFO - 检测方法5: 屏幕状态为亮屏 (有前台应用活动)
+2025-03-18 09:37:35,147 - ScreenUtils - INFO - 最终判断: 屏幕处于亮屏状态

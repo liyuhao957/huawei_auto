@@ -430,6 +430,121 @@ class QuickAppADBTester:
         logger.info("打开最近任务列表")
         self.press_key("KEYCODE_APP_SWITCH")
         
+    def check_screen_state(self):
+        """检查屏幕状态，使用mHoldingDisplaySuspendBlocker标志
+        
+        Returns:
+            bool: 屏幕亮起返回True，熄屏返回False
+        """
+        logger.info("检查屏幕状态")
+        
+        # 使用mHoldingDisplaySuspendBlocker检查
+        cmd = "adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'"
+        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        
+        if result.stdout:
+            if "true" in result.stdout.lower():
+                logger.info("屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)")
+                return True
+            elif "false" in result.stdout.lower():
+                logger.info("屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)")
+                return False
+            
+        # 如果无法确定，尝试其他方法
+        logger.warning("无法通过mHoldingDisplaySuspendBlocker确定屏幕状态，尝试其他方法")
+        
+        # 尝试检查前台应用活动
+        cmd = "adb shell dumpsys activity activities | grep -A 3 'mResumedActivity'"
+        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        
+        if result.stdout and len(result.stdout.strip()) > 10:
+            logger.info("检测到前台应用活动，屏幕可能处于亮屏状态")
+            return True
+        else:
+            logger.info("未检测到前台应用活动，屏幕可能处于熄屏状态")
+            return False
+            
+    def wake_screen(self):
+        """尝试唤醒屏幕
+        
+        Returns:
+            bool: 是否成功唤醒屏幕
+        """
+        logger.info("尝试唤醒屏幕")
+        
+        # 使用电源键唤醒
+        logger.info("使用电源键唤醒")
+        self.press_key("KEYCODE_POWER")
+        time.sleep(2)  # 等待屏幕响应
+        
+        # 检查是否成功唤醒
+        if self.check_screen_state():
+            logger.info("成功唤醒屏幕")
+            return True
+        
+        logger.warning("电源键唤醒失败，尝试备用方法")
+        
+        # 备用方法：使用WAKEUP键码
+        logger.info("使用WAKEUP键码唤醒")
+        self.press_key("KEYCODE_WAKEUP")
+        time.sleep(2)
+        
+        if self.check_screen_state():
+            logger.info("成功使用WAKEUP键码唤醒屏幕")
+            return True
+            
+        logger.warning("所有唤醒方法均失败")
+        return False
+    
+    def simple_unlock(self):
+        """简单解锁屏幕（适用于无密码设备）
+        
+        Returns:
+            bool: 是否成功解锁
+        """
+        logger.info("尝试简单解锁屏幕")
+        
+        # 滑动解锁
+        self.swipe_by_percent(0.5, 0.7, 0.5, 0.3)
+        time.sleep(1)
+        
+        # 按Home键确认
+        self.press_home()
+        time.sleep(1)
+        
+        # 检查是否到达桌面
+        cmd = "adb shell dumpsys activity activities | grep mResumedActivity"
+        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        
+        if result.stdout and "Launcher" in result.stdout:
+            logger.info("成功解锁到桌面")
+            return True
+        else:
+            logger.info("简单解锁操作已执行，但未确认是否到达桌面")
+            return True
+    
+    def ensure_screen_on(self):
+        """确保屏幕亮起并解锁
+        
+        Returns:
+            bool: 屏幕是否成功亮起并解锁
+        """
+        logger.info("确保屏幕亮起并解锁")
+        
+        # 检查屏幕状态
+        if not self.check_screen_state():
+            logger.info("屏幕处于熄屏状态，尝试唤醒")
+            if not self.wake_screen():
+                logger.error("无法唤醒屏幕")
+                return False
+        else:
+            logger.info("屏幕已处于亮屏状态")
+            
+        # 尝试解锁
+        result = self.simple_unlock()
+        
+        return result
+        
     def take_screenshot(self, name=None, upload=False):
         """截取屏幕截图，并可选择上传到图床
         
@@ -749,6 +864,7 @@ class QuickAppADBTester:
         
         # 详细测试结果
         detailed_results = {
+            "屏幕唤醒": False,
             "流程1_清除快应用中心数据": False,
             "流程2_通过应用市场管理快应用": False,
             "流程3_防侧滑测试": False,
@@ -757,6 +873,14 @@ class QuickAppADBTester:
         }
         
         try:
+            # 确保屏幕处于亮屏状态
+            logger.info("确保屏幕处于亮屏状态")
+            screen_on = self.ensure_screen_on()
+            detailed_results["屏幕唤醒"] = screen_on
+            
+            if not screen_on:
+                logger.warning("无法确保屏幕处于亮屏状态，测试可能失败")
+            
             # 流程1: 清除快应用中心数据
             result1 = self.clear_quick_app_center_data()
             detailed_results["流程1_清除快应用中心数据"] = result1
@@ -777,6 +901,7 @@ class QuickAppADBTester:
             
             # 判断整体测试是否成功
             success = all([
+                detailed_results["屏幕唤醒"],
                 detailed_results["流程1_清除快应用中心数据"],
                 detailed_results["流程2_通过应用市场管理快应用"],
                 detailed_results["流程3_防侧滑测试"],
@@ -810,15 +935,18 @@ class QuickAppADBTester:
                               f"- 结束时间: {test_end_time}\n" \
                               f"- 测试设备: 华为设备\n\n" \
                               f"**✅ 成功执行了所有测试流程:**\n" \
-                              f"1. 清除快应用中心数据: {'✅ 成功' if detailed_results['流程1_清除快应用中心数据'] else '❌ 失败'}\n" \
-                              f"2. 通过应用市场管理快应用: {'✅ 成功' if detailed_results['流程2_通过应用市场管理快应用'] else '❌ 失败'}\n" \
-                              f"3. 快应用功能测试: \n" \
+                              f"1. 屏幕唤醒: {'✅ 成功' if detailed_results['屏幕唤醒'] else '❌ 失败'}\n" \
+                              f"2. 清除快应用中心数据: {'✅ 成功' if detailed_results['流程1_清除快应用中心数据'] else '❌ 失败'}\n" \
+                              f"3. 通过应用市场管理快应用: {'✅ 成功' if detailed_results['流程2_通过应用市场管理快应用'] else '❌ 失败'}\n" \
+                              f"4. 快应用功能测试: \n" \
                               f"   - 防侧滑测试: {'✅ 成功' if detailed_results['流程3_防侧滑测试'] else '❌ 失败'}\n" \
                               f"   - 拉回测试: {'✅ 成功' if detailed_results['流程3_拉回测试'] else '❌ 失败'}\n" \
-                              f"4. 清空手机里的全部应用: {'✅ 成功' if detailed_results['流程4_清空手机里的全部应用'] else '❌ 失败'}"
+                              f"5. 清空手机里的全部应用: {'✅ 成功' if detailed_results['流程4_清空手机里的全部应用'] else '❌ 失败'}"
                 else:
                     # 确定哪个测试失败了
                     failure_reasons = []
+                    if not detailed_results["屏幕唤醒"]:
+                        failure_reasons.append("屏幕唤醒失败")
                     if not detailed_results["流程1_清除快应用中心数据"]:
                         failure_reasons.append("清除快应用中心数据失败")
                     if not detailed_results["流程2_通过应用市场管理快应用"]:
@@ -838,12 +966,13 @@ class QuickAppADBTester:
                               f"- 结束时间: {test_end_time}\n" \
                               f"- 测试设备: 华为设备\n\n" \
                               f"**测试结果详情:**\n" \
-                              f"1. 清除快应用中心数据: {'✅ 成功' if detailed_results['流程1_清除快应用中心数据'] else '❌ 失败'}\n" \
-                              f"2. 通过应用市场管理快应用: {'✅ 成功' if detailed_results['流程2_通过应用市场管理快应用'] else '❌ 失败'}\n" \
-                              f"3. 快应用功能测试: \n" \
+                              f"1. 屏幕唤醒: {'✅ 成功' if detailed_results['屏幕唤醒'] else '❌ 失败'}\n" \
+                              f"2. 清除快应用中心数据: {'✅ 成功' if detailed_results['流程1_清除快应用中心数据'] else '❌ 失败'}\n" \
+                              f"3. 通过应用市场管理快应用: {'✅ 成功' if detailed_results['流程2_通过应用市场管理快应用'] else '❌ 失败'}\n" \
+                              f"4. 快应用功能测试: \n" \
                               f"   - 防侧滑测试: {'✅ 成功' if detailed_results['流程3_防侧滑测试'] else '❌ 失败'}\n" \
                               f"   - 拉回测试: {'✅ 成功' if detailed_results['流程3_拉回测试'] else '❌ 失败'}\n" \
-                              f"4. 清空手机里的全部应用: {'✅ 成功' if detailed_results['流程4_清空手机里的全部应用'] else '❌ 失败'}\n\n" \
+                              f"5. 清空手机里的全部应用: {'✅ 成功' if detailed_results['流程4_清空手机里的全部应用'] else '❌ 失败'}\n\n" \
                               f"**{'❌ 错误信息:' if error_msg else ''}** {error_msg or ''}"
                 
                 # 收集截图URL
@@ -895,6 +1024,11 @@ def run_automated_test(no_notification=False, upload_screenshots=False):
     logger.info("启动快应用ADB测试")
     
     tester = QuickAppADBTester()
+    
+    # 确保屏幕处于亮屏状态
+    screen_on = tester.ensure_screen_on()
+    if not screen_on:
+        logger.warning("无法确保屏幕处于亮屏状态，测试可能失败")
     
     # 执行所有流程
     tester.run_all_flows(send_notification=not no_notification)
