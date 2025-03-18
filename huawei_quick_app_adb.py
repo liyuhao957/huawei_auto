@@ -934,14 +934,8 @@ class QuickAppADBTester:
                               f"- 开始时间: {test_start_time}\n" \
                               f"- 结束时间: {test_end_time}\n" \
                               f"- 测试设备: 华为设备\n\n" \
-                              f"**✅ 成功执行了所有测试流程:**\n" \
-                              f"1. 屏幕唤醒: {'✅ 成功' if detailed_results['屏幕唤醒'] else '❌ 失败'}\n" \
-                              f"2. 清除快应用中心数据: {'✅ 成功' if detailed_results['流程1_清除快应用中心数据'] else '❌ 失败'}\n" \
-                              f"3. 通过应用市场管理快应用: {'✅ 成功' if detailed_results['流程2_通过应用市场管理快应用'] else '❌ 失败'}\n" \
-                              f"4. 快应用功能测试: \n" \
-                              f"   - 防侧滑测试: {'✅ 成功' if detailed_results['流程3_防侧滑测试'] else '❌ 失败'}\n" \
-                              f"   - 拉回测试: {'✅ 成功' if detailed_results['流程3_拉回测试'] else '❌ 失败'}\n" \
-                              f"5. 清空手机里的全部应用: {'✅ 成功' if detailed_results['流程4_清空手机里的全部应用'] else '❌ 失败'}"
+                              f"**防侧滑:** {'✅ 成功' if detailed_results['流程3_防侧滑测试'] else '❌ 失败'}\n\n" \
+                              f"**拉回:** {'✅ 成功' if detailed_results['流程3_拉回测试'] else '❌ 失败'}"
                 else:
                     # 确定哪个测试失败了
                     failure_reasons = []
