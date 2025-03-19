@@ -300,7 +300,7 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
                 "tag": "div",
                 "text": {
                     "tag": "lark_md",
-                    "content": "**📷 测试截图：**"
+                    "content": "**📷 测试截图和视频：**"
                 }
             })
             
@@ -309,7 +309,7 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
             
             for i, url in enumerate(image_urls):
                 if url:  # 确保URL不为空
-                    button_text = "防侧滑" if i == 0 else "拉回" if i == 1 else f"查看截图 {i+1}"
+                    button_text = "防侧滑" if i == 0 else "拉回" if i == 1 else "视频"
                     image_buttons.append({
                         "tag": "button",
                         "text": {
@@ -324,6 +324,15 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
             elements.append({
                 "tag": "action",
                 "actions": image_buttons
+            })
+            
+            # 添加提示文本
+            elements.append({
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": "查看截图 or 视频，需要使用VPN"
+                }
             })
         
         # 添加分隔线
@@ -1308,7 +1317,7 @@ def main():
     run_automated_test(no_notification=args.no_notification, upload_screenshots=args.upload_screenshots)
     
     # 设置定时任务，每30分钟执行一次
-    schedule.every(30).minutes.do(
+    schedule.every(5).minutes.do(
         run_automated_test, 
         no_notification=args.no_notification, 
         upload_screenshots=args.upload_screenshots
