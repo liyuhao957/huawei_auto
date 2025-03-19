@@ -1303,7 +1303,22 @@ def main():
         logger.info("接收到终止信号，正在优雅退出...")
         if scrcpy_recording_process is not None:
             logger.info("终止录制进程...")
-            stop_scrcpy_recording(upload_to_tg=False)
+            video_path, video_url = stop_scrcpy_recording(upload_to_tg=True)
+            
+            # 如果成功获取视频URL，手动发送飞书通知
+            if video_url:
+                logger.info(f"上传的视频URL: {video_url}")
+                test_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                title = "❌ 测试被手动中断"
+                content = f"**华为快应用测试被手动中断**\n\n" \
+                         f"- 中断时间: {test_time}\n" \
+                         f"- 测试设备: 华为设备\n\n" \
+                         f"**注意:** 测试过程被人为中断，未能完成全部测试流程。"
+                 
+                # 发送包含视频URL的飞书通知
+                send_feishu_notification(title, content, image_urls=[video_url])
+                logger.info("已发送中断通知，包含录制视频")
+        
         logger.info("脚本已终止")
         sys.exit(0)
     
@@ -1339,7 +1354,7 @@ def main():
         # 确保任何正在运行的录制进程都被正确关闭
         if scrcpy_recording_process is not None:
             logger.info("清理录制进程...")
-            stop_scrcpy_recording(upload_to_tg=False)
+            stop_scrcpy_recording(upload_to_tg=True)
         logger.info("定时测试任务已结束")
 
 def start_scrcpy_recording(filename=None):
