@@ -125,14 +125,10 @@ def kill_scrcpy_processes():
     try:
         logger.info("尝试优雅地终止所有scrcpy进程")
         
-        # 1. 先尝试发送HOME键，帮助scrcpy能够优雅退出
-        try:
-            subprocess.run("adb shell input keyevent KEYCODE_HOME", shell=True, timeout=2)
-            time.sleep(1)
-        except Exception:
-            pass
+        # 不再发送HOME键，避免影响当前应用状态
+        # 直接使用信号终止scrcpy进程
         
-        # 2. 尝试使用pkill发送SIGINT信号 (等同于Ctrl+C)
+        # 尝试使用pkill发送SIGINT信号 (等同于Ctrl+C)
         if os.name == 'nt':  # Windows
             # Windows没有SIGINT的直接方式，尝试taskkill /F
             logger.info("Windows平台：使用taskkill")
@@ -160,7 +156,7 @@ def kill_scrcpy_processes():
                 logger.warning("使用SIGKILL强制终止残留进程")
                 subprocess.run("pkill -9 scrcpy", shell=True)
         
-        # 4. 确保scrcpy-server也被终止
+        # 4. 确保scrcpy-server也被终止，但不要发送HOME键
         try:
             subprocess.run("adb shell pkill scrcpy-server", shell=True, timeout=2)
         except Exception:
@@ -1102,23 +1098,6 @@ class QuickAppADBTester:
         success = False
         error_msg = None
         
-        # 开始录屏 - 使用scrcpy代替原来的ADB screenrecord
-        video_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        video_name = f"test_flow_{video_timestamp}"
-        logger.info(f"开始使用scrcpy录制测试流程视频: {video_name}.mp4")
-        
-        # 启动前先确保设备处于唤醒状态
-        self.ensure_screen_on()
-        
-        # 启动scrcpy录制，预留3秒稳定缓冲
-        video_path = start_scrcpy_recording(video_name)
-        if not video_path:
-            logger.warning("无法启动scrcpy录制，将继续测试但没有录制")
-        else:
-            # 录制启动后，先延迟3秒再开始测试，确保录制稳定
-            logger.info("录制已启动，等待3秒确保录制稳定...")
-            time.sleep(3)
-        
         # 详细测试结果
         detailed_results = {
             "屏幕唤醒": False,
@@ -1151,11 +1130,41 @@ class QuickAppADBTester:
             result2 = self.manage_quick_apps_via_market()
             detailed_results["流程2_通过应用市场管理快应用"] = result2
             
+            # ======= 流程3开始前启动录制 =======
+            video_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            video_name = f"test_flow_{video_timestamp}"
+            logger.info(f"开始使用scrcpy录制流程3视频: {video_name}.mp4")
+            
+            # 启动scrcpy录制，预留3秒稳定缓冲
+            video_path = start_scrcpy_recording(video_name)
+            if not video_path:
+                logger.warning("无法启动scrcpy录制，将继续测试但没有录制")
+            else:
+                # 录制启动后，先延迟3秒再开始流程3，确保录制稳定
+                logger.info("录制已启动，等待3秒确保录制稳定...")
+                time.sleep(3)
+            
             # 流程3: 搜索并打开快应用进行测试
             # 现在返回的是包含"防侧滑"和"拉回"结果的字典
             result3 = self.search_and_open_quick_app()
             detailed_results["流程3_防侧滑测试"] = result3["防侧滑"]
             detailed_results["流程3_拉回测试"] = result3["拉回"]
+            
+            # ======= 流程3结束后停止录制 =======
+            logger.info("流程3完成，停止录制...")
+            # 先按Home键回到桌面，以便更好地结束录制
+            try:
+                self.press_home()
+                time.sleep(2)  # 等待一下确保回到桌面
+            except Exception:
+                pass
+                
+            video_path, video_url = stop_scrcpy_recording(upload_to_tg=True)
+            if video_url:
+                self.test_video_url = video_url
+                logger.info(f"流程3视频已上传到Telegram，URL: {video_url}")
+            else:
+                logger.warning("无法获取流程3视频URL，可能是录制或上传失败")
             
             # 流程4: 清空手机里的全部应用
             result4 = self.clear_all_apps()
@@ -1173,17 +1182,19 @@ class QuickAppADBTester:
             
             logger.info(f"所有流程执行完成。详细结果: {detailed_results}")
             
-            # 测试完成后，先按Home键回到桌面，然后等待5秒，确保录制内容完整
-            # 这有助于scrcpy录制的正常结束
-            logger.info("测试完成，按Home键回到桌面...")
-            self.press_home()
-            time.sleep(5)  # 测试结束后预留5秒安全缓冲
-            
             return success
         
         except Exception as e:
             error_msg = str(e)
             logger.error(f"执行流程时出错: {error_msg}")
+            # 如果在流程3中出错，确保停止录制
+            if 'video_path' in locals():
+                logger.info("错误发生时停止录制...")
+                video_path, video_url = stop_scrcpy_recording(upload_to_tg=True)
+                if video_url:
+                    self.test_video_url = video_url
+                    logger.info(f"错误时捕获的视频已上传，URL: {video_url}")
+            
             # 详细的异常信息
             import traceback
             logger.error(f"详细错误: {traceback.format_exc()}")
@@ -1193,27 +1204,12 @@ class QuickAppADBTester:
             # 恢复原始输入法
             self.restore_original_input_method()
             
-            # 再次回到桌面，以确保录制能够干净地结束
-            try:
-                logger.info("测试完成，最后回到桌面...")
-                self.press_home()
-                time.sleep(2)
-            except Exception:
-                pass
-            
             # 检查是否有手动中断上传的视频
             if is_manually_interrupted and manual_interruption_video_url:
                 self.test_video_url = manual_interruption_video_url
                 logger.info(f"使用中断时上传的视频URL: {manual_interruption_video_url}")
-            else:
-                # 停止scrcpy录制并获取视频 - 先确保按了Home键
-                logger.info("测试完成，停止scrcpy录制...")
-                video_path, video_url = stop_scrcpy_recording(upload_to_tg=True)
-                if video_url:
-                    self.test_video_url = video_url
-                    logger.info(f"测试视频已上传到Telegram，URL: {video_url}")
-                else:
-                    logger.warning("无法获取测试视频URL，可能是录制或上传失败")
+            
+            # 注意：不再需要在这里停止录制，因为流程3结束后已经停止
             
             # 如果需要发送飞书通知
             if send_notification:
@@ -1370,6 +1366,7 @@ def main():
         logger.info("接收到终止信号，正在优雅退出...")
         is_manually_interrupted = True
         
+        # 检查是否在流程3录制过程中被中断
         if scrcpy_recording_process is not None:
             logger.info("终止录制进程...")
             video_path, video_url = stop_scrcpy_recording(upload_to_tg=True)
@@ -1492,7 +1489,7 @@ def start_scrcpy_recording(filename=None):
         "--time-limit=120",       # 限制录制时间为120秒(避免无法正常结束)
         "--video-bit-rate=8M",    # 使用8Mbps的比特率
         "--record-format=mp4",    # 确保使用mp4格式
-        "--power-off-on-close",   # 关闭scrcpy时关闭设备屏幕
+        # 移除 "--power-off-on-close" 参数，避免录制结束时设备息屏
         "--no-audio"              # 禁用音频
     ]
     
@@ -1592,24 +1589,15 @@ def stop_scrcpy_recording(upload_to_tg=True):
             if stderr:
                 logger.info(f"stderr输出: {stderr}")
         else:
-            # 1. 先按多次HOME键以确保应用回到桌面状态，这有助于scrcpy正确结束录制
-            logger.info("发送HOME键序列")
-            for i in range(3):
-                subprocess.run("adb shell input keyevent KEYCODE_HOME", shell=True, timeout=2)
-                time.sleep(0.5)
+            # 移除发送HOME键和使设备休眠的步骤，避免干扰测试流程
             
-            # 2. 让设备屏幕休眠，这也有助于scrcpy优雅地结束录制
-            logger.info("让设备屏幕休眠")
-            subprocess.run("adb shell input keyevent KEYCODE_POWER", shell=True, timeout=2)
-            time.sleep(2)
-            
-            # 3. 使用SIGINT信号(等同于按Ctrl+C) - 这是最优雅的方式，允许scrcpy完成MP4文件的正确写入
+            # 直接使用SIGINT信号(等同于按Ctrl+C) - 这是最优雅的方式，允许scrcpy完成MP4文件的正确写入
             logger.info("发送SIGINT信号 (Ctrl+C)")
             scrcpy_recording_process.send_signal(signal.SIGINT)
             
-            # 4. 增加等待时间，给予更多时间处理SIGINT
-            logger.info("等待SIGINT生效，这可能需要10-15秒...")
-            max_wait = 15  # 增加到15秒
+            # 增加等待时间，给予更多时间处理SIGINT
+            logger.info("等待SIGINT生效，这可能需要10-30秒...")
+            max_wait = 30  # 从15秒增加到30秒
             wait_interval = 1
             
             for i in range(max_wait):
@@ -1619,7 +1607,7 @@ def stop_scrcpy_recording(upload_to_tg=True):
                 logger.info(f"等待进程退出... ({i+1}/{max_wait})")
                 time.sleep(wait_interval)
             
-            # 5. 如果SIGINT未能终止进程，尝试通过ADB命令停止server
+            # 如果SIGINT未能终止进程，尝试通过ADB命令停止server
             if scrcpy_recording_process.poll() is None:
                 logger.info("SIGINT未能终止进程，尝试通过ADB停止scrcpy服务端")
                 server_cmds = [
