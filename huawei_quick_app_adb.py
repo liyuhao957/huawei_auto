@@ -1391,7 +1391,7 @@ def main():
     run_automated_test(no_notification=args.no_notification, upload_screenshots=args.upload_screenshots)
     
     # 设置定时任务，每30分钟执行一次
-    schedule.every(30).minutes.do(
+    schedule.every(5).minutes.do(
         run_automated_test, 
         no_notification=args.no_notification, 
         upload_screenshots=args.upload_screenshots
@@ -1482,7 +1482,7 @@ def start_scrcpy_recording(filename=None):
     cmd = [
         "scrcpy",
         f"--record={output_path}",
-        "--no-playback",          # 只录制不显示
+        "--no-window",           # 完全禁用窗口，避免需要手动点击窗口来终止进程
         "--video-codec=h265",     # 使用H.265编码器(更好的质量)
         "--max-size=720",         # 限制分辨率
         "--max-fps=15",           # 帧率15fps提高稳定性
@@ -1513,8 +1513,8 @@ def start_scrcpy_recording(filename=None):
             if stderr:
                 logger.error(f"错误输出: {stderr}")
                 # 尝试解析常见的错误，如参数问题
-                if "--no-display" in stderr and "--no-playback" in cmd:
-                    logger.error("检测到参数不兼容：您的scrcpy版本可能不支持--no-display，尝试使用--no-playback")
+                if "--no-display" in stderr and "--no-window" in cmd:
+                    logger.error("检测到参数不兼容：您的scrcpy版本可能不支持--no-display，尝试使用--no-window")
                 elif "unrecognized option" in stderr:
                     logger.error("检测到不支持的选项，可能需要更新scrcpy或调整参数")
             
