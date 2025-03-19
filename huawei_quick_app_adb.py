@@ -260,7 +260,7 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
         content: 通知内容
         mention_user: 要@的用户ID，如果为None则不@任何人
         mention_all: 是否@所有人
-        image_urls: 图片URL列表，如果为None则不发送图片
+        image_urls: 媒体URL列表或带有类型标识的媒体项列表，如果为None则不发送媒体
     
     Returns:
         bool: 是否发送成功
@@ -290,12 +290,12 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
             }
         })
         
-        # 如果有图片URL，添加分隔线和图片链接部分
+        # 如果有媒体URL，添加分隔线和媒体链接部分
         if image_urls and len(image_urls) > 0:
             # 添加分隔线
             elements.append({"tag": "hr"})
             
-            # 添加图片标题
+            # 添加媒体标题
             elements.append({
                 "tag": "div",
                 "text": {
@@ -304,12 +304,31 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
                 }
             })
             
-            # 为每张图片创建按钮
+            # 为每个媒体创建按钮
             image_buttons = []
             
-            for i, url in enumerate(image_urls):
-                if url:  # 确保URL不为空
+            for i, item in enumerate(image_urls):
+                # 检查是否是带有类型标识的媒体项
+                if isinstance(item, dict) and 'url' in item:
+                    url = item['url']
+                    # 根据类型设置按钮文字
+                    if 'type' in item:
+                        if item['type'] == 'video':
+                            button_text = "视频"
+                        elif item['type'] == 'screenshot_swipe':
+                            button_text = "防侧滑"
+                        elif item['type'] == 'screenshot_home':
+                            button_text = "拉回"
+                        else:
+                            button_text = f"媒体 {i+1}"
+                    else:
+                        button_text = f"媒体 {i+1}"
+                else:
+                    # 向后兼容，如果只是字符串URL
+                    url = item
                     button_text = "防侧滑" if i == 0 else "拉回" if i == 1 else "视频"
+                
+                if url:  # 确保URL不为空
                     image_buttons.append({
                         "tag": "button",
                         "text": {
@@ -320,7 +339,7 @@ def send_feishu_notification(title, content, mention_user=None, mention_all=Fals
                         "url": url
                     })
             
-            # 添加图片按钮区域
+            # 添加媒体按钮区域
             elements.append({
                 "tag": "action",
                 "actions": image_buttons
@@ -1070,6 +1089,9 @@ class QuickAppADBTester:
         Returns:
             bool: 所有流程是否都成功执行
         """
+        # 引用全局变量
+        global is_manually_interrupted, manual_interruption_video_url
+        
         logger.info("开始执行所有流程")
         
         # 用于记录测试截图URL和视频URL
@@ -1108,6 +1130,11 @@ class QuickAppADBTester:
         }
         
         try:
+            # 检查是否手动中断
+            if is_manually_interrupted:
+                logger.info("检测到测试已被手动中断")
+                return False
+                
             # 确保屏幕处于亮屏状态
             logger.info("确保屏幕处于亮屏状态")
             screen_on = self.ensure_screen_on()
@@ -1174,14 +1201,19 @@ class QuickAppADBTester:
             except Exception:
                 pass
             
-            # 停止scrcpy录制并获取视频 - 先确保按了Home键
-            logger.info("测试完成，停止scrcpy录制...")
-            video_path, video_url = stop_scrcpy_recording(upload_to_tg=True)
-            if video_url:
-                self.test_video_url = video_url
-                logger.info(f"测试视频已上传到Telegram，URL: {video_url}")
+            # 检查是否有手动中断上传的视频
+            if is_manually_interrupted and manual_interruption_video_url:
+                self.test_video_url = manual_interruption_video_url
+                logger.info(f"使用中断时上传的视频URL: {manual_interruption_video_url}")
             else:
-                logger.warning("无法获取测试视频URL，可能是录制或上传失败")
+                # 停止scrcpy录制并获取视频 - 先确保按了Home键
+                logger.info("测试完成，停止scrcpy录制...")
+                video_path, video_url = stop_scrcpy_recording(upload_to_tg=True)
+                if video_url:
+                    self.test_video_url = video_url
+                    logger.info(f"测试视频已上传到Telegram，URL: {video_url}")
+                else:
+                    logger.warning("无法获取测试视频URL，可能是录制或上传失败")
             
             # 如果需要发送飞书通知
             if send_notification:
@@ -1198,47 +1230,76 @@ class QuickAppADBTester:
                 else:
                     # 确定哪个测试失败了
                     failure_reasons = []
-                    if not detailed_results["屏幕唤醒"]:
-                        failure_reasons.append("屏幕唤醒失败")
-                    if not detailed_results["流程1_清除快应用中心数据"]:
-                        failure_reasons.append("清除快应用中心数据失败")
-                    if not detailed_results["流程2_通过应用市场管理快应用"]:
-                        failure_reasons.append("通过应用市场管理快应用失败")
-                    if not detailed_results["流程3_防侧滑测试"]:
-                        failure_reasons.append("快应用防侧滑测试失败")
-                    if not detailed_results["流程3_拉回测试"]:
-                        failure_reasons.append("快应用拉回测试失败")
-                    if not detailed_results["流程4_清空手机里的全部应用"]:
-                        failure_reasons.append("清空手机里的全部应用失败")
+                    
+                    # 如果是手动中断
+                    if is_manually_interrupted:
+                        failure_reasons.append("测试被手动中断")
+                    else:
+                        if not detailed_results["屏幕唤醒"]:
+                            failure_reasons.append("屏幕唤醒失败")
+                        if not detailed_results["流程1_清除快应用中心数据"]:
+                            failure_reasons.append("清除快应用中心数据失败")
+                        if not detailed_results["流程2_通过应用市场管理快应用"]:
+                            failure_reasons.append("通过应用市场管理快应用失败")
+                        if not detailed_results["流程3_防侧滑测试"]:
+                            failure_reasons.append("快应用防侧滑测试失败")
+                        if not detailed_results["流程3_拉回测试"]:
+                            failure_reasons.append("快应用拉回测试失败")
+                        if not detailed_results["流程4_清空手机里的全部应用"]:
+                            failure_reasons.append("清空手机里的全部应用失败")
                     
                     failure_summary = "、".join(failure_reasons)
                     
                     title = "❌ 快应用自动化测试失败"
-                    content = f"**快应用测试执行失败！失败项目：{failure_summary}**\n\n" \
-                              f"- 开始时间: {test_start_time}\n" \
-                              f"- 结束时间: {test_end_time}\n" \
-                              f"- 测试设备: 华为设备\n\n" \
-                              f"**测试结果详情:**\n" \
-                              f"1. 屏幕唤醒: {'✅ 成功' if detailed_results['屏幕唤醒'] else '❌ 失败'}\n" \
-                              f"2. 清除快应用中心数据: {'✅ 成功' if detailed_results['流程1_清除快应用中心数据'] else '❌ 失败'}\n" \
-                              f"3. 通过应用市场管理快应用: {'✅ 成功' if detailed_results['流程2_通过应用市场管理快应用'] else '❌ 失败'}\n" \
-                              f"4. 快应用功能测试: \n" \
-                              f"   - 防侧滑测试: {'✅ 成功' if detailed_results['流程3_防侧滑测试'] else '❌ 失败'}\n" \
-                              f"   - 拉回测试: {'✅ 成功' if detailed_results['流程3_拉回测试'] else '❌ 失败'}\n" \
-                              f"5. 清空手机里的全部应用: {'✅ 成功' if detailed_results['流程4_清空手机里的全部应用'] else '❌ 失败'}\n\n" \
-                              f"**{'❌ 错误信息:' if error_msg else ''}** {error_msg or ''}"
+                    
+                    # 为手动中断准备不同的内容
+                    if is_manually_interrupted:
+                        content = f"**快应用测试被手动中断！**\n\n" \
+                                  f"- 开始时间: {test_start_time}\n" \
+                                  f"- 中断时间: {test_end_time}\n" \
+                                  f"- 测试设备: 华为设备\n\n" \
+                                  f"**注意:** 测试过程被人为中断，未能完成全部测试流程。"
+                    else:
+                        content = f"**快应用测试执行失败！失败项目：{failure_summary}**\n\n" \
+                                  f"- 开始时间: {test_start_time}\n" \
+                                  f"- 结束时间: {test_end_time}\n" \
+                                  f"- 测试设备: 华为设备\n\n" \
+                                  f"**测试结果详情:**\n" \
+                                  f"1. 屏幕唤醒: {'✅ 成功' if detailed_results['屏幕唤醒'] else '❌ 失败'}\n" \
+                                  f"2. 清除快应用中心数据: {'✅ 成功' if detailed_results['流程1_清除快应用中心数据'] else '❌ 失败'}\n" \
+                                  f"3. 通过应用市场管理快应用: {'✅ 成功' if detailed_results['流程2_通过应用市场管理快应用'] else '❌ 失败'}\n" \
+                                  f"4. 快应用功能测试: \n" \
+                                  f"   - 防侧滑测试: {'✅ 成功' if detailed_results['流程3_防侧滑测试'] else '❌ 失败'}\n" \
+                                  f"   - 拉回测试: {'✅ 成功' if detailed_results['流程3_拉回测试'] else '❌ 失败'}\n" \
+                                  f"5. 清空手机里的全部应用: {'✅ 成功' if detailed_results['流程4_清空手机里的全部应用'] else '❌ 失败'}\n\n" \
+                                  f"**{'❌ 错误信息:' if error_msg else ''}** {error_msg or ''}"
                 
-                # 收集所有媒体URL
-                image_urls = []
+                # 收集所有媒体URL，使用新的带类型标识的媒体项格式
+                media_items = []
                 if self.swipe_screenshot_url:
-                    image_urls.append(self.swipe_screenshot_url)
+                    media_items.append({
+                        "type": "screenshot_swipe",
+                        "url": self.swipe_screenshot_url
+                    })
                 if self.home_screenshot_url:
-                    image_urls.append(self.home_screenshot_url)
+                    media_items.append({
+                        "type": "screenshot_home",
+                        "url": self.home_screenshot_url
+                    })
                 if self.test_video_url:
-                    image_urls.append(self.test_video_url)
+                    media_items.append({
+                        "type": "video",
+                        "url": self.test_video_url
+                    })
                 
                 # 发送飞书通知
-                send_feishu_notification(title, content, mention_all=not success, image_urls=image_urls)
+                send_feishu_notification(title, content, mention_all=not success, image_urls=media_items)
+                
+                # 重置中断标志，以便下次测试正常进行
+                if is_manually_interrupted:
+                    # global声明已在函数开头，此处不需要重复
+                    is_manually_interrupted = False
+                    manual_interruption_video_url = None
 
     def is_quick_app_running(self, app_name=None):
         """
@@ -1290,6 +1351,10 @@ def run_automated_test(no_notification=False, upload_screenshots=False):
     
     logger.info("测试完成")
 
+# 定义全局变量，用于在信号处理和测试流程间共享数据
+is_manually_interrupted = False
+manual_interruption_video_url = None
+
 def main():
     """主函数"""
     # 创建命令行参数解析器
@@ -1300,24 +1365,21 @@ def main():
     
     # 注册终止处理
     def signal_handler(sig, frame):
+        global is_manually_interrupted, manual_interruption_video_url
+        
         logger.info("接收到终止信号，正在优雅退出...")
+        is_manually_interrupted = True
+        
         if scrcpy_recording_process is not None:
             logger.info("终止录制进程...")
             video_path, video_url = stop_scrcpy_recording(upload_to_tg=True)
             
-            # 如果成功获取视频URL，手动发送飞书通知
+            # 保存视频URL到全局变量，供run_all_flows使用
             if video_url:
                 logger.info(f"上传的视频URL: {video_url}")
-                test_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                title = "❌ 测试被手动中断"
-                content = f"**华为快应用测试被手动中断**\n\n" \
-                         f"- 中断时间: {test_time}\n" \
-                         f"- 测试设备: 华为设备\n\n" \
-                         f"**注意:** 测试过程被人为中断，未能完成全部测试流程。"
-                 
-                # 发送包含视频URL的飞书通知
-                send_feishu_notification(title, content, image_urls=[video_url])
-                logger.info("已发送中断通知，包含录制视频")
+                manual_interruption_video_url = video_url
+                # 不再单独发送通知，让run_all_flows方法统一处理
+                logger.info("视频已上传，将在测试结果通知中包含")
         
         logger.info("脚本已终止")
         sys.exit(0)
@@ -1332,7 +1394,7 @@ def main():
     run_automated_test(no_notification=args.no_notification, upload_screenshots=args.upload_screenshots)
     
     # 设置定时任务，每30分钟执行一次
-    schedule.every(5).minutes.do(
+    schedule.every(30).minutes.do(
         run_automated_test, 
         no_notification=args.no_notification, 
         upload_screenshots=args.upload_screenshots

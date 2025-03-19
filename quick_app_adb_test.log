@@ -337,3 +337,866 @@ WARN: Device disconnected
 2025-03-19 10:02:26,336 - QuickAppADBTester - INFO - 使用交互式卡片消息格式发送
 2025-03-19 10:02:26,336 - QuickAppADBTester - INFO - 构建的消息结构: {"msg_type": "interactive", "card": {"config": {"wide_screen_mode": true}, "header": {"title": {"tag": "plain_text", "content": "❌ 快应用自动化测试失败"}, "template": "red"}, "elements": [{"tag": "div", "text": {"tag": "lark_md", "content": "<at id=all></at> 请注意："}}, {"tag": "div", "text": {"tag": "lark_md", "content": "**快应用测试执行失败！失败项目：清除快应用中心数据失败、通过应用市场管理快应用失败、快应用防侧滑测试失败、快应用拉回测试失败、清空手机里的全部应用失败**\n\n- 开始时间: 2025-03-19 10:01:28\n- 结束时间: 2025-03-19 10:02:26\n- 测试设备: 华为设备\n\n**测试结果详情:**\n1. 屏幕唤醒: ✅ 成功\n2. 清除快应用中心数据: ❌ 失败\n3. 通过应用市场管理快应用: ❌ 失败\n4. 快应用功能测试: \n   - 防侧滑测试: ❌ 失败\n   - 拉回测试: ❌ 失败\n5. 清空手机里的全部应用: ❌ 失败\n\n**** "}}, {"tag": "hr"}, {"tag": "note", "elements": [{"tag": "plain_text", "content": "测试时间: 2025-03-19 10:02:26"}]}]}}
 2025-03-19 10:02:26,904 - QuickAppADBTester - INFO - 飞书通知发送成功: ❌ 快应用自动化测试失败
+2025-03-19 10:07:54,369 - QuickAppADBTester - INFO - 启动定时任务模式，每30分钟执行一次测试
+2025-03-19 10:07:54,369 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-19 10:07:54,369 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-19 10:07:54,369 - QuickAppADBTester - INFO - 确保ADBKeyboard被设置为默认输入法
+2025-03-19 10:07:54,369 - QuickAppADBTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-19 10:07:54,476 - QuickAppADBTester - INFO - 检测到ADBKeyboard已安装（通过ime list确认）
+2025-03-19 10:07:54,597 - QuickAppADBTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-19 10:07:54,597 - QuickAppADBTester - INFO - 当前已经是ADBKeyboard输入法，无需切换
+2025-03-19 10:07:54,597 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:07:54,597 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:07:54,814 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:07:54,814 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:07:54,814 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:07:54,815 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:07:56,305 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:07:56,306 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:07:57,565 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:07:57,565 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-19 10:07:57,566 - QuickAppADBTester - INFO - 开始使用scrcpy录制测试流程视频: test_flow_20250319_100757.mp4
+2025-03-19 10:07:57,566 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:07:57,566 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:07:57,719 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:07:57,720 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:07:57,720 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:07:57,720 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:07:59,125 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:07:59,125 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:08:00,342 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:08:00,343 - QuickAppADBTester - INFO - 尝试优雅地终止所有scrcpy进程
+2025-03-19 10:08:01,479 - QuickAppADBTester - INFO - Linux/Mac平台：先发送SIGINT信号
+2025-03-19 10:08:06,713 - QuickAppADBTester - INFO - 所有scrcpy进程已终止
+2025-03-19 10:08:06,715 - QuickAppADBTester - INFO - 检查设备连接状态...
+2025-03-19 10:08:06,751 - QuickAppADBTester - INFO - 设备连接正常: List of devices attached
+7NQBB23606001053	device
+2025-03-19 10:08:07,884 - QuickAppADBTester - INFO - 开始录制，输出文件: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_100757.mp4
+2025-03-19 10:08:07,885 - QuickAppADBTester - INFO - 使用命令: scrcpy --record=/Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_100757.mp4 --no-playback --video-codec=h265 --max-size=720 --max-fps=15 --time-limit=120 --video-bit-rate=8M --record-format=mp4 --power-off-on-close --no-audio
+2025-03-19 10:08:09,896 - QuickAppADBTester - INFO - 录制已开始...
+2025-03-19 10:08:12,900 - QuickAppADBTester - INFO - 录制状态监控已启动
+2025-03-19 10:08:12,901 - QuickAppADBTester - INFO - 录制已启动，等待3秒确保录制稳定...
+2025-03-19 10:08:15,902 - QuickAppADBTester - INFO - 确保屏幕处于亮屏状态
+2025-03-19 10:08:15,902 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:08:15,903 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:08:16,207 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:08:16,208 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:08:16,208 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:08:16,208 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:08:17,679 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:08:17,679 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:08:18,897 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:08:18,898 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-19 10:08:18,898 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-19 10:08:18,898 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:08:18,898 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:08:19,974 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-19 10:08:19,975 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-19 10:08:20,096 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-19 10:08:22,101 - QuickAppADBTester - INFO - 步骤3: 点击搜索框
+2025-03-19 10:08:22,102 - QuickAppADBTester - INFO - 点击坐标: (276, 515)
+2025-03-19 10:08:23,252 - QuickAppADBTester - INFO - 步骤4: 输入'应用和服务'
+2025-03-19 10:08:23,253 - QuickAppADBTester - INFO - 输入文本: 应用和服务
+2025-03-19 10:08:23,253 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-19 10:08:23,253 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "应用和服务"
+2025-03-19 10:08:23,336 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-19 10:08:25,338 - QuickAppADBTester - INFO - 步骤5: 点击搜索结果'应用和服务'
+2025-03-19 10:08:25,339 - QuickAppADBTester - INFO - 点击坐标: (254, 418)
+2025-03-19 10:08:27,420 - QuickAppADBTester - INFO - 步骤6: 点击'应用管理'
+2025-03-19 10:08:27,421 - QuickAppADBTester - INFO - 点击坐标: (239, 377)
+2025-03-19 10:08:27,446 - QuickAppADBTester - INFO - 接收到终止信号，正在优雅退出...
+2025-03-19 10:08:27,447 - QuickAppADBTester - INFO - 终止录制进程...
+2025-03-19 10:08:27,447 - QuickAppADBTester - INFO - 停止录制...
+2025-03-19 10:08:27,447 - QuickAppADBTester - INFO - 发送HOME键序列
+2025-03-19 10:08:29,293 - QuickAppADBTester - INFO - 让设备屏幕休眠
+2025-03-19 10:08:31,432 - QuickAppADBTester - INFO - 发送SIGINT信号 (Ctrl+C)
+2025-03-19 10:08:31,433 - QuickAppADBTester - INFO - 等待SIGINT生效，这可能需要10-15秒...
+2025-03-19 10:08:31,433 - QuickAppADBTester - INFO - 进程在接收SIGINT后成功退出，用时1秒
+2025-03-19 10:08:31,433 - QuickAppADBTester - INFO - 录制进程已退出，退出码: 2
+2025-03-19 10:08:31,433 - QuickAppADBTester - INFO - stderr输出: 2025-03-19 10:08:07.992 scrcpy[91768:3576905] INFO: No video mirroring, SDK mouse disabled
+/opt/homebrew/Cellar/scrcpy/3.1/share/scrcpy/scrcpy-server: 1 file pushed, 0 skipped. 134.1 MB/s (90640 bytes in 0.001s)
+2025-03-19 10:08:08.729 scrcpy[91768:3576905] +[IMKClient subclass]: chose IMKClient_Modern
+2025-03-19 10:08:08.729 scrcpy[91768:3576905] +[IMKInputSession subclass]: chose IMKInputSession_Modern
+WARN: Device disconnected
+
+2025-03-19 10:08:31,433 - QuickAppADBTester - INFO - 等待10秒确保文件写入完成...
+2025-03-19 10:08:41,439 - QuickAppADBTester - INFO - 录制文件: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_100757.mp4 (大小: 1.49MB)
+2025-03-19 10:08:41,439 - QuickAppADBTester - INFO - 预检查文件完整性...
+2025-03-19 10:08:41,547 - QuickAppADBTester - INFO - 录制文件完整，时长: 18.504944秒，无需修复
+2025-03-19 10:08:41,548 - QuickAppADBTester - INFO - 上传视频到Telegram...
+2025-03-19 10:08:41,548 - QuickAppADBTester - INFO - 开始上传文件到Telegram: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_100757.mp4
+2025-03-19 10:08:41,548 - QuickAppADBTester - INFO - 发送请求到 sendVideo...
+2025-03-19 10:08:48,920 - QuickAppADBTester - INFO - 文件上传成功! 下载URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_35.mp4
+2025-03-19 10:08:48,923 - QuickAppADBTester - INFO - 视频已上传，URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_35.mp4
+2025-03-19 10:08:48,923 - QuickAppADBTester - INFO - 尝试优雅地终止所有scrcpy进程
+2025-03-19 10:08:50,167 - QuickAppADBTester - INFO - Linux/Mac平台：先发送SIGINT信号
+2025-03-19 10:08:55,416 - QuickAppADBTester - INFO - 所有scrcpy进程已终止
+2025-03-19 10:08:55,417 - QuickAppADBTester - INFO - 上传的视频URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_35.mp4
+2025-03-19 10:08:55,417 - QuickAppADBTester - INFO - 使用交互式卡片消息格式发送，包含1张图片链接
+2025-03-19 10:08:55,418 - QuickAppADBTester - INFO - 构建的消息结构: {"msg_type": "interactive", "card": {"config": {"wide_screen_mode": true}, "header": {"title": {"tag": "plain_text", "content": "❌ 测试被手动中断"}, "template": "red"}, "elements": [{"tag": "div", "text": {"tag": "lark_md", "content": "**华为快应用测试被手动中断**\n\n- 中断时间: 2025-03-19 10:08:55\n- 测试设备: 华为设备\n\n**注意:** 测试过程被人为中断，未能完成全部测试流程。"}}, {"tag": "hr"}, {"tag": "div", "text": {"tag": "lark_md", "content": "**📷 测试截图和视频：**"}}, {"tag": "action", "actions": [{"tag": "button", "text": {"tag": "plain_text", "content": "视频"}, "type": "primary", "url": "https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_35.mp4"}]}, {"tag": "div", "text": {"tag": "lark_md", "content": "查看截图 or 视频，需要使用VPN"}}, {"tag": "hr"}, {"tag": "note", "elements": [{"tag": "plain_text", "content": "测试时间: 2025-03-19 10:08:55"}]}]}}
+2025-03-19 10:08:55,945 - QuickAppADBTester - INFO - 飞书通知发送成功: ❌ 测试被手动中断
+2025-03-19 10:08:55,949 - QuickAppADBTester - INFO - 已发送中断通知，包含录制视频
+2025-03-19 10:08:55,949 - QuickAppADBTester - INFO - 脚本已终止
+2025-03-19 10:08:55,949 - QuickAppADBTester - INFO - 测试完成，最后回到桌面...
+2025-03-19 10:08:55,950 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:08:55,950 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:08:58,124 - QuickAppADBTester - INFO - 测试完成，停止scrcpy录制...
+2025-03-19 10:08:58,125 - QuickAppADBTester - WARNING - 没有正在进行的录制进程，无法停止
+2025-03-19 10:08:58,125 - QuickAppADBTester - WARNING - 无法获取测试视频URL，可能是录制或上传失败
+2025-03-19 10:08:58,125 - QuickAppADBTester - INFO - 使用交互式卡片消息格式发送
+2025-03-19 10:08:58,126 - QuickAppADBTester - INFO - 构建的消息结构: {"msg_type": "interactive", "card": {"config": {"wide_screen_mode": true}, "header": {"title": {"tag": "plain_text", "content": "❌ 快应用自动化测试失败"}, "template": "red"}, "elements": [{"tag": "div", "text": {"tag": "lark_md", "content": "<at id=all></at> 请注意："}}, {"tag": "div", "text": {"tag": "lark_md", "content": "**快应用测试执行失败！失败项目：清除快应用中心数据失败、通过应用市场管理快应用失败、快应用防侧滑测试失败、快应用拉回测试失败、清空手机里的全部应用失败**\n\n- 开始时间: 2025-03-19 10:07:57\n- 结束时间: 2025-03-19 10:08:58\n- 测试设备: 华为设备\n\n**测试结果详情:**\n1. 屏幕唤醒: ✅ 成功\n2. 清除快应用中心数据: ❌ 失败\n3. 通过应用市场管理快应用: ❌ 失败\n4. 快应用功能测试: \n   - 防侧滑测试: ❌ 失败\n   - 拉回测试: ❌ 失败\n5. 清空手机里的全部应用: ❌ 失败\n\n**** "}}, {"tag": "hr"}, {"tag": "note", "elements": [{"tag": "plain_text", "content": "测试时间: 2025-03-19 10:08:58"}]}]}}
+2025-03-19 10:08:58,636 - QuickAppADBTester - INFO - 飞书通知发送成功: ❌ 快应用自动化测试失败
+2025-03-19 10:09:27,705 - QuickAppADBTester - INFO - 启动定时任务模式，每30分钟执行一次测试
+2025-03-19 10:09:27,705 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-19 10:09:27,705 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-19 10:09:27,705 - QuickAppADBTester - INFO - 确保ADBKeyboard被设置为默认输入法
+2025-03-19 10:09:27,706 - QuickAppADBTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-19 10:09:27,766 - QuickAppADBTester - INFO - 检测到ADBKeyboard已安装（通过ime list确认）
+2025-03-19 10:09:27,837 - QuickAppADBTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-19 10:09:27,837 - QuickAppADBTester - INFO - 当前已经是ADBKeyboard输入法，无需切换
+2025-03-19 10:09:27,837 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:09:27,837 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:09:28,005 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:09:28,005 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:09:28,005 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:09:28,005 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:09:29,420 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:09:29,421 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:09:30,630 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:09:30,630 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-19 10:09:30,631 - QuickAppADBTester - INFO - 开始使用scrcpy录制测试流程视频: test_flow_20250319_100930.mp4
+2025-03-19 10:09:30,631 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:09:30,631 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:09:30,815 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:09:30,816 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:09:30,816 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:09:30,816 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:09:32,219 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:09:32,220 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:09:33,435 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:09:33,435 - QuickAppADBTester - INFO - 尝试优雅地终止所有scrcpy进程
+2025-03-19 10:09:34,572 - QuickAppADBTester - INFO - Linux/Mac平台：先发送SIGINT信号
+2025-03-19 10:09:39,842 - QuickAppADBTester - INFO - 所有scrcpy进程已终止
+2025-03-19 10:09:39,843 - QuickAppADBTester - INFO - 检查设备连接状态...
+2025-03-19 10:09:39,878 - QuickAppADBTester - INFO - 设备连接正常: List of devices attached
+7NQBB23606001053	device
+2025-03-19 10:09:41,062 - QuickAppADBTester - INFO - 开始录制，输出文件: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_100930.mp4
+2025-03-19 10:09:41,062 - QuickAppADBTester - INFO - 使用命令: scrcpy --record=/Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_100930.mp4 --no-playback --video-codec=h265 --max-size=720 --max-fps=15 --time-limit=120 --video-bit-rate=8M --record-format=mp4 --power-off-on-close --no-audio
+2025-03-19 10:09:43,071 - QuickAppADBTester - INFO - 录制已开始...
+2025-03-19 10:09:46,075 - QuickAppADBTester - INFO - 录制状态监控已启动
+2025-03-19 10:09:46,075 - QuickAppADBTester - INFO - 录制已启动，等待3秒确保录制稳定...
+2025-03-19 10:09:49,079 - QuickAppADBTester - INFO - 确保屏幕处于亮屏状态
+2025-03-19 10:09:49,079 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:09:49,079 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:09:49,309 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:09:49,309 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:09:49,309 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:09:49,310 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:09:50,775 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:09:50,777 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:09:52,052 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:09:52,052 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-19 10:09:52,052 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-19 10:09:52,052 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:09:52,052 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:09:53,139 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-19 10:09:53,139 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-19 10:09:53,264 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-19 10:09:55,265 - QuickAppADBTester - INFO - 步骤3: 点击搜索框
+2025-03-19 10:09:55,265 - QuickAppADBTester - INFO - 点击坐标: (276, 515)
+2025-03-19 10:09:56,339 - QuickAppADBTester - INFO - 步骤4: 输入'应用和服务'
+2025-03-19 10:09:56,340 - QuickAppADBTester - INFO - 输入文本: 应用和服务
+2025-03-19 10:09:56,341 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-19 10:09:56,341 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "应用和服务"
+2025-03-19 10:09:56,422 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-19 10:09:58,426 - QuickAppADBTester - INFO - 步骤5: 点击搜索结果'应用和服务'
+2025-03-19 10:09:58,426 - QuickAppADBTester - INFO - 点击坐标: (254, 418)
+2025-03-19 10:10:00,601 - QuickAppADBTester - INFO - 步骤6: 点击'应用管理'
+2025-03-19 10:10:00,602 - QuickAppADBTester - INFO - 点击坐标: (239, 377)
+2025-03-19 10:10:02,729 - QuickAppADBTester - INFO - 步骤7: 点击搜索框
+2025-03-19 10:10:02,730 - QuickAppADBTester - INFO - 点击坐标: (239, 354)
+2025-03-19 10:10:03,876 - QuickAppADBTester - INFO - 步骤8: 输入'快应用中心'
+2025-03-19 10:10:03,877 - QuickAppADBTester - INFO - 输入文本: 快应用中心
+2025-03-19 10:10:03,877 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-19 10:10:03,877 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "快应用中心"
+2025-03-19 10:10:04,026 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-19 10:10:06,033 - QuickAppADBTester - INFO - 步骤9: 点击搜索结果'快应用中心'
+2025-03-19 10:10:06,034 - QuickAppADBTester - INFO - 点击坐标: (261, 574)
+2025-03-19 10:10:08,194 - QuickAppADBTester - INFO - 步骤10: 向上滑动显示更多内容
+2025-03-19 10:10:08,195 - QuickAppADBTester - INFO - 滑动: (490, 1900) -> (490, 950)
+2025-03-19 10:10:09,620 - QuickAppADBTester - INFO - 滑动: (490, 1663) -> (490, 712)
+2025-03-19 10:10:11,100 - QuickAppADBTester - INFO - 步骤11: 点击'存储'
+2025-03-19 10:10:11,100 - QuickAppADBTester - INFO - 点击坐标: (156, 1021)
+2025-03-19 10:10:12,257 - QuickAppADBTester - INFO - 步骤12: 点击'删除数据'
+2025-03-19 10:10:12,258 - QuickAppADBTester - INFO - 点击坐标: (555, 1271)
+2025-03-19 10:10:13,353 - QuickAppADBTester - INFO - 步骤13: 点击确认对话框中的'确定'按钮
+2025-03-19 10:10:13,354 - QuickAppADBTester - INFO - 点击坐标: (757, 2214)
+2025-03-19 10:10:15,526 - QuickAppADBTester - INFO - 流程1执行完成: 清除快应用中心数据
+2025-03-19 10:10:15,527 - QuickAppADBTester - INFO - ===== 开始执行流程2: 通过应用市场管理快应用 =====
+2025-03-19 10:10:15,527 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-19 10:10:15,527 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:10:15,527 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:10:16,169 - QuickAppADBTester - INFO - 录制进行中，已录制约 30 秒
+2025-03-19 10:10:16,700 - QuickAppADBTester - INFO - 步骤2: 打开应用市场
+2025-03-19 10:10:16,700 - QuickAppADBTester - INFO - 运行命令: adb shell am start -n com.huawei.appmarket/.MainActivity
+2025-03-19 10:10:16,821 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { cmp=com.huawei.appmarket/.MainActivity }
+
+2025-03-19 10:10:21,826 - QuickAppADBTester - INFO - 步骤3: 点击'我的'选项卡
+2025-03-19 10:10:21,827 - QuickAppADBTester - INFO - 点击坐标: (965, 2247)
+2025-03-19 10:10:23,969 - QuickAppADBTester - INFO - 步骤4: 点击'快应用管理'选项
+2025-03-19 10:10:23,970 - QuickAppADBTester - INFO - 点击坐标: (171, 1653)
+2025-03-19 10:10:29,123 - QuickAppADBTester - INFO - 步骤5: 检查并点击'同意'按钮(如果出现)
+2025-03-19 10:10:29,124 - QuickAppADBTester - INFO - 点击坐标: (735, 2226)
+2025-03-19 10:10:31,293 - QuickAppADBTester - INFO - 等待应用市场稳定 (5秒)
+2025-03-19 10:10:36,299 - QuickAppADBTester - INFO - 流程2执行完成: 通过应用市场管理快应用
+2025-03-19 10:10:36,300 - QuickAppADBTester - INFO - ===== 开始执行流程3: 搜索并打开快应用进行测试 =====
+2025-03-19 10:10:36,300 - QuickAppADBTester - INFO - 步骤1: 点击搜索框
+2025-03-19 10:10:36,300 - QuickAppADBTester - INFO - 点击坐标: (326, 354)
+2025-03-19 10:10:37,476 - QuickAppADBTester - INFO - 步骤2: 输入'优购'
+2025-03-19 10:10:37,476 - QuickAppADBTester - INFO - 输入文本: 优购
+2025-03-19 10:10:37,477 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-19 10:10:37,477 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "优购"
+2025-03-19 10:10:37,573 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-19 10:10:39,578 - QuickAppADBTester - INFO - 步骤3: 按下回车键
+2025-03-19 10:10:39,579 - QuickAppADBTester - INFO - 按下回车键
+2025-03-19 10:10:39,579 - QuickAppADBTester - INFO - 按下按键: 66
+2025-03-19 10:10:41,843 - QuickAppADBTester - INFO - 步骤4: 点击搜索结果旁边的'打开'按钮
+2025-03-19 10:10:41,844 - QuickAppADBTester - INFO - 点击坐标: (860, 370)
+2025-03-19 10:10:46,283 - QuickAppADBTester - INFO - 录制进行中，已录制约 60 秒
+2025-03-19 10:10:50,032 - QuickAppADBTester - INFO - 步骤5: 准备执行10次侧滑
+2025-03-19 10:10:50,033 - QuickAppADBTester - INFO - 步骤6: 执行10次侧滑操作
+2025-03-19 10:10:50,033 - QuickAppADBTester - INFO - 第1次侧滑
+2025-03-19 10:10:50,033 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:10:50,310 - QuickAppADBTester - INFO - 第2次侧滑
+2025-03-19 10:10:50,310 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:10:50,588 - QuickAppADBTester - INFO - 第3次侧滑
+2025-03-19 10:10:50,589 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:10:50,819 - QuickAppADBTester - INFO - 第4次侧滑
+2025-03-19 10:10:50,819 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:10:51,067 - QuickAppADBTester - INFO - 第5次侧滑
+2025-03-19 10:10:51,067 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:10:51,287 - QuickAppADBTester - INFO - 第6次侧滑
+2025-03-19 10:10:51,288 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:10:51,509 - QuickAppADBTester - INFO - 第7次侧滑
+2025-03-19 10:10:51,510 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:10:51,763 - QuickAppADBTester - INFO - 第8次侧滑
+2025-03-19 10:10:51,763 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:10:52,009 - QuickAppADBTester - INFO - 第9次侧滑
+2025-03-19 10:10:52,009 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:10:52,283 - QuickAppADBTester - INFO - 第10次侧滑
+2025-03-19 10:10:52,284 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:10:54,518 - QuickAppADBTester - INFO - 步骤7: 检查当前应用
+2025-03-19 10:10:54,520 - QuickAppADBTester - INFO - 检查快应用是否在前台运行
+2025-03-19 10:10:54,520 - QuickAppADBTester - INFO - 运行命令: adb shell "dumpsys activity activities | grep -A 1 'mResumedActivity'"
+2025-03-19 10:10:54,640 - QuickAppADBTester - INFO - 命令输出:     mResumedActivity: ActivityRecord{f336ba4 u0 com.huawei.fastapp/.app.processManager.RpkLoaderActivityEntry0 t324}
+    * Task{47be4c2 #324 type=standard A=10148:com.huawei.fastapp.app.launcher0 U=0 visible=true mode=fullscreen translucent=false sz=1}
+
+2025-03-19 10:10:54,641 - QuickAppADBTester - INFO - ✅ 检测到华为快应用正在前台运行
+2025-03-19 10:10:54,641 - QuickAppADBTester - INFO - 侧滑拦截成功：快应用仍在前台运行
+2025-03-19 10:10:54,641 - QuickAppADBTester - INFO - 步骤8: 截图记录侧滑后状态
+2025-03-19 10:10:54,641 - QuickAppADBTester - INFO - 正在截图: /Users/ct/Desktop/huawei_auto/screenshots/after_swipe_20250319_101054_20250319_101054.png
+2025-03-19 10:10:56,143 - QuickAppADBTester - INFO - 上传截图到Telegram: /Users/ct/Desktop/huawei_auto/screenshots/after_swipe_20250319_101054_20250319_101054.png
+2025-03-19 10:10:56,143 - QuickAppADBTester - INFO - 开始上传文件到Telegram: /Users/ct/Desktop/huawei_auto/screenshots/after_swipe_20250319_101054_20250319_101054.png
+2025-03-19 10:10:56,143 - QuickAppADBTester - INFO - 发送请求到 sendPhoto...
+2025-03-19 10:11:01,941 - QuickAppADBTester - INFO - 文件上传成功! 下载URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_36.jpg
+2025-03-19 10:11:01,949 - QuickAppADBTester - INFO - 截图上传成功: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_36.jpg
+2025-03-19 10:11:01,949 - QuickAppADBTester - INFO - 步骤9: 按Home键
+2025-03-19 10:11:01,950 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:11:01,950 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:11:05,773 - QuickAppADBTester - INFO - 接收到终止信号，正在优雅退出...
+2025-03-19 10:11:05,774 - QuickAppADBTester - INFO - 终止录制进程...
+2025-03-19 10:11:05,774 - QuickAppADBTester - INFO - 停止录制...
+2025-03-19 10:11:05,774 - QuickAppADBTester - INFO - 发送HOME键序列
+2025-03-19 10:11:07,793 - QuickAppADBTester - INFO - 让设备屏幕休眠
+2025-03-19 10:11:09,982 - QuickAppADBTester - INFO - 发送SIGINT信号 (Ctrl+C)
+2025-03-19 10:11:09,982 - QuickAppADBTester - INFO - 等待SIGINT生效，这可能需要10-15秒...
+2025-03-19 10:11:09,982 - QuickAppADBTester - INFO - 进程在接收SIGINT后成功退出，用时1秒
+2025-03-19 10:11:09,983 - QuickAppADBTester - INFO - 录制进程已退出，退出码: 2
+2025-03-19 10:11:09,983 - QuickAppADBTester - INFO - stderr输出: 2025-03-19 10:09:41.186 scrcpy[93340:3582202] INFO: No video mirroring, SDK mouse disabled
+/opt/homebrew/Cellar/scrcpy/3.1/share/scrcpy/scrcpy-server: 1 file pushed, 0 skipped. 139.6 MB/s (90640 bytes in 0.001s)
+2025-03-19 10:09:41.924 scrcpy[93340:3582202] +[IMKClient subclass]: chose IMKClient_Modern
+2025-03-19 10:09:41.924 scrcpy[93340:3582202] +[IMKInputSession subclass]: chose IMKInputSession_Modern
+WARN: Device disconnected
+
+2025-03-19 10:11:09,983 - QuickAppADBTester - INFO - 等待10秒确保文件写入完成...
+2025-03-19 10:11:19,989 - QuickAppADBTester - INFO - 录制文件: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_100930.mp4 (大小: 9.13MB)
+2025-03-19 10:11:19,991 - QuickAppADBTester - INFO - 预检查文件完整性...
+2025-03-19 10:11:20,154 - QuickAppADBTester - INFO - 录制文件完整，时长: 83.779578秒，无需修复
+2025-03-19 10:11:20,154 - QuickAppADBTester - INFO - 上传视频到Telegram...
+2025-03-19 10:11:20,155 - QuickAppADBTester - INFO - 开始上传文件到Telegram: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_100930.mp4
+2025-03-19 10:11:20,155 - QuickAppADBTester - INFO - 发送请求到 sendVideo...
+2025-03-19 10:11:28,422 - QuickAppADBTester - INFO - 文件上传成功! 下载URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_37.mp4
+2025-03-19 10:11:28,429 - QuickAppADBTester - INFO - 视频已上传，URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_37.mp4
+2025-03-19 10:11:28,429 - QuickAppADBTester - INFO - 尝试优雅地终止所有scrcpy进程
+2025-03-19 10:11:29,570 - QuickAppADBTester - INFO - Linux/Mac平台：先发送SIGINT信号
+2025-03-19 10:11:34,821 - QuickAppADBTester - INFO - 所有scrcpy进程已终止
+2025-03-19 10:11:34,822 - QuickAppADBTester - INFO - 上传的视频URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_37.mp4
+2025-03-19 10:11:34,822 - QuickAppADBTester - INFO - 使用交互式卡片消息格式发送，包含1张图片链接
+2025-03-19 10:11:34,823 - QuickAppADBTester - INFO - 构建的消息结构: {"msg_type": "interactive", "card": {"config": {"wide_screen_mode": true}, "header": {"title": {"tag": "plain_text", "content": "❌ 测试被手动中断"}, "template": "red"}, "elements": [{"tag": "div", "text": {"tag": "lark_md", "content": "**华为快应用测试被手动中断**\n\n- 中断时间: 2025-03-19 10:11:34\n- 测试设备: 华为设备\n\n**注意:** 测试过程被人为中断，未能完成全部测试流程。"}}, {"tag": "hr"}, {"tag": "div", "text": {"tag": "lark_md", "content": "**📷 测试截图和视频：**"}}, {"tag": "action", "actions": [{"tag": "button", "text": {"tag": "plain_text", "content": "视频"}, "type": "primary", "url": "https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_37.mp4"}]}, {"tag": "div", "text": {"tag": "lark_md", "content": "查看截图 or 视频，需要使用VPN"}}, {"tag": "hr"}, {"tag": "note", "elements": [{"tag": "plain_text", "content": "测试时间: 2025-03-19 10:11:34"}]}]}}
+2025-03-19 10:11:35,363 - QuickAppADBTester - INFO - 飞书通知发送成功: ❌ 测试被手动中断
+2025-03-19 10:11:35,365 - QuickAppADBTester - INFO - 已发送中断通知，包含录制视频
+2025-03-19 10:11:35,366 - QuickAppADBTester - INFO - 脚本已终止
+2025-03-19 10:11:35,366 - QuickAppADBTester - INFO - 测试完成，最后回到桌面...
+2025-03-19 10:11:35,366 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:11:35,366 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:11:37,480 - QuickAppADBTester - INFO - 测试完成，停止scrcpy录制...
+2025-03-19 10:11:37,481 - QuickAppADBTester - WARNING - 没有正在进行的录制进程，无法停止
+2025-03-19 10:11:37,481 - QuickAppADBTester - WARNING - 无法获取测试视频URL，可能是录制或上传失败
+2025-03-19 10:11:37,481 - QuickAppADBTester - INFO - 使用交互式卡片消息格式发送，包含1张图片链接
+2025-03-19 10:11:37,482 - QuickAppADBTester - INFO - 构建的消息结构: {"msg_type": "interactive", "card": {"config": {"wide_screen_mode": true}, "header": {"title": {"tag": "plain_text", "content": "❌ 快应用自动化测试失败"}, "template": "red"}, "elements": [{"tag": "div", "text": {"tag": "lark_md", "content": "<at id=all></at> 请注意："}}, {"tag": "div", "text": {"tag": "lark_md", "content": "**快应用测试执行失败！失败项目：快应用防侧滑测试失败、快应用拉回测试失败、清空手机里的全部应用失败**\n\n- 开始时间: 2025-03-19 10:09:30\n- 结束时间: 2025-03-19 10:11:37\n- 测试设备: 华为设备\n\n**测试结果详情:**\n1. 屏幕唤醒: ✅ 成功\n2. 清除快应用中心数据: ✅ 成功\n3. 通过应用市场管理快应用: ✅ 成功\n4. 快应用功能测试: \n   - 防侧滑测试: ❌ 失败\n   - 拉回测试: ❌ 失败\n5. 清空手机里的全部应用: ❌ 失败\n\n**** "}}, {"tag": "hr"}, {"tag": "div", "text": {"tag": "lark_md", "content": "**📷 测试截图和视频：**"}}, {"tag": "action", "actions": [{"tag": "button", "text": {"tag": "plain_text", "content": "防侧滑"}, "type": "primary", "url": "https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_36.jpg"}]}, {"tag": "div", "text": {"tag": "lark_md", "content": "查看截图 or 视频，需要使用VPN"}}, {"tag": "hr"}, {"tag": "note", "elements": [{"tag": "plain_text", "content": "测试时间: 2025-03-19 10:11:37"}]}]}}
+2025-03-19 10:11:38,004 - QuickAppADBTester - INFO - 飞书通知发送成功: ❌ 快应用自动化测试失败
+2025-03-19 10:16:28,839 - QuickAppADBTester - INFO - 启动定时任务模式，每30分钟执行一次测试
+2025-03-19 10:16:28,839 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-19 10:16:28,839 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-19 10:16:28,839 - QuickAppADBTester - INFO - 确保ADBKeyboard被设置为默认输入法
+2025-03-19 10:16:28,839 - QuickAppADBTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-19 10:16:29,031 - QuickAppADBTester - INFO - 检测到ADBKeyboard已安装（通过ime list确认）
+2025-03-19 10:16:29,139 - QuickAppADBTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-19 10:16:29,140 - QuickAppADBTester - INFO - 当前已经是ADBKeyboard输入法，无需切换
+2025-03-19 10:16:29,140 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:16:29,140 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:16:29,342 - QuickAppADBTester - INFO - 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-19 10:16:29,343 - QuickAppADBTester - INFO - 屏幕处于熄屏状态，尝试唤醒
+2025-03-19 10:16:29,343 - QuickAppADBTester - INFO - 尝试唤醒屏幕
+2025-03-19 10:16:29,343 - QuickAppADBTester - INFO - 使用电源键唤醒
+2025-03-19 10:16:29,343 - QuickAppADBTester - INFO - 按下按键: KEYCODE_POWER
+2025-03-19 10:16:31,519 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:16:31,691 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:16:31,692 - QuickAppADBTester - INFO - 成功唤醒屏幕
+2025-03-19 10:16:31,692 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:16:31,692 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:16:33,116 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:16:33,117 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:16:34,334 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:16:34,334 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-19 10:16:34,334 - QuickAppADBTester - INFO - 开始使用scrcpy录制测试流程视频: test_flow_20250319_101634.mp4
+2025-03-19 10:16:34,334 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:16:34,335 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:16:34,511 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:16:34,512 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:16:34,512 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:16:34,512 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:16:35,915 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:16:35,916 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:16:37,178 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:16:37,178 - QuickAppADBTester - INFO - 尝试优雅地终止所有scrcpy进程
+2025-03-19 10:16:38,370 - QuickAppADBTester - INFO - Linux/Mac平台：先发送SIGINT信号
+2025-03-19 10:16:43,612 - QuickAppADBTester - INFO - 所有scrcpy进程已终止
+2025-03-19 10:16:43,614 - QuickAppADBTester - INFO - 检查设备连接状态...
+2025-03-19 10:16:43,662 - QuickAppADBTester - INFO - 设备连接正常: List of devices attached
+7NQBB23606001053	device
+2025-03-19 10:16:44,845 - QuickAppADBTester - INFO - 开始录制，输出文件: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_101634.mp4
+2025-03-19 10:16:44,846 - QuickAppADBTester - INFO - 使用命令: scrcpy --record=/Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_101634.mp4 --no-playback --video-codec=h265 --max-size=720 --max-fps=15 --time-limit=120 --video-bit-rate=8M --record-format=mp4 --power-off-on-close --no-audio
+2025-03-19 10:16:46,858 - QuickAppADBTester - INFO - 录制已开始...
+2025-03-19 10:16:49,862 - QuickAppADBTester - INFO - 录制状态监控已启动
+2025-03-19 10:16:49,862 - QuickAppADBTester - INFO - 录制已启动，等待3秒确保录制稳定...
+2025-03-19 10:16:52,867 - QuickAppADBTester - INFO - 确保屏幕处于亮屏状态
+2025-03-19 10:16:52,868 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:16:52,868 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:16:53,184 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:16:53,185 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:16:53,185 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:16:53,185 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:16:54,659 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:16:54,660 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:16:55,870 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:16:55,871 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-19 10:16:55,871 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-19 10:16:55,871 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:16:55,871 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:16:56,961 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-19 10:16:56,961 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-19 10:16:57,085 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-19 10:16:59,098 - QuickAppADBTester - INFO - 步骤3: 点击搜索框
+2025-03-19 10:16:59,098 - QuickAppADBTester - INFO - 点击坐标: (276, 515)
+2025-03-19 10:17:00,311 - QuickAppADBTester - INFO - 步骤4: 输入'应用和服务'
+2025-03-19 10:17:00,312 - QuickAppADBTester - INFO - 输入文本: 应用和服务
+2025-03-19 10:17:00,312 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-19 10:17:00,312 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "应用和服务"
+2025-03-19 10:17:00,393 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-19 10:17:02,401 - QuickAppADBTester - INFO - 步骤5: 点击搜索结果'应用和服务'
+2025-03-19 10:17:02,401 - QuickAppADBTester - INFO - 点击坐标: (254, 418)
+2025-03-19 10:17:04,478 - QuickAppADBTester - INFO - 步骤6: 点击'应用管理'
+2025-03-19 10:17:04,480 - QuickAppADBTester - INFO - 点击坐标: (239, 377)
+2025-03-19 10:17:06,581 - QuickAppADBTester - INFO - 步骤7: 点击搜索框
+2025-03-19 10:17:06,582 - QuickAppADBTester - INFO - 点击坐标: (239, 354)
+2025-03-19 10:17:07,722 - QuickAppADBTester - INFO - 步骤8: 输入'快应用中心'
+2025-03-19 10:17:07,722 - QuickAppADBTester - INFO - 输入文本: 快应用中心
+2025-03-19 10:17:07,728 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-19 10:17:07,733 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "快应用中心"
+2025-03-19 10:17:07,820 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-19 10:17:09,826 - QuickAppADBTester - INFO - 步骤9: 点击搜索结果'快应用中心'
+2025-03-19 10:17:09,826 - QuickAppADBTester - INFO - 点击坐标: (261, 574)
+2025-03-19 10:17:11,993 - QuickAppADBTester - INFO - 步骤10: 向上滑动显示更多内容
+2025-03-19 10:17:11,995 - QuickAppADBTester - INFO - 滑动: (490, 1900) -> (490, 950)
+2025-03-19 10:17:13,417 - QuickAppADBTester - INFO - 滑动: (490, 1663) -> (490, 712)
+2025-03-19 10:17:14,865 - QuickAppADBTester - INFO - 步骤11: 点击'存储'
+2025-03-19 10:17:14,866 - QuickAppADBTester - INFO - 点击坐标: (156, 1021)
+2025-03-19 10:17:16,009 - QuickAppADBTester - INFO - 步骤12: 点击'删除数据'
+2025-03-19 10:17:16,009 - QuickAppADBTester - INFO - 点击坐标: (555, 1271)
+2025-03-19 10:17:17,105 - QuickAppADBTester - INFO - 步骤13: 点击确认对话框中的'确定'按钮
+2025-03-19 10:17:17,106 - QuickAppADBTester - INFO - 点击坐标: (757, 2214)
+2025-03-19 10:17:19,284 - QuickAppADBTester - INFO - 流程1执行完成: 清除快应用中心数据
+2025-03-19 10:17:19,285 - QuickAppADBTester - INFO - ===== 开始执行流程2: 通过应用市场管理快应用 =====
+2025-03-19 10:17:19,285 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-19 10:17:19,285 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:17:19,285 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:17:19,967 - QuickAppADBTester - INFO - 录制进行中，已录制约 30 秒
+2025-03-19 10:17:20,441 - QuickAppADBTester - INFO - 步骤2: 打开应用市场
+2025-03-19 10:17:20,442 - QuickAppADBTester - INFO - 运行命令: adb shell am start -n com.huawei.appmarket/.MainActivity
+2025-03-19 10:17:20,555 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { cmp=com.huawei.appmarket/.MainActivity }
+
+2025-03-19 10:17:25,557 - QuickAppADBTester - INFO - 步骤3: 点击'我的'选项卡
+2025-03-19 10:17:25,557 - QuickAppADBTester - INFO - 点击坐标: (965, 2247)
+2025-03-19 10:17:27,706 - QuickAppADBTester - INFO - 步骤4: 点击'快应用管理'选项
+2025-03-19 10:17:27,706 - QuickAppADBTester - INFO - 点击坐标: (171, 1653)
+2025-03-19 10:17:32,860 - QuickAppADBTester - INFO - 步骤5: 检查并点击'同意'按钮(如果出现)
+2025-03-19 10:17:32,861 - QuickAppADBTester - INFO - 点击坐标: (735, 2226)
+2025-03-19 10:17:35,000 - QuickAppADBTester - INFO - 等待应用市场稳定 (5秒)
+2025-03-19 10:17:40,002 - QuickAppADBTester - INFO - 流程2执行完成: 通过应用市场管理快应用
+2025-03-19 10:17:40,004 - QuickAppADBTester - INFO - ===== 开始执行流程3: 搜索并打开快应用进行测试 =====
+2025-03-19 10:17:40,004 - QuickAppADBTester - INFO - 步骤1: 点击搜索框
+2025-03-19 10:17:40,004 - QuickAppADBTester - INFO - 点击坐标: (326, 354)
+2025-03-19 10:17:41,116 - QuickAppADBTester - INFO - 步骤2: 输入'优购'
+2025-03-19 10:17:41,116 - QuickAppADBTester - INFO - 输入文本: 优购
+2025-03-19 10:17:41,116 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-19 10:17:41,116 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "优购"
+2025-03-19 10:17:41,195 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-19 10:17:43,199 - QuickAppADBTester - INFO - 步骤3: 按下回车键
+2025-03-19 10:17:43,199 - QuickAppADBTester - INFO - 按下回车键
+2025-03-19 10:17:43,199 - QuickAppADBTester - INFO - 按下按键: 66
+2025-03-19 10:17:45,459 - QuickAppADBTester - INFO - 步骤4: 点击搜索结果旁边的'打开'按钮
+2025-03-19 10:17:45,460 - QuickAppADBTester - INFO - 点击坐标: (860, 370)
+2025-03-19 10:17:50,055 - QuickAppADBTester - INFO - 录制进行中，已录制约 60 秒
+2025-03-19 10:17:53,582 - QuickAppADBTester - INFO - 步骤5: 准备执行10次侧滑
+2025-03-19 10:17:53,583 - QuickAppADBTester - INFO - 步骤6: 执行10次侧滑操作
+2025-03-19 10:17:53,583 - QuickAppADBTester - INFO - 第1次侧滑
+2025-03-19 10:17:53,583 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:17:53,914 - QuickAppADBTester - INFO - 第2次侧滑
+2025-03-19 10:17:53,915 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:17:54,164 - QuickAppADBTester - INFO - 第3次侧滑
+2025-03-19 10:17:54,165 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:17:54,407 - QuickAppADBTester - INFO - 第4次侧滑
+2025-03-19 10:17:54,407 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:17:54,659 - QuickAppADBTester - INFO - 第5次侧滑
+2025-03-19 10:17:54,659 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:17:54,878 - QuickAppADBTester - INFO - 第6次侧滑
+2025-03-19 10:17:54,879 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:17:55,099 - QuickAppADBTester - INFO - 第7次侧滑
+2025-03-19 10:17:55,100 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:17:55,357 - QuickAppADBTester - INFO - 第8次侧滑
+2025-03-19 10:17:55,358 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:17:55,579 - QuickAppADBTester - INFO - 第9次侧滑
+2025-03-19 10:17:55,580 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:17:55,823 - QuickAppADBTester - INFO - 第10次侧滑
+2025-03-19 10:17:55,824 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:17:58,054 - QuickAppADBTester - INFO - 步骤7: 检查当前应用
+2025-03-19 10:17:58,055 - QuickAppADBTester - INFO - 检查快应用是否在前台运行
+2025-03-19 10:17:58,055 - QuickAppADBTester - INFO - 运行命令: adb shell "dumpsys activity activities | grep -A 1 'mResumedActivity'"
+2025-03-19 10:17:58,168 - QuickAppADBTester - INFO - 命令输出:     mResumedActivity: ActivityRecord{3ca8274 u0 com.huawei.fastapp/.app.processManager.RpkLoaderActivityEntry0 t334}
+    * Task{9cd6012 #334 type=standard A=10148:com.huawei.fastapp.app.launcher0 U=0 visible=true mode=fullscreen translucent=false sz=1}
+
+2025-03-19 10:17:58,169 - QuickAppADBTester - INFO - ✅ 检测到华为快应用正在前台运行
+2025-03-19 10:17:58,169 - QuickAppADBTester - INFO - 侧滑拦截成功：快应用仍在前台运行
+2025-03-19 10:17:58,169 - QuickAppADBTester - INFO - 步骤8: 截图记录侧滑后状态
+2025-03-19 10:17:58,169 - QuickAppADBTester - INFO - 正在截图: /Users/ct/Desktop/huawei_auto/screenshots/after_swipe_20250319_101758_20250319_101758.png
+2025-03-19 10:17:59,717 - QuickAppADBTester - INFO - 上传截图到Telegram: /Users/ct/Desktop/huawei_auto/screenshots/after_swipe_20250319_101758_20250319_101758.png
+2025-03-19 10:17:59,717 - QuickAppADBTester - INFO - 开始上传文件到Telegram: /Users/ct/Desktop/huawei_auto/screenshots/after_swipe_20250319_101758_20250319_101758.png
+2025-03-19 10:17:59,717 - QuickAppADBTester - INFO - 发送请求到 sendPhoto...
+2025-03-19 10:18:06,570 - QuickAppADBTester - INFO - 文件上传成功! 下载URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_38.jpg
+2025-03-19 10:18:06,578 - QuickAppADBTester - INFO - 截图上传成功: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_38.jpg
+2025-03-19 10:18:06,578 - QuickAppADBTester - INFO - 步骤9: 按Home键
+2025-03-19 10:18:06,578 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:18:06,578 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:18:09,106 - QuickAppADBTester - INFO - 接收到终止信号，正在优雅退出...
+2025-03-19 10:18:09,107 - QuickAppADBTester - INFO - 终止录制进程...
+2025-03-19 10:18:09,107 - QuickAppADBTester - INFO - 停止录制...
+2025-03-19 10:18:09,107 - QuickAppADBTester - INFO - 发送HOME键序列
+2025-03-19 10:18:11,029 - QuickAppADBTester - INFO - 让设备屏幕休眠
+2025-03-19 10:18:13,215 - QuickAppADBTester - INFO - 发送SIGINT信号 (Ctrl+C)
+2025-03-19 10:18:13,217 - QuickAppADBTester - INFO - 等待SIGINT生效，这可能需要10-15秒...
+2025-03-19 10:18:13,217 - QuickAppADBTester - INFO - 进程在接收SIGINT后成功退出，用时1秒
+2025-03-19 10:18:13,218 - QuickAppADBTester - INFO - 录制进程已退出，退出码: 2
+2025-03-19 10:18:13,218 - QuickAppADBTester - INFO - stderr输出: 2025-03-19 10:16:44.952 scrcpy[958:3608236] INFO: No video mirroring, SDK mouse disabled
+/opt/homebrew/Cellar/scrcpy/3.1/share/scrcpy/scrcpy-server: 1 file pushed, 0 skipped. 169.8 MB/s (90640 bytes in 0.001s)
+2025-03-19 10:16:45.772 scrcpy[958:3608236] +[IMKClient subclass]: chose IMKClient_Modern
+2025-03-19 10:16:45.772 scrcpy[958:3608236] +[IMKInputSession subclass]: chose IMKInputSession_Modern
+WARN: Device disconnected
+
+2025-03-19 10:18:13,218 - QuickAppADBTester - INFO - 等待10秒确保文件写入完成...
+2025-03-19 10:18:23,221 - QuickAppADBTester - INFO - 录制文件: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_101634.mp4 (大小: 6.86MB)
+2025-03-19 10:18:23,223 - QuickAppADBTester - INFO - 预检查文件完整性...
+2025-03-19 10:18:23,378 - QuickAppADBTester - INFO - 录制文件完整，时长: 83.310744秒，无需修复
+2025-03-19 10:18:23,378 - QuickAppADBTester - INFO - 上传视频到Telegram...
+2025-03-19 10:18:23,378 - QuickAppADBTester - INFO - 开始上传文件到Telegram: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_101634.mp4
+2025-03-19 10:18:23,378 - QuickAppADBTester - INFO - 发送请求到 sendVideo...
+2025-03-19 10:18:31,109 - QuickAppADBTester - INFO - 文件上传成功! 下载URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_39.mp4
+2025-03-19 10:18:31,117 - QuickAppADBTester - INFO - 视频已上传，URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_39.mp4
+2025-03-19 10:18:31,118 - QuickAppADBTester - INFO - 尝试优雅地终止所有scrcpy进程
+2025-03-19 10:18:32,255 - QuickAppADBTester - INFO - Linux/Mac平台：先发送SIGINT信号
+2025-03-19 10:18:37,512 - QuickAppADBTester - INFO - 所有scrcpy进程已终止
+2025-03-19 10:18:37,514 - QuickAppADBTester - INFO - 上传的视频URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_39.mp4
+2025-03-19 10:18:37,515 - QuickAppADBTester - INFO - 视频已上传，将在测试结果通知中包含
+2025-03-19 10:18:37,515 - QuickAppADBTester - INFO - 脚本已终止
+2025-03-19 10:18:37,515 - QuickAppADBTester - INFO - 测试完成，最后回到桌面...
+2025-03-19 10:18:37,515 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:18:37,515 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:18:39,643 - QuickAppADBTester - INFO - 使用中断时上传的视频URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_39.mp4
+2025-03-19 10:18:39,644 - QuickAppADBTester - INFO - 使用交互式卡片消息格式发送，包含2张图片链接
+2025-03-19 10:18:39,645 - QuickAppADBTester - INFO - 构建的消息结构: {"msg_type": "interactive", "card": {"config": {"wide_screen_mode": true}, "header": {"title": {"tag": "plain_text", "content": "❌ 快应用自动化测试失败"}, "template": "red"}, "elements": [{"tag": "div", "text": {"tag": "lark_md", "content": "<at id=all></at> 请注意："}}, {"tag": "div", "text": {"tag": "lark_md", "content": "**快应用测试被手动中断！**\n\n- 开始时间: 2025-03-19 10:16:34\n- 中断时间: 2025-03-19 10:18:39\n- 测试设备: 华为设备\n\n**注意:** 测试过程被人为中断，未能完成全部测试流程。"}}, {"tag": "hr"}, {"tag": "div", "text": {"tag": "lark_md", "content": "**📷 测试截图和视频：**"}}, {"tag": "action", "actions": [{"tag": "button", "text": {"tag": "plain_text", "content": "防侧滑"}, "type": "primary", "url": "https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_38.jpg"}, {"tag": "button", "text": {"tag": "plain_text", "content": "视频"}, "type": "primary", "url": "https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_39.mp4"}]}, {"tag": "div", "text": {"tag": "lark_md", "content": "查看截图 or 视频，需要使用VPN"}}, {"tag": "hr"}, {"tag": "note", "elements": [{"tag": "plain_text", "content": "测试时间: 2025-03-19 10:18:39"}]}]}}
+2025-03-19 10:18:40,138 - QuickAppADBTester - INFO - 飞书通知发送成功: ❌ 快应用自动化测试失败
+2025-03-19 10:19:13,233 - QuickAppADBTester - INFO - 启动定时任务模式，每30分钟执行一次测试
+2025-03-19 10:19:13,233 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-19 10:19:13,233 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-19 10:19:13,233 - QuickAppADBTester - INFO - 确保ADBKeyboard被设置为默认输入法
+2025-03-19 10:19:13,233 - QuickAppADBTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-19 10:19:13,307 - QuickAppADBTester - INFO - 检测到ADBKeyboard已安装（通过ime list确认）
+2025-03-19 10:19:13,387 - QuickAppADBTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-19 10:19:13,387 - QuickAppADBTester - INFO - 当前已经是ADBKeyboard输入法，无需切换
+2025-03-19 10:19:13,387 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:19:13,387 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:19:13,564 - QuickAppADBTester - INFO - 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-19 10:19:13,565 - QuickAppADBTester - INFO - 屏幕处于熄屏状态，尝试唤醒
+2025-03-19 10:19:13,565 - QuickAppADBTester - INFO - 尝试唤醒屏幕
+2025-03-19 10:19:13,565 - QuickAppADBTester - INFO - 使用电源键唤醒
+2025-03-19 10:19:13,565 - QuickAppADBTester - INFO - 按下按键: KEYCODE_POWER
+2025-03-19 10:19:15,684 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:19:15,851 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:19:15,851 - QuickAppADBTester - INFO - 成功唤醒屏幕
+2025-03-19 10:19:15,851 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:19:15,852 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:19:17,278 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:19:17,279 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:19:18,495 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:19:18,496 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-19 10:19:18,496 - QuickAppADBTester - INFO - 开始使用scrcpy录制测试流程视频: test_flow_20250319_101918.mp4
+2025-03-19 10:19:18,496 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:19:18,496 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:19:18,667 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:19:18,668 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:19:18,668 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:19:18,668 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:19:20,084 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:19:20,085 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:19:21,268 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:19:21,269 - QuickAppADBTester - INFO - 尝试优雅地终止所有scrcpy进程
+2025-03-19 10:19:22,406 - QuickAppADBTester - INFO - Linux/Mac平台：先发送SIGINT信号
+2025-03-19 10:19:27,642 - QuickAppADBTester - INFO - 所有scrcpy进程已终止
+2025-03-19 10:19:27,643 - QuickAppADBTester - INFO - 检查设备连接状态...
+2025-03-19 10:19:27,681 - QuickAppADBTester - INFO - 设备连接正常: List of devices attached
+7NQBB23606001053	device
+2025-03-19 10:19:28,820 - QuickAppADBTester - INFO - 开始录制，输出文件: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_101918.mp4
+2025-03-19 10:19:28,821 - QuickAppADBTester - INFO - 使用命令: scrcpy --record=/Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_101918.mp4 --no-playback --video-codec=h265 --max-size=720 --max-fps=15 --time-limit=120 --video-bit-rate=8M --record-format=mp4 --power-off-on-close --no-audio
+2025-03-19 10:19:30,828 - QuickAppADBTester - INFO - 录制已开始...
+2025-03-19 10:19:33,834 - QuickAppADBTester - INFO - 录制状态监控已启动
+2025-03-19 10:19:33,835 - QuickAppADBTester - INFO - 录制已启动，等待3秒确保录制稳定...
+2025-03-19 10:19:36,837 - QuickAppADBTester - INFO - 确保屏幕处于亮屏状态
+2025-03-19 10:19:36,838 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:19:36,838 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:19:37,014 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:19:37,015 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:19:37,015 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:19:37,015 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:19:38,427 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:19:38,428 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:19:39,629 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:19:39,629 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-19 10:19:39,630 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-19 10:19:39,630 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:19:39,630 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:19:40,719 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-19 10:19:40,719 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-19 10:19:40,844 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-19 10:19:42,848 - QuickAppADBTester - INFO - 步骤3: 点击搜索框
+2025-03-19 10:19:42,848 - QuickAppADBTester - INFO - 点击坐标: (276, 515)
+2025-03-19 10:19:43,107 - QuickAppADBTester - INFO - 接收到终止信号，正在优雅退出...
+2025-03-19 10:19:43,107 - QuickAppADBTester - INFO - 终止录制进程...
+2025-03-19 10:19:43,107 - QuickAppADBTester - INFO - 停止录制...
+2025-03-19 10:19:43,107 - QuickAppADBTester - INFO - 发送HOME键序列
+2025-03-19 10:19:44,907 - QuickAppADBTester - INFO - 让设备屏幕休眠
+2025-03-19 10:19:46,992 - QuickAppADBTester - INFO - 发送SIGINT信号 (Ctrl+C)
+2025-03-19 10:19:46,993 - QuickAppADBTester - INFO - 等待SIGINT生效，这可能需要10-15秒...
+2025-03-19 10:19:46,993 - QuickAppADBTester - INFO - 进程在接收SIGINT后成功退出，用时1秒
+2025-03-19 10:19:46,993 - QuickAppADBTester - INFO - 录制进程已退出，退出码: 2
+2025-03-19 10:19:46,994 - QuickAppADBTester - INFO - stderr输出: 2025-03-19 10:19:28.914 scrcpy[3769:3618608] INFO: No video mirroring, SDK mouse disabled
+/opt/homebrew/Cellar/scrcpy/3.1/share/scrcpy/scrcpy-server: 1 file pushed, 0 skipped. 180.0 MB/s (90640 bytes in 0.000s)
+2025-03-19 10:19:29.574 scrcpy[3769:3618608] +[IMKClient subclass]: chose IMKClient_Modern
+2025-03-19 10:19:29.574 scrcpy[3769:3618608] +[IMKInputSession subclass]: chose IMKInputSession_Modern
+2025-03-19 10:19:40.385 scrcpy[3769:3618608] TSM AdjustCapsLockLEDForKeyTransitionHandling - _ISSetPhysicalKeyboardCapsLockLED Inhibit
+WARN: Device disconnected
+
+2025-03-19 10:19:46,994 - QuickAppADBTester - INFO - 等待10秒确保文件写入完成...
+2025-03-19 10:19:56,998 - QuickAppADBTester - INFO - 录制文件: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_101918.mp4 (大小: 1.08MB)
+2025-03-19 10:19:56,999 - QuickAppADBTester - INFO - 预检查文件完整性...
+2025-03-19 10:19:57,147 - QuickAppADBTester - INFO - 录制文件完整，时长: 13.577578秒，无需修复
+2025-03-19 10:19:57,147 - QuickAppADBTester - INFO - 上传视频到Telegram...
+2025-03-19 10:19:57,147 - QuickAppADBTester - INFO - 开始上传文件到Telegram: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_101918.mp4
+2025-03-19 10:19:57,147 - QuickAppADBTester - INFO - 发送请求到 sendVideo...
+2025-03-19 10:20:03,302 - QuickAppADBTester - INFO - 文件上传成功! 下载URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_40.mp4
+2025-03-19 10:20:03,306 - QuickAppADBTester - INFO - 视频已上传，URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_40.mp4
+2025-03-19 10:20:03,306 - QuickAppADBTester - INFO - 尝试优雅地终止所有scrcpy进程
+2025-03-19 10:20:04,448 - QuickAppADBTester - INFO - Linux/Mac平台：先发送SIGINT信号
+2025-03-19 10:20:09,693 - QuickAppADBTester - INFO - 所有scrcpy进程已终止
+2025-03-19 10:20:09,694 - QuickAppADBTester - INFO - 上传的视频URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_40.mp4
+2025-03-19 10:20:09,694 - QuickAppADBTester - INFO - 视频已上传，将在测试结果通知中包含
+2025-03-19 10:20:09,694 - QuickAppADBTester - INFO - 脚本已终止
+2025-03-19 10:20:09,694 - QuickAppADBTester - INFO - 测试完成，最后回到桌面...
+2025-03-19 10:20:09,695 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:20:09,695 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:20:11,830 - QuickAppADBTester - INFO - 使用中断时上传的视频URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_40.mp4
+2025-03-19 10:20:11,832 - QuickAppADBTester - INFO - 使用交互式卡片消息格式发送，包含1张图片链接
+2025-03-19 10:20:11,833 - QuickAppADBTester - INFO - 构建的消息结构: {"msg_type": "interactive", "card": {"config": {"wide_screen_mode": true}, "header": {"title": {"tag": "plain_text", "content": "❌ 快应用自动化测试失败"}, "template": "red"}, "elements": [{"tag": "div", "text": {"tag": "lark_md", "content": "<at id=all></at> 请注意："}}, {"tag": "div", "text": {"tag": "lark_md", "content": "**快应用测试被手动中断！**\n\n- 开始时间: 2025-03-19 10:19:18\n- 中断时间: 2025-03-19 10:20:11\n- 测试设备: 华为设备\n\n**注意:** 测试过程被人为中断，未能完成全部测试流程。"}}, {"tag": "hr"}, {"tag": "div", "text": {"tag": "lark_md", "content": "**📷 测试截图和视频：**"}}, {"tag": "action", "actions": [{"tag": "button", "text": {"tag": "plain_text", "content": "视频"}, "type": "primary", "url": "https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_40.mp4"}]}, {"tag": "div", "text": {"tag": "lark_md", "content": "查看截图 or 视频，需要使用VPN"}}, {"tag": "hr"}, {"tag": "note", "elements": [{"tag": "plain_text", "content": "测试时间: 2025-03-19 10:20:11"}]}]}}
+2025-03-19 10:20:12,406 - QuickAppADBTester - INFO - 飞书通知发送成功: ❌ 快应用自动化测试失败
+2025-03-19 10:25:38,468 - QuickAppADBTester - INFO - 启动定时任务模式，每30分钟执行一次测试
+2025-03-19 10:25:38,468 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-19 10:25:38,468 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-19 10:25:38,468 - QuickAppADBTester - INFO - 确保ADBKeyboard被设置为默认输入法
+2025-03-19 10:25:38,468 - QuickAppADBTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-19 10:25:38,535 - QuickAppADBTester - INFO - 检测到ADBKeyboard已安装（通过ime list确认）
+2025-03-19 10:25:38,615 - QuickAppADBTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-19 10:25:38,615 - QuickAppADBTester - INFO - 当前已经是ADBKeyboard输入法，无需切换
+2025-03-19 10:25:38,615 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:25:38,615 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:25:38,820 - QuickAppADBTester - INFO - 屏幕状态为熄屏 (mHoldingDisplaySuspendBlocker=false)
+2025-03-19 10:25:38,820 - QuickAppADBTester - INFO - 屏幕处于熄屏状态，尝试唤醒
+2025-03-19 10:25:38,820 - QuickAppADBTester - INFO - 尝试唤醒屏幕
+2025-03-19 10:25:38,820 - QuickAppADBTester - INFO - 使用电源键唤醒
+2025-03-19 10:25:38,821 - QuickAppADBTester - INFO - 按下按键: KEYCODE_POWER
+2025-03-19 10:25:39,404 - QuickAppADBTester - INFO - 接收到终止信号，正在优雅退出...
+2025-03-19 10:25:39,404 - QuickAppADBTester - INFO - 脚本已终止
+2025-03-19 10:25:57,409 - QuickAppADBTester - INFO - 启动定时任务模式，每30分钟执行一次测试
+2025-03-19 10:25:57,409 - QuickAppADBTester - INFO - 启动快应用ADB测试
+2025-03-19 10:25:57,409 - QuickAppADBTester - INFO - 初始化QuickAppADBTester
+2025-03-19 10:25:57,409 - QuickAppADBTester - INFO - 确保ADBKeyboard被设置为默认输入法
+2025-03-19 10:25:57,409 - QuickAppADBTester - INFO - 检查ADBKeyboard是否已安装
+2025-03-19 10:25:57,486 - QuickAppADBTester - INFO - 检测到ADBKeyboard已安装（通过ime list确认）
+2025-03-19 10:25:57,546 - QuickAppADBTester - INFO - 当前输入法: com.android.adbkeyboard/.AdbIME
+2025-03-19 10:25:57,546 - QuickAppADBTester - INFO - 当前已经是ADBKeyboard输入法，无需切换
+2025-03-19 10:25:57,546 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:25:57,546 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:25:57,688 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:25:57,688 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:25:57,688 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:25:57,688 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:25:59,082 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:25:59,083 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:26:00,339 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:26:00,339 - QuickAppADBTester - INFO - 开始执行所有流程
+2025-03-19 10:26:00,339 - QuickAppADBTester - INFO - 开始使用scrcpy录制测试流程视频: test_flow_20250319_102600.mp4
+2025-03-19 10:26:00,339 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:26:00,339 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:26:00,509 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:26:00,510 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:26:00,510 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:26:00,510 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:26:01,926 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:26:01,927 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:26:03,157 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:26:03,158 - QuickAppADBTester - INFO - 尝试优雅地终止所有scrcpy进程
+2025-03-19 10:26:04,284 - QuickAppADBTester - INFO - Linux/Mac平台：先发送SIGINT信号
+2025-03-19 10:26:09,535 - QuickAppADBTester - INFO - 所有scrcpy进程已终止
+2025-03-19 10:26:09,536 - QuickAppADBTester - INFO - 检查设备连接状态...
+2025-03-19 10:26:09,561 - QuickAppADBTester - INFO - 设备连接正常: List of devices attached
+7NQBB23606001053	device
+2025-03-19 10:26:10,698 - QuickAppADBTester - INFO - 开始录制，输出文件: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_102600.mp4
+2025-03-19 10:26:10,699 - QuickAppADBTester - INFO - 使用命令: scrcpy --record=/Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_102600.mp4 --no-playback --video-codec=h265 --max-size=720 --max-fps=15 --time-limit=120 --video-bit-rate=8M --record-format=mp4 --power-off-on-close --no-audio
+2025-03-19 10:26:12,708 - QuickAppADBTester - INFO - 录制已开始...
+2025-03-19 10:26:15,714 - QuickAppADBTester - INFO - 录制状态监控已启动
+2025-03-19 10:26:15,715 - QuickAppADBTester - INFO - 录制已启动，等待3秒确保录制稳定...
+2025-03-19 10:26:18,718 - QuickAppADBTester - INFO - 确保屏幕处于亮屏状态
+2025-03-19 10:26:18,718 - QuickAppADBTester - INFO - 确保屏幕亮起并解锁
+2025-03-19 10:26:18,718 - QuickAppADBTester - INFO - 检查屏幕状态
+2025-03-19 10:26:18,984 - QuickAppADBTester - INFO - 屏幕状态为亮屏 (mHoldingDisplaySuspendBlocker=true)
+2025-03-19 10:26:18,985 - QuickAppADBTester - INFO - 屏幕已处于亮屏状态
+2025-03-19 10:26:18,985 - QuickAppADBTester - INFO - 尝试简单解锁屏幕
+2025-03-19 10:26:18,985 - QuickAppADBTester - INFO - 滑动: (540, 1663) -> (540, 712)
+2025-03-19 10:26:20,434 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:26:20,435 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:26:21,636 - QuickAppADBTester - INFO - 成功解锁到桌面
+2025-03-19 10:26:21,637 - QuickAppADBTester - INFO - ===== 开始执行流程1: 清除快应用中心数据 =====
+2025-03-19 10:26:21,637 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-19 10:26:21,637 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:26:21,637 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:26:22,716 - QuickAppADBTester - INFO - 步骤2: 打开设置应用
+2025-03-19 10:26:22,717 - QuickAppADBTester - INFO - 运行命令: adb shell am start -a android.settings.SETTINGS
+2025-03-19 10:26:22,828 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { act=android.settings.SETTINGS }
+
+2025-03-19 10:26:24,832 - QuickAppADBTester - INFO - 步骤3: 点击搜索框
+2025-03-19 10:26:24,832 - QuickAppADBTester - INFO - 点击坐标: (276, 515)
+2025-03-19 10:26:25,932 - QuickAppADBTester - INFO - 步骤4: 输入'应用和服务'
+2025-03-19 10:26:25,934 - QuickAppADBTester - INFO - 输入文本: 应用和服务
+2025-03-19 10:26:25,934 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-19 10:26:25,934 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "应用和服务"
+2025-03-19 10:26:26,016 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-19 10:26:28,020 - QuickAppADBTester - INFO - 步骤5: 点击搜索结果'应用和服务'
+2025-03-19 10:26:28,020 - QuickAppADBTester - INFO - 点击坐标: (254, 418)
+2025-03-19 10:26:30,197 - QuickAppADBTester - INFO - 步骤6: 点击'应用管理'
+2025-03-19 10:26:30,198 - QuickAppADBTester - INFO - 点击坐标: (239, 377)
+2025-03-19 10:26:32,282 - QuickAppADBTester - INFO - 步骤7: 点击搜索框
+2025-03-19 10:26:32,284 - QuickAppADBTester - INFO - 点击坐标: (239, 354)
+2025-03-19 10:26:33,424 - QuickAppADBTester - INFO - 步骤8: 输入'快应用中心'
+2025-03-19 10:26:33,424 - QuickAppADBTester - INFO - 输入文本: 快应用中心
+2025-03-19 10:26:33,425 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-19 10:26:33,425 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "快应用中心"
+2025-03-19 10:26:33,599 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-19 10:26:35,603 - QuickAppADBTester - INFO - 步骤9: 点击搜索结果'快应用中心'
+2025-03-19 10:26:35,604 - QuickAppADBTester - INFO - 点击坐标: (261, 574)
+2025-03-19 10:26:37,808 - QuickAppADBTester - INFO - 步骤10: 向上滑动显示更多内容
+2025-03-19 10:26:37,809 - QuickAppADBTester - INFO - 滑动: (490, 1900) -> (490, 950)
+2025-03-19 10:26:39,237 - QuickAppADBTester - INFO - 滑动: (490, 1663) -> (490, 712)
+2025-03-19 10:26:40,668 - QuickAppADBTester - INFO - 步骤11: 点击'存储'
+2025-03-19 10:26:40,669 - QuickAppADBTester - INFO - 点击坐标: (156, 1021)
+2025-03-19 10:26:41,843 - QuickAppADBTester - INFO - 步骤12: 点击'删除数据'
+2025-03-19 10:26:41,844 - QuickAppADBTester - INFO - 点击坐标: (555, 1271)
+2025-03-19 10:26:42,959 - QuickAppADBTester - INFO - 步骤13: 点击确认对话框中的'确定'按钮
+2025-03-19 10:26:42,960 - QuickAppADBTester - INFO - 点击坐标: (757, 2214)
+2025-03-19 10:26:45,123 - QuickAppADBTester - INFO - 流程1执行完成: 清除快应用中心数据
+2025-03-19 10:26:45,124 - QuickAppADBTester - INFO - ===== 开始执行流程2: 通过应用市场管理快应用 =====
+2025-03-19 10:26:45,125 - QuickAppADBTester - INFO - 步骤1: 按Home键回到桌面
+2025-03-19 10:26:45,125 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:26:45,125 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:26:45,803 - QuickAppADBTester - INFO - 录制进行中，已录制约 30 秒
+2025-03-19 10:26:46,263 - QuickAppADBTester - INFO - 步骤2: 打开应用市场
+2025-03-19 10:26:46,263 - QuickAppADBTester - INFO - 运行命令: adb shell am start -n com.huawei.appmarket/.MainActivity
+2025-03-19 10:26:46,383 - QuickAppADBTester - INFO - 命令输出: Starting: Intent { cmp=com.huawei.appmarket/.MainActivity }
+
+2025-03-19 10:26:51,377 - QuickAppADBTester - INFO - 步骤3: 点击'我的'选项卡
+2025-03-19 10:26:51,378 - QuickAppADBTester - INFO - 点击坐标: (965, 2247)
+2025-03-19 10:26:53,515 - QuickAppADBTester - INFO - 步骤4: 点击'快应用管理'选项
+2025-03-19 10:26:53,516 - QuickAppADBTester - INFO - 点击坐标: (171, 1653)
+2025-03-19 10:26:58,661 - QuickAppADBTester - INFO - 步骤5: 检查并点击'同意'按钮(如果出现)
+2025-03-19 10:26:58,663 - QuickAppADBTester - INFO - 点击坐标: (735, 2226)
+2025-03-19 10:27:00,814 - QuickAppADBTester - INFO - 等待应用市场稳定 (5秒)
+2025-03-19 10:27:05,814 - QuickAppADBTester - INFO - 流程2执行完成: 通过应用市场管理快应用
+2025-03-19 10:27:05,814 - QuickAppADBTester - INFO - ===== 开始执行流程3: 搜索并打开快应用进行测试 =====
+2025-03-19 10:27:05,814 - QuickAppADBTester - INFO - 步骤1: 点击搜索框
+2025-03-19 10:27:05,814 - QuickAppADBTester - INFO - 点击坐标: (326, 354)
+2025-03-19 10:27:06,965 - QuickAppADBTester - INFO - 步骤2: 输入'优购'
+2025-03-19 10:27:06,966 - QuickAppADBTester - INFO - 输入文本: 优购
+2025-03-19 10:27:06,966 - QuickAppADBTester - INFO - 使用ADBKeyboard输入非ASCII文本
+2025-03-19 10:27:06,967 - QuickAppADBTester - INFO - 执行命令: adb shell am broadcast -a ADB_INPUT_TEXT --es msg "优购"
+2025-03-19 10:27:07,069 - QuickAppADBTester - INFO - 文本输入广播命令成功发送
+2025-03-19 10:27:09,077 - QuickAppADBTester - INFO - 步骤3: 按下回车键
+2025-03-19 10:27:09,078 - QuickAppADBTester - INFO - 按下回车键
+2025-03-19 10:27:09,078 - QuickAppADBTester - INFO - 按下按键: 66
+2025-03-19 10:27:11,346 - QuickAppADBTester - INFO - 步骤4: 点击搜索结果旁边的'打开'按钮
+2025-03-19 10:27:11,346 - QuickAppADBTester - INFO - 点击坐标: (860, 370)
+2025-03-19 10:27:15,884 - QuickAppADBTester - INFO - 录制进行中，已录制约 60 秒
+2025-03-19 10:27:19,493 - QuickAppADBTester - INFO - 步骤5: 准备执行10次侧滑
+2025-03-19 10:27:19,493 - QuickAppADBTester - INFO - 步骤6: 执行10次侧滑操作
+2025-03-19 10:27:19,494 - QuickAppADBTester - INFO - 第1次侧滑
+2025-03-19 10:27:19,494 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:27:19,776 - QuickAppADBTester - INFO - 第2次侧滑
+2025-03-19 10:27:19,777 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:27:20,100 - QuickAppADBTester - INFO - 第3次侧滑
+2025-03-19 10:27:20,101 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:27:20,342 - QuickAppADBTester - INFO - 第4次侧滑
+2025-03-19 10:27:20,343 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:27:20,603 - QuickAppADBTester - INFO - 第5次侧滑
+2025-03-19 10:27:20,604 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:27:20,838 - QuickAppADBTester - INFO - 第6次侧滑
+2025-03-19 10:27:20,839 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:27:21,070 - QuickAppADBTester - INFO - 第7次侧滑
+2025-03-19 10:27:21,071 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:27:21,318 - QuickAppADBTester - INFO - 第8次侧滑
+2025-03-19 10:27:21,318 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:27:21,565 - QuickAppADBTester - INFO - 第9次侧滑
+2025-03-19 10:27:21,566 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:27:21,808 - QuickAppADBTester - INFO - 第10次侧滑
+2025-03-19 10:27:21,809 - QuickAppADBTester - INFO - 滑动: (1058, 1188) -> (950, 1188)
+2025-03-19 10:27:24,046 - QuickAppADBTester - INFO - 步骤7: 检查当前应用
+2025-03-19 10:27:24,047 - QuickAppADBTester - INFO - 检查快应用是否在前台运行
+2025-03-19 10:27:24,047 - QuickAppADBTester - INFO - 运行命令: adb shell "dumpsys activity activities | grep -A 1 'mResumedActivity'"
+2025-03-19 10:27:24,145 - QuickAppADBTester - INFO - 命令输出:     mResumedActivity: ActivityRecord{f53a7c7 u0 com.huawei.fastapp/.app.processManager.RpkLoaderActivityEntry0 t346}
+    * Task{a079d1d #346 type=standard A=10148:com.huawei.fastapp.app.launcher0 U=0 visible=true mode=fullscreen translucent=false sz=1}
+
+2025-03-19 10:27:24,146 - QuickAppADBTester - INFO - ✅ 检测到华为快应用正在前台运行
+2025-03-19 10:27:24,146 - QuickAppADBTester - INFO - 侧滑拦截成功：快应用仍在前台运行
+2025-03-19 10:27:24,146 - QuickAppADBTester - INFO - 步骤8: 截图记录侧滑后状态
+2025-03-19 10:27:24,146 - QuickAppADBTester - INFO - 正在截图: /Users/ct/Desktop/huawei_auto/screenshots/after_swipe_20250319_102724_20250319_102724.png
+2025-03-19 10:27:25,863 - QuickAppADBTester - INFO - 上传截图到Telegram: /Users/ct/Desktop/huawei_auto/screenshots/after_swipe_20250319_102724_20250319_102724.png
+2025-03-19 10:27:25,864 - QuickAppADBTester - INFO - 开始上传文件到Telegram: /Users/ct/Desktop/huawei_auto/screenshots/after_swipe_20250319_102724_20250319_102724.png
+2025-03-19 10:27:25,865 - QuickAppADBTester - INFO - 发送请求到 sendPhoto...
+2025-03-19 10:27:32,930 - QuickAppADBTester - INFO - 文件上传成功! 下载URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_41.jpg
+2025-03-19 10:27:32,935 - QuickAppADBTester - INFO - 截图上传成功: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_41.jpg
+2025-03-19 10:27:32,935 - QuickAppADBTester - INFO - 步骤9: 按Home键
+2025-03-19 10:27:32,935 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:27:32,935 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:27:43,031 - QuickAppADBTester - INFO - 步骤10: 再次检查当前应用
+2025-03-19 10:27:43,032 - QuickAppADBTester - INFO - 检查快应用是否在前台运行
+2025-03-19 10:27:43,032 - QuickAppADBTester - INFO - 运行命令: adb shell "dumpsys activity activities | grep -A 1 'mResumedActivity'"
+2025-03-19 10:27:43,168 - QuickAppADBTester - INFO - 命令输出:     mResumedActivity: ActivityRecord{f53a7c7 u0 com.huawei.fastapp/.app.processManager.RpkLoaderActivityEntry0 t346}
+    * Task{a079d1d #346 type=standard A=10148:com.huawei.fastapp.app.launcher0 U=0 visible=true mode=fullscreen translucent=false sz=1}
+
+2025-03-19 10:27:43,168 - QuickAppADBTester - INFO - ✅ 检测到华为快应用正在前台运行
+2025-03-19 10:27:43,169 - QuickAppADBTester - INFO - 拉回成功：按Home键后快应用仍在前台运行
+2025-03-19 10:27:43,169 - QuickAppADBTester - INFO - 步骤11: 再次截图记录按Home后状态
+2025-03-19 10:27:43,169 - QuickAppADBTester - INFO - 正在截图: /Users/ct/Desktop/huawei_auto/screenshots/after_home_20250319_102743_20250319_102743.png
+2025-03-19 10:27:44,854 - QuickAppADBTester - INFO - 上传截图到Telegram: /Users/ct/Desktop/huawei_auto/screenshots/after_home_20250319_102743_20250319_102743.png
+2025-03-19 10:27:44,855 - QuickAppADBTester - INFO - 开始上传文件到Telegram: /Users/ct/Desktop/huawei_auto/screenshots/after_home_20250319_102743_20250319_102743.png
+2025-03-19 10:27:44,855 - QuickAppADBTester - INFO - 发送请求到 sendPhoto...
+2025-03-19 10:27:45,990 - QuickAppADBTester - INFO - 录制进行中，已录制约 90 秒
+2025-03-19 10:27:50,826 - QuickAppADBTester - INFO - 文件上传成功! 下载URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_42.jpg
+2025-03-19 10:27:50,834 - QuickAppADBTester - INFO - 截图上传成功: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_42.jpg
+2025-03-19 10:27:50,835 - QuickAppADBTester - INFO - 流程3执行完成: 搜索并打开快应用进行测试
+2025-03-19 10:27:50,835 - QuickAppADBTester - INFO - ===== 开始执行流程4: 清空手机里的全部应用 =====
+2025-03-19 10:27:50,835 - QuickAppADBTester - INFO - 步骤1: 强制停止快应用
+2025-03-19 10:27:50,835 - QuickAppADBTester - INFO - 运行命令: adb shell am force-stop com.huawei.fastapp
+2025-03-19 10:27:51,230 - QuickAppADBTester - INFO - 命令输出: 
+2025-03-19 10:27:52,234 - QuickAppADBTester - INFO - 步骤2: 按Home键
+2025-03-19 10:27:52,235 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:27:52,235 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:27:53,342 - QuickAppADBTester - INFO - 步骤3: 打开最近任务列表
+2025-03-19 10:27:53,342 - QuickAppADBTester - INFO - 打开最近任务列表
+2025-03-19 10:27:53,342 - QuickAppADBTester - INFO - 按下按键: KEYCODE_APP_SWITCH
+2025-03-19 10:27:55,436 - QuickAppADBTester - INFO - 步骤4: 点击底部中间清除按钮
+2025-03-19 10:27:55,436 - QuickAppADBTester - INFO - 点击坐标: (540, 2147)
+2025-03-19 10:27:56,557 - QuickAppADBTester - INFO - 步骤5: 按Home键回到桌面
+2025-03-19 10:27:56,558 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:27:56,558 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:27:57,672 - QuickAppADBTester - INFO - 流程4执行完成: 清空手机里的全部应用
+2025-03-19 10:27:57,675 - QuickAppADBTester - INFO - 所有流程执行完成。详细结果: {'屏幕唤醒': True, '流程1_清除快应用中心数据': True, '流程2_通过应用市场管理快应用': True, '流程3_防侧滑测试': True, '流程3_拉回测试': True, '流程4_清空手机里的全部应用': True}
+2025-03-19 10:27:57,675 - QuickAppADBTester - INFO - 测试完成，按Home键回到桌面...
+2025-03-19 10:27:57,676 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:27:57,676 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:28:02,807 - QuickAppADBTester - INFO - 测试完成，最后回到桌面...
+2025-03-19 10:28:02,809 - QuickAppADBTester - INFO - 按下Home键
+2025-03-19 10:28:02,809 - QuickAppADBTester - INFO - 按下按键: KEYCODE_HOME
+2025-03-19 10:28:04,993 - QuickAppADBTester - INFO - 测试完成，停止scrcpy录制...
+2025-03-19 10:28:04,994 - QuickAppADBTester - INFO - 停止录制...
+2025-03-19 10:28:04,994 - QuickAppADBTester - INFO - 发送HOME键序列
+2025-03-19 10:28:06,946 - QuickAppADBTester - INFO - 让设备屏幕休眠
+2025-03-19 10:28:09,077 - QuickAppADBTester - INFO - 发送SIGINT信号 (Ctrl+C)
+2025-03-19 10:28:09,078 - QuickAppADBTester - INFO - 等待SIGINT生效，这可能需要10-15秒...
+2025-03-19 10:28:09,078 - QuickAppADBTester - INFO - 等待进程退出... (1/15)
+2025-03-19 10:28:10,081 - QuickAppADBTester - INFO - 等待进程退出... (2/15)
+2025-03-19 10:28:11,087 - QuickAppADBTester - INFO - 等待进程退出... (3/15)
+2025-03-19 10:28:12,088 - QuickAppADBTester - INFO - 进程在接收SIGINT后成功退出，用时4秒
+2025-03-19 10:28:12,089 - QuickAppADBTester - INFO - 录制进程已退出，退出码: 0
+2025-03-19 10:28:12,089 - QuickAppADBTester - INFO - stderr输出: 2025-03-19 10:26:10.805 scrcpy[10339:3641503] INFO: No video mirroring, SDK mouse disabled
+/opt/homebrew/Cellar/scrcpy/3.1/share/scrcpy/scrcpy-server: 1 file pushed, 0 skipped. 176.1 MB/s (90640 bytes in 0.000s)
+2025-03-19 10:26:11.547 scrcpy[10339:3641503] +[IMKClient subclass]: chose IMKClient_Modern
+2025-03-19 10:26:11.547 scrcpy[10339:3641503] +[IMKInputSession subclass]: chose IMKInputSession_Modern
+
+2025-03-19 10:28:12,090 - QuickAppADBTester - INFO - 等待10秒确保文件写入完成...
+2025-03-19 10:28:22,092 - QuickAppADBTester - INFO - 录制文件: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_102600.mp4 (大小: 10.87MB)
+2025-03-19 10:28:22,094 - QuickAppADBTester - INFO - 预检查文件完整性...
+2025-03-19 10:28:22,212 - QuickAppADBTester - INFO - 录制文件完整，时长: 119.878189秒，无需修复
+2025-03-19 10:28:22,212 - QuickAppADBTester - INFO - 上传视频到Telegram...
+2025-03-19 10:28:22,212 - QuickAppADBTester - INFO - 开始上传文件到Telegram: /Users/ct/Desktop/huawei_auto/videos/test_flow_20250319_102600.mp4
+2025-03-19 10:28:22,212 - QuickAppADBTester - INFO - 发送请求到 sendVideo...
+2025-03-19 10:28:30,765 - QuickAppADBTester - INFO - 文件上传成功! 下载URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_43.mp4
+2025-03-19 10:28:30,771 - QuickAppADBTester - INFO - 视频已上传，URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_43.mp4
+2025-03-19 10:28:30,772 - QuickAppADBTester - INFO - 尝试优雅地终止所有scrcpy进程
+2025-03-19 10:28:32,019 - QuickAppADBTester - INFO - Linux/Mac平台：先发送SIGINT信号
+2025-03-19 10:28:37,268 - QuickAppADBTester - INFO - 所有scrcpy进程已终止
+2025-03-19 10:28:37,270 - QuickAppADBTester - INFO - 测试视频已上传到Telegram，URL: https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_43.mp4
+2025-03-19 10:28:37,270 - QuickAppADBTester - INFO - 使用交互式卡片消息格式发送，包含3张图片链接
+2025-03-19 10:28:37,271 - QuickAppADBTester - INFO - 构建的消息结构: {"msg_type": "interactive", "card": {"config": {"wide_screen_mode": true}, "header": {"title": {"tag": "plain_text", "content": "✅ 快应用自动化测试成功"}, "template": "green"}, "elements": [{"tag": "div", "text": {"tag": "lark_md", "content": "**快应用防侧滑和拉回测试成功完成！**\n\n- 开始时间: 2025-03-19 10:26:00\n- 结束时间: 2025-03-19 10:28:37\n- 测试设备: 华为设备\n\n**防侧滑:** ✅ 成功\n\n**拉回:** ✅ 成功"}}, {"tag": "hr"}, {"tag": "div", "text": {"tag": "lark_md", "content": "**📷 测试截图和视频：**"}}, {"tag": "action", "actions": [{"tag": "button", "text": {"tag": "plain_text", "content": "防侧滑"}, "type": "primary", "url": "https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_41.jpg"}, {"tag": "button", "text": {"tag": "plain_text", "content": "拉回"}, "type": "primary", "url": "https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/photos/file_42.jpg"}, {"tag": "button", "text": {"tag": "plain_text", "content": "视频"}, "type": "primary", "url": "https://api.telegram.org/file/bot7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg/videos/file_43.mp4"}]}, {"tag": "div", "text": {"tag": "lark_md", "content": "查看截图 or 视频，需要使用VPN"}}, {"tag": "hr"}, {"tag": "note", "elements": [{"tag": "plain_text", "content": "测试时间: 2025-03-19 10:28:37"}]}]}}
+2025-03-19 10:28:37,706 - QuickAppADBTester - INFO - 飞书通知发送成功: ✅ 快应用自动化测试成功
+2025-03-19 10:28:37,709 - QuickAppADBTester - INFO - 测试完成
+2025-03-19 10:28:37,710 - QuickAppADBTester - INFO - 定时任务已启动，按Ctrl+C可停止
