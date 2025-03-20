@@ -864,7 +864,7 @@ class QuickAppADBTester:
         
         # 3. 点击搜索框
         logger.info("步骤3: 点击搜索框")
-        self.tap_by_percent(0.256, 0.217)  # 坐标: (276, 516)
+        self.tap_by_percent(0.254, 0.237)  # 坐标: (276, 516)
         time.sleep(1)
         
         # 4. 输入"应用和服务"
@@ -874,17 +874,17 @@ class QuickAppADBTester:
         
         # 5. 点击搜索结果"应用和服务"
         logger.info("步骤5: 点击搜索结果'应用和服务'")
-        self.tap_by_percent(0.236, 0.176)  # 坐标: (255, 418)
+        self.tap_by_percent(0.246, 0.183)  # 坐标: (255, 418)
         time.sleep(2)
         
         # 6. 点击"应用管理"
         logger.info("步骤6: 点击'应用管理'")
-        self.tap_by_percent(0.222, 0.159)  # 坐标: (240, 377)
+        self.tap_by_percent(0.151, 0.174)  # 坐标: (240, 377)
         time.sleep(2)
         
         # 7. 点击搜索框
         logger.info("步骤7: 点击搜索框")
-        self.tap_by_percent(0.222, 0.149)  # 坐标: (240, 353)
+        self.tap_by_percent(0.206, 0.164)  # 坐标: (240, 353)
         time.sleep(1)
         
         # 8. 输入"快应用中心"
@@ -894,29 +894,29 @@ class QuickAppADBTester:
         
         # 9. 点击搜索结果"快应用中心"
         logger.info("步骤9: 点击搜索结果'快应用中心'") 
-        self.tap_by_percent(0.242, 0.242)  # 坐标: (261, 576)
+        self.tap_by_percent(0.273, 0.249)  # 坐标: (261, 576)
         time.sleep(2)
         
         # 10. 向上滑动显示更多内容 - 修正为从下往上滑
         logger.info("步骤10: 向上滑动显示更多内容")
         self.swipe_by_percent(0.454, 0.8, 0.454, 0.4)  # 从下部(约80%位置)滑动到上部(约40%位置)
         time.sleep(1)
-        self.swipe_by_percent(0.454, 0.7, 0.454, 0.3)  # 再滑一次确保看到更多内容
-        time.sleep(1)
+        # self.swipe_by_percent(0.454, 0.7, 0.454, 0.3)  # 再滑一次确保看到更多内容
+        # time.sleep(1)
         
         # 11. 点击"存储"
         logger.info("步骤11: 点击'存储'")
-        self.tap_by_percent(0.145, 0.430)  # 坐标: (157, 1021)
+        self.tap_by_percent(0.124, 0.422)  # 坐标: (157, 1021)
         time.sleep(1)
         
         # 12. 点击"删除数据"
         logger.info("步骤12: 点击'删除数据'")
-        self.tap_by_percent(0.514, 0.535)  # 坐标: (555, 1271)
+        self.tap_by_percent(0.506, 0.556)  # 坐标: (555, 1271)
         time.sleep(1)
         
         # 13. 点击确认对话框中的"确定"按钮
         logger.info("步骤13: 点击确认对话框中的'确定'按钮")
-        self.tap_by_percent(0.701, 0.932)  # 坐标: (757, 2215)
+        self.tap_by_percent(0.739, 0.935)  # 坐标: (757, 2215)
         time.sleep(2)
         
         logger.info("流程1执行完成: 清除快应用中心数据")
@@ -938,17 +938,17 @@ class QuickAppADBTester:
         
         # 3. 点击"我的"选项卡
         logger.info("步骤3: 点击'我的'选项卡")
-        self.tap_by_percent(0.894, 0.946)  # 坐标: (965, 2248)
+        self.tap_by_percent(0.904, 0.950)  # 坐标: (965, 2248)
         time.sleep(2)
         
         # 4. 点击"快应用管理"选项
         logger.info("步骤4: 点击'快应用管理'选项")
-        self.tap_by_percent(0.159, 0.696)  # 坐标: (172, 1654)
+        self.tap_by_percent(0.168, 0.711)  # 坐标: (172, 1654)
         time.sleep(5)  # 增加等待时间，从2秒增加到5秒，确保页面完全加载
         
         # 5. 点击"同意"按钮(如果出现)
         logger.info("步骤5: 检查并点击'同意'按钮(如果出现)")
-        self.tap_by_percent(0.681, 0.937)  # 坐标: (736, 2227)
+        self.tap_by_percent(0.715, 0.936)  # 坐标: (736, 2227)
         time.sleep(2)
         
         # 增加额外等待时间，确保应用市场稳定后再继续下一流程
@@ -970,7 +970,7 @@ class QuickAppADBTester:
         
         # 1. 点击搜索框
         logger.info("步骤1: 点击搜索框")
-        self.tap_by_percent(0.302, 0.149)  # 坐标: (326, 353)
+        self.tap_by_percent(0.214, 0.164)  # 坐标: (326, 353)
         time.sleep(1)
         
         # 2. 输入"优购"
@@ -985,7 +985,7 @@ class QuickAppADBTester:
         
         # 4. 点击搜索结果旁边的"打开"按钮
         logger.info("步骤4: 点击搜索结果旁边的'打开'按钮")
-        self.tap_by_percent(0.797, 0.156)  # 坐标: (861, 371)
+        self.tap_by_percent(0.820, 0.168)  # 坐标: (861, 371)
         time.sleep(8)  # 应用打开需要更长时间
         
         # 5. 执行10次侧滑
@@ -1065,7 +1065,7 @@ class QuickAppADBTester:
         
         # 4. 点击底部中间清除按钮
         logger.info("步骤4: 点击底部中间清除按钮")
-        self.tap_by_percent(0.500, 0.904)  # 坐标: (540, 2147)
+        self.tap_by_percent(0.495, 0.909)  # 坐标: (540, 2147)
         time.sleep(1)
         
         # 5. 按Home键回到桌面

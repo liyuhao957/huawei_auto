@@ -11,7 +11,7 @@ def find_coordinates():
     
     # 屏幕尺寸设置
     screen_width = 1080   # 请替换为您的屏幕宽度
-    screen_height = 2376  # 请替换为您的屏幕高度
+    screen_height = 2340  # 请替换为您的屏幕高度
     
     # 添加文件保存功能
     coord_file = open("coordinates.txt", "w")
