@@ -447,6 +447,13 @@ class QuickAppADBTester:
         logger.info("初始化QuickAppADBTester")
         # 确保ADBKeyboard已安装并设置为默认输入法
         self.ensure_adbkeyboard_input_method()
+
+        # 初始化流程模块
+        from flows import ClearAppData, AppMarket, QuickAppTesting, ClearApps
+        self._clear_app_data = ClearAppData(self)
+        self._app_market = AppMarket(self)
+        self._quick_app_testing = QuickAppTesting(self)
+        self._clear_apps = ClearApps(self)
         
     def check_adbkeyboard_installed(self):
         """检查ADBKeyboard是否已安装"""
@@ -848,233 +855,28 @@ class QuickAppADBTester:
             
         time.sleep(1)  # 等待输入完成
 
+
     def clear_quick_app_center_data(self):
         """流程1: 清除快应用中心数据"""
-        logger.info("===== 开始执行流程1: 清除快应用中心数据 =====")
-        
-        # 1. 按Home键回到桌面
-        logger.info("步骤1: 按Home键回到桌面")
-        self.press_home()
-        time.sleep(1)
-        
-        # 2. 打开设置应用
-        logger.info("步骤2: 打开设置应用")
-        self.run_shell_command("adb shell am start -a android.settings.SETTINGS")
-        time.sleep(2)
-        
-        # 3. 点击搜索框
-        logger.info("步骤3: 点击搜索框")
-        self.tap_by_percent(0.254, 0.237)  # 坐标: (276, 516)
-        time.sleep(1)
-        
-        # 4. 输入"应用和服务"
-        logger.info("步骤4: 输入'应用和服务'")
-        self.input_text("应用和服务")
-        time.sleep(1)
-        
-        # 5. 点击搜索结果"应用和服务"
-        logger.info("步骤5: 点击搜索结果'应用和服务'")
-        self.tap_by_percent(0.246, 0.183)  # 坐标: (255, 418)
-        time.sleep(2)
-        
-        # 6. 点击"应用管理"
-        logger.info("步骤6: 点击'应用管理'")
-        self.tap_by_percent(0.151, 0.174)  # 坐标: (240, 377)
-        time.sleep(2)
-        
-        # 7. 点击搜索框
-        logger.info("步骤7: 点击搜索框")
-        self.tap_by_percent(0.206, 0.164)  # 坐标: (240, 353)
-        time.sleep(1)
-        
-        # 8. 输入"快应用中心"
-        logger.info("步骤8: 输入'快应用中心'")
-        self.input_text("快应用中心")
-        time.sleep(1)
-        
-        # 9. 点击搜索结果"快应用中心"
-        logger.info("步骤9: 点击搜索结果'快应用中心'") 
-        self.tap_by_percent(0.273, 0.249)  # 坐标: (261, 576)
-        time.sleep(2)
-        
-        # 10. 向上滑动显示更多内容 - 修正为从下往上滑
-        logger.info("步骤10: 向上滑动显示更多内容")
-        self.swipe_by_percent(0.454, 0.8, 0.454, 0.4)  # 从下部(约80%位置)滑动到上部(约40%位置)
-        time.sleep(1)
-        # self.swipe_by_percent(0.454, 0.7, 0.454, 0.3)  # 再滑一次确保看到更多内容
-        # time.sleep(1)
-        
-        # 11. 点击"存储"
-        logger.info("步骤11: 点击'存储'")
-        self.tap_by_percent(0.124, 0.422)  # 坐标: (157, 1021)
-        time.sleep(1)
-        
-        # 12. 点击"删除数据"
-        logger.info("步骤12: 点击'删除数据'")
-        self.tap_by_percent(0.506, 0.556)  # 坐标: (555, 1271)
-        time.sleep(1)
-        
-        # 13. 点击确认对话框中的"确定"按钮
-        logger.info("步骤13: 点击确认对话框中的'确定'按钮")
-        self.tap_by_percent(0.739, 0.935)  # 坐标: (757, 2215)
-        time.sleep(2)
-        
-        logger.info("流程1执行完成: 清除快应用中心数据")
-        return True
+        return self._clear_app_data.execute()
         
     def manage_quick_apps_via_market(self):
         """流程2: 通过应用市场管理快应用"""
-        logger.info("===== 开始执行流程2: 通过应用市场管理快应用 =====")
-        
-        # 1. 按Home键回到桌面
-        logger.info("步骤1: 按Home键回到桌面")
-        self.press_home()
-        time.sleep(1)
-        
-        # 2. 打开应用市场
-        logger.info("步骤2: 打开应用市场")
-        self.run_shell_command("adb shell am start -n com.huawei.appmarket/.MainActivity")
-        time.sleep(5)  # 应用市场加载可能需要更长时间
-        
-        # 3. 点击"我的"选项卡
-        logger.info("步骤3: 点击'我的'选项卡")
-        self.tap_by_percent(0.904, 0.950)  # 坐标: (965, 2248)
-        time.sleep(2)
-        
-        # 4. 点击"快应用管理"选项
-        logger.info("步骤4: 点击'快应用管理'选项")
-        self.tap_by_percent(0.168, 0.711)  # 坐标: (172, 1654)
-        time.sleep(5)  # 增加等待时间，从2秒增加到5秒，确保页面完全加载
-        
-        # 5. 点击"同意"按钮(如果出现)
-        logger.info("步骤5: 检查并点击'同意'按钮(如果出现)")
-        self.tap_by_percent(0.715, 0.936)  # 坐标: (736, 2227)
-        time.sleep(2)
-        
-        # 增加额外等待时间，确保应用市场稳定后再继续下一流程
-        logger.info("等待应用市场稳定 (5秒)")
-        time.sleep(5)  # 从3秒增加到5秒
-        
-        logger.info("流程2执行完成: 通过应用市场管理快应用")
-        return True
+        return self._app_market.execute()
     
     def search_and_open_quick_app(self):
         """流程3: 搜索并打开快应用进行测试"""
-        logger.info("===== 开始执行流程3: 搜索并打开快应用进行测试 =====")
-        
-        # 用于存储测试结果
-        test_results = {
-            "防侧滑": False,
-            "拉回": False
-        }
-        
-        # 1. 点击搜索框
-        logger.info("步骤1: 点击搜索框")
-        self.tap_by_percent(0.214, 0.164)  # 坐标: (326, 353)
-        time.sleep(1)
-        
-        # 2. 输入"优购"
-        logger.info("步骤2: 输入'优购'")
-        self.input_text("优购")
-        time.sleep(1)
-        
-        # 3. 按下回车键
-        logger.info("步骤3: 按下回车键")
-        self.press_enter()
-        time.sleep(2)
-        
-        # 4. 点击搜索结果旁边的"打开"按钮
-        logger.info("步骤4: 点击搜索结果旁边的'打开'按钮")
-        self.tap_by_percent(0.820, 0.168)  # 坐标: (861, 371)
-        time.sleep(8)  # 应用打开需要更长时间
-        
-        # 5. 执行10次侧滑
-        logger.info("步骤5: 准备执行10次侧滑")
-        start_x = int(SCREEN_WIDTH * 0.98)  # 起点X：屏幕宽度的98%
-        end_x = int(SCREEN_WIDTH * 0.88)    # 终点X：屏幕宽度的88%
-        y_pos = int(SCREEN_HEIGHT * 0.5)    # Y位置：屏幕高度的50%
-        
-        # 6. 执行侧滑操作
-        logger.info("步骤6: 执行10次侧滑操作")
-        for i in range(10):
-            logger.info(f"第{i+1}次侧滑")
-            self.swipe(start_x, y_pos, end_x, y_pos, duration=15)  # 超快速侧滑
-            time.sleep(0.1)  # 极短等待
-        
-        time.sleep(2)  # 等待界面稳定
-        
-        # 7. 检查当前应用
-        logger.info("步骤7: 检查当前应用")
-        is_quick_app = self.is_quick_app_running("优购")
-        
-        if is_quick_app:
-            logger.info("侧滑拦截成功：快应用仍在前台运行")
-            test_results["防侧滑"] = True
-        else:
-            logger.warning("侧滑拦截失败：快应用已不在前台运行")
-            test_results["防侧滑"] = False
-        
-        # 8. 截图记录状态
-        logger.info("步骤8: 截图记录侧滑后状态")
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.swipe_screenshot_path, self.swipe_screenshot_url = self.take_screenshot(f"after_swipe_{timestamp}", upload=True)
-        
-        # 9. 按Home键
-        logger.info("步骤9: 按Home键")
-        self.press_home()
-        time.sleep(10)  # 等待一段时间
-        
-        # 10. 再次检查当前应用
-        logger.info("步骤10: 再次检查当前应用")
-        is_quick_app = self.is_quick_app_running("优购")
-        
-        if is_quick_app:
-            logger.info("拉回成功：按Home键后快应用仍在前台运行")
-            test_results["拉回"] = True
-        else:
-            logger.warning("拉回失败：按Home键后快应用已不在前台运行")
-            test_results["拉回"] = False
-        
-        # 11. 再次截图记录状态
-        logger.info("步骤11: 再次截图记录按Home后状态")
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.home_screenshot_path, self.home_screenshot_url = self.take_screenshot(f"after_home_{timestamp}", upload=True)
-        
-        logger.info("流程3执行完成: 搜索并打开快应用进行测试")
-        # 返回详细的测试结果，而不仅仅是布尔值
-        return test_results
+        result = self._quick_app_testing.execute()
+        # 保存截图路径以便在其他方法中访问
+        self.swipe_screenshot_path = self._quick_app_testing.swipe_screenshot_path
+        self.swipe_screenshot_url = self._quick_app_testing.swipe_screenshot_url
+        self.home_screenshot_path = self._quick_app_testing.home_screenshot_path
+        self.home_screenshot_url = self._quick_app_testing.home_screenshot_url
+        return result
     
     def clear_all_apps(self):
         """流程4: 清空手机里的全部应用"""
-        logger.info("===== 开始执行流程4: 清空手机里的全部应用 =====")
-        
-        # 1. 强制停止快应用
-        logger.info("步骤1: 强制停止快应用")
-        self.run_shell_command("adb shell am force-stop com.huawei.fastapp")
-        time.sleep(1)
-        
-        # 2. 按Home键
-        logger.info("步骤2: 按Home键")
-        self.press_home()
-        time.sleep(1)
-        
-        # 3. 打开最近任务列表
-        logger.info("步骤3: 打开最近任务列表")
-        self.press_recent_apps()
-        time.sleep(2)
-        
-        # 4. 点击底部中间清除按钮
-        logger.info("步骤4: 点击底部中间清除按钮")
-        self.tap_by_percent(0.495, 0.909)  # 坐标: (540, 2147)
-        time.sleep(1)
-        
-        # 5. 按Home键回到桌面
-        logger.info("步骤5: 按Home键回到桌面")
-        self.press_home()
-        time.sleep(1)
-        
-        logger.info("流程4执行完成: 清空手机里的全部应用")
-        return True
+        return self._clear_apps.execute()
     
     def run_all_flows(self, send_notification=True):
         """执行所有流程
@@ -1135,7 +937,7 @@ class QuickAppADBTester:
             video_name = f"test_flow_{video_timestamp}"
             logger.info(f"开始使用scrcpy录制流程3视频: {video_name}.mp4")
             
-            # 启动scrcpy录制，预留3秒稳定缓冲
+            # # 启动scrcpy录制，预留3秒稳定缓冲
             video_path = start_scrcpy_recording(video_name)
             if not video_path:
                 logger.warning("无法启动scrcpy录制，将继续测试但没有录制")
@@ -1391,7 +1193,7 @@ def main():
     run_automated_test(no_notification=args.no_notification, upload_screenshots=args.upload_screenshots)
     
     # 设置定时任务，每30分钟执行一次
-    schedule.every(5).minutes.do(
+    schedule.every(10).minutes.do(
         run_automated_test, 
         no_notification=args.no_notification, 
         upload_screenshots=args.upload_screenshots
