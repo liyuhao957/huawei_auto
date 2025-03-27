@@ -12,7 +12,6 @@ Huawei Quick App ADB-based Automation Script
 
 import subprocess
 import time
-import logging
 import os
 import requests
 import json
@@ -26,99 +25,13 @@ import argparse
 import schedule
 import signal
 import sys
-import shutil  # 用于检查命令是否存在
 
-# 获取当前脚本所在目录
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-# 截图保存目录
-SCREENSHOTS_DIR = os.path.join(SCRIPT_DIR, "screenshots")
-# 视频保存目录
-VIDEOS_DIR = os.path.join(SCRIPT_DIR, "videos")
+# 导入配置模块
+from config import *
+from config import configure_logging
 
-# 确保目录存在
-os.makedirs(SCREENSHOTS_DIR, exist_ok=True)
-os.makedirs(VIDEOS_DIR, exist_ok=True)
-
-# 配置日志
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler("quick_app_adb_test.log"),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger("QuickAppADBTester")
-
-# 飞书机器人配置
-FEISHU_WEBHOOK_URL = "https://open.feishu.cn/open-apis/bot/v2/hook/2e9f09a8-4cec-4475-a6a8-4da61c4a874c"  # 替换为您的飞书机器人webhook URL
-FEISHU_SECRET = "YOUR_SECRET"  # 替换为您的飞书机器人签名密钥，如果没有设置签名可以留空
-
-# Telegram配置 (替换Stardots配置)
-TELEGRAM_BOT_TOKEN = "7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg"
-TELEGRAM_CHAT_ID = "-1002505009144"  # 您的Telegram频道/群组ID
-
-# 设备屏幕尺寸
-SCREEN_WIDTH = 1080
-SCREEN_HEIGHT = 2376
-
-# scrcpy录制相关配置
-SCRCPY_CONFIG = {
-    'display': False,         # 不显示屏幕
-    'bitrate': '2M',          # 较低比特率，提高稳定性
-    'max_size': '720',        # 最大分辨率
-    'codec': 'h264',          # 使用H.264编码，更稳定
-    'max_fps': '20'           # 限制帧率，确保稳定性
-}
-
-# 全局变量用于处理scrcpy录制
-scrcpy_recording_process = None
-current_video_path = None
-
-# 全局配置
-DEFAULT_CONFIG = {
-    'duration': 0,  # 默认0表示无限录制，直到手动停止
-    'upload_screenshots': True,
-    'telegram_bot_token': '7883072273:AAH0VO-o6O4-ZkY1KXLCiqT3xMqPgq--CXg',
-    'telegram_chat_id': '5748280607'
-}
-
-# 检查系统中是否安装了命令
-def check_command_exists(command):
-    """
-    检查系统是否安装了指定的命令
-    
-    Args:
-        command: 要检查的命令名称
-    
-    Returns:
-        bool: 如果命令存在则返回True，否则返回False
-    """
-    return shutil.which(command) is not None
-
-# 检查ffmpeg是否可用
-def check_ffmpeg_available():
-    """
-    检查系统中是否安装了ffmpeg
-    
-    Returns:
-        bool: 如果ffmpeg可用则返回True，否则返回False
-    """
-    if not check_command_exists('ffmpeg'):
-        logger.warning("系统中未找到ffmpeg，视频修复功能将不可用")
-        return False
-    
-    try:
-        # 检查ffmpeg版本
-        result = subprocess.run(['ffmpeg', '-version'], 
-                               capture_output=True, 
-                               text=True, 
-                               check=True)
-        logger.info(f"检测到ffmpeg: {result.stdout.splitlines()[0]}")
-        return True
-    except Exception as e:
-        logger.warning(f"ffmpeg检测失败: {str(e)}")
-        return False
+# 初始化日志
+logger = configure_logging()
 
 def kill_scrcpy_processes():
     """优雅地终止所有正在运行的scrcpy进程"""
@@ -1735,3 +1648,27 @@ if __name__ == "__main__":
     else:
         # 启动定时任务
         main() 
+
+# 检查ffmpeg是否可用
+def check_ffmpeg_available():
+    """
+    检查系统中是否安装了ffmpeg
+    
+    Returns:
+        bool: 如果ffmpeg可用则返回True，否则返回False
+    """
+    if not check_command_exists('ffmpeg'):
+        logger.warning("系统中未找到ffmpeg，视频修复功能将不可用")
+        return False
+    
+    try:
+        # 检查ffmpeg版本
+        result = subprocess.run(['ffmpeg', '-version'], 
+                               capture_output=True, 
+                               text=True, 
+                               check=True)
+        logger.info(f"检测到ffmpeg: {result.stdout.splitlines()[0]}")
+        return True
+    except Exception as e:
+        logger.warning(f"ffmpeg检测失败: {str(e)}")
+        return False

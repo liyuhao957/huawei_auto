@@ -1,0 +1,3 @@
+# 设备屏幕尺寸
+SCREEN_WIDTH = 1080
+SCREEN_HEIGHT = 2376 

@@ -58,7 +58,7 @@ class QuickAppTesting:
         # 5. 执行10次侧滑
         logger.info("步骤5: 准备执行10次侧滑")
         # 获取屏幕尺寸
-        from huawei_quick_app_adb import SCREEN_WIDTH, SCREEN_HEIGHT
+        from config import SCREEN_WIDTH, SCREEN_HEIGHT
         start_x = int(SCREEN_WIDTH * 0.98)  # 起点X：屏幕宽度的98%
         end_x = int(SCREEN_WIDTH * 0.88)    # 终点X：屏幕宽度的88%
         y_pos = int(SCREEN_HEIGHT * 0.5)    # Y位置：屏幕高度的50%
