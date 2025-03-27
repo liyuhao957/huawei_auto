@@ -433,11 +433,13 @@ def main():
     parser.add_argument('--upload-screenshots', action='store_true', help='上传截图到图床')
     args = parser.parse_args()
     
+    # 创建一个共享的录制管理器，在整个程序中使用
+    recorder = ScrcpyRecorder(VIDEOS_DIR, logger)
+    
     # 注册终止处理
     def signal_handler(sig, frame):
         global is_manually_interrupted, manual_interruption_video_url
         
-        logger = logging.getLogger("main")
         logger.info("接收到终止信号，正在优雅退出...")
         is_manually_interrupted = True
         
@@ -474,10 +476,8 @@ def main():
         import traceback
         logger.error(f"详细错误: {traceback.format_exc()}")
     finally:
-        # 确保任何正在运行的录制进程都被正确关闭
-        logger = logging.getLogger("main")
-        recorder = ScrcpyRecorder(VIDEOS_DIR, logger)
-        recorder.kill_scrcpy_processes()
+        # 只在necessary时确保录制进程被终止
+        # 由于测试流程中已经正确终止了录制进程，这里通常不需要再次终止
         logger.info("定时测试任务已结束")
 
 
