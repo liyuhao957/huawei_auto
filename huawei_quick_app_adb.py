@@ -1106,7 +1106,7 @@ def main():
     run_automated_test(no_notification=args.no_notification, upload_screenshots=args.upload_screenshots)
     
     # 设置定时任务，每30分钟执行一次
-    schedule.every(10).minutes.do(
+    schedule.every(30).minutes.do(
         run_automated_test, 
         no_notification=args.no_notification, 
         upload_screenshots=args.upload_screenshots

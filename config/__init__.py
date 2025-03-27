@@ -7,6 +7,8 @@ from .recording import *
 from .notification import *
 from .logging_config import configure_logging
 from .utils import check_command_exists, check_ffmpeg_available
+from .quick_app import *
+from .scheduler import *
 
 # 全局变量用于处理scrcpy录制
 scrcpy_recording_process = None
@@ -29,6 +31,12 @@ __all__ = [
     
     # 通知配置
     'FEISHU_WEBHOOK_URL', 'FEISHU_SECRET', 'TELEGRAM_BOT_TOKEN', 'TELEGRAM_CHAT_ID',
+    
+    # 快应用配置
+    'SEARCH_KEYWORD', 'QUICK_APP_PACKAGE',
+    
+    # 定时任务配置
+    'SCHEDULE_INTERVAL_MINUTES', 'RUN_IMMEDIATELY_ON_START',
     
     # 信号处理相关
     'is_manually_interrupted', 'manual_interruption_video_url',

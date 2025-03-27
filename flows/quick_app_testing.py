@@ -1,32 +1,38 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+流程3: 搜索并打开快应用进行测试
+"""
+
 import time
+import subprocess
 import logging
 from datetime import datetime
 
-# 获取logger
-logger = logging.getLogger(__name__)
+# 导入配置
+from config import SCREEN_WIDTH, SCREEN_HEIGHT, SEARCH_KEYWORD
+
+# 获取日志记录器
+logger = logging.getLogger("quick_app_test")
 
 class QuickAppTesting:
-    """流程3: 搜索并打开快应用进行测试"""
+    """搜索并打开快应用进行测试"""
     
     def __init__(self, adb_controller):
-        """初始化
+        """初始化测试类
         
         Args:
-            adb_controller: ADB控制器实例，提供基础操作方法
+            adb_controller: ADB控制器实例
         """
         self.adb = adb_controller
-        # 保存截图路径和URL的属性
-        self.swipe_screenshot_path = None
-        self.swipe_screenshot_url = None
-        self.home_screenshot_path = None
-        self.home_screenshot_url = None
+        self.swipe_screenshot_path = None  # 防侧滑测试截图路径
+        self.swipe_screenshot_url = None   # 防侧滑测试截图URL
+        self.home_screenshot_path = None   # 拉回测试截图路径
+        self.home_screenshot_url = None    # 拉回测试截图URL
     
     def execute(self):
-        """执行搜索并打开快应用进行测试流程
-        
-        Returns:
-            dict: 测试结果字典，包含"防侧滑"和"拉回"两个键
-        """
+        """执行测试流程"""
         logger.info("===== 开始执行流程3: 搜索并打开快应用进行测试 =====")
         
         # 用于存储测试结果
@@ -40,9 +46,9 @@ class QuickAppTesting:
         self.adb.tap_by_percent(0.214, 0.164)  # 坐标: (326, 353)
         time.sleep(1)
         
-        # 2. 输入"优购"
-        logger.info("步骤2: 输入'买乐多'")
-        self.adb.input_text("买乐多")
+        # 2. 输入搜索关键词
+        logger.info(f"步骤2: 输入'{SEARCH_KEYWORD}'")
+        self.adb.input_text(SEARCH_KEYWORD)
         time.sleep(1)
         
         # 3. 按下回车键
@@ -57,8 +63,6 @@ class QuickAppTesting:
         
         # 5. 执行10次侧滑
         logger.info("步骤5: 准备执行10次侧滑")
-        # 获取屏幕尺寸
-        from config import SCREEN_WIDTH, SCREEN_HEIGHT
         start_x = int(SCREEN_WIDTH * 0.98)  # 起点X：屏幕宽度的98%
         end_x = int(SCREEN_WIDTH * 0.88)    # 终点X：屏幕宽度的88%
         y_pos = int(SCREEN_HEIGHT * 0.5)    # Y位置：屏幕高度的50%
@@ -74,7 +78,7 @@ class QuickAppTesting:
         
         # 7. 检查当前应用
         logger.info("步骤7: 检查当前应用")
-        is_quick_app = self.adb.is_quick_app_running("优购")
+        is_quick_app = self.adb.is_quick_app_running(SEARCH_KEYWORD)
         
         if is_quick_app:
             logger.info("侧滑拦截成功：快应用仍在前台运行")
@@ -95,7 +99,7 @@ class QuickAppTesting:
         
         # 10. 再次检查当前应用
         logger.info("步骤10: 再次检查当前应用")
-        is_quick_app = self.adb.is_quick_app_running("优购")
+        is_quick_app = self.adb.is_quick_app_running(SEARCH_KEYWORD)
         
         if is_quick_app:
             logger.info("拉回成功：按Home键后快应用仍在前台运行")
