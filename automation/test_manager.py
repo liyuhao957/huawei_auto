@@ -517,7 +517,9 @@ class TestManager:
                       f"- 测试设备: 华为设备\n" \
                       f"- 测试应用数: {total_apps}\n" \
                       f"- 成功应用数: {success_apps}/{total_apps}\n\n" \
-                      f"**详细测试结果:**\n"
+                      f"**测试结果汇总表**\n\n" \
+                      f"| 应用名称 | 总体结果 | 防侧滑 | 拉回 |\n" \
+                      f"|---------|---------|--------|------|\n"
         else:
             title = "❌ 多快应用自动化测试部分失败"
             content = f"**华为快应用测试部分失败！**\n\n" \
@@ -526,63 +528,67 @@ class TestManager:
                       f"- 测试设备: 华为设备\n" \
                       f"- 测试应用数: {total_apps}\n" \
                       f"- 成功应用数: {success_apps}/{total_apps}\n\n" \
-                      f"**详细测试结果:**\n"
+                      f"**测试结果汇总表**\n\n" \
+                      f"| 应用名称 | 总体结果 | 防侧滑 | 拉回 |\n" \
+                      f"|---------|---------|--------|------|\n"
         
-        # 添加每个应用的测试结果摘要和媒体收集
-        all_media_items = []
+        # 按应用分组的媒体项
+        app_media_groups = {}
         
+        # 添加每个应用的测试结果到表格
         for app_name, app_result in all_results.items():
+            # 总体结果图标
             result_status = "✅ 成功" if app_result["success"] else "❌ 失败"
-            content += f"- {app_name}: {result_status}\n"
             
-            # 收集该应用的媒体项
+            # 收集详细结果
             detailed = app_result.get("detailed", {})
             
-            # 如果应用结果中包含媒体URL，添加到汇总报告
-            if "media_items" in app_result:
+            # 获取防侧滑和拉回测试结果
+            side_swipe_result = "✅" if detailed.get("流程3_防侧滑测试", False) else "❌"
+            pull_back_result = "✅" if detailed.get("流程3_拉回测试", False) else "❌"
+            
+            # 添加到表格行
+            content += f"| {app_name} | {result_status} | {side_swipe_result} | {pull_back_result} |\n"
+            
+            # 收集该应用的媒体项
+            if "media_items" in app_result and app_result["media_items"]:
+                app_media_groups[app_name] = []
                 for media_item in app_result["media_items"]:
-                    # 添加应用名称标识到媒体项的类型中
                     media_item_with_app = media_item.copy()
                     media_item_with_app["app_name"] = app_name
                     
                     # 根据类型修改显示文字
                     if media_item["type"] == "screenshot_swipe":
-                        media_item_with_app["display_name"] = f"{app_name}防侧滑"
+                        media_item_with_app["display_name"] = "防侧滑"
                     elif media_item["type"] == "screenshot_home":
-                        media_item_with_app["display_name"] = f"{app_name}拉回"
+                        media_item_with_app["display_name"] = "拉回"
                     elif media_item["type"] == "video":
-                        media_item_with_app["display_name"] = f"{app_name}视频"
+                        media_item_with_app["display_name"] = "视频"
                     
-                    all_media_items.append(media_item_with_app)
-            
-            # 添加详细结果（无论成功失败）
-            if detailed:
-                if "流程3_防侧滑测试" in detailed:
-                    content += f"  - 防侧滑: {'✅ 成功' if detailed['流程3_防侧滑测试'] else '❌ 失败'}\n"
-                if "流程3_拉回测试" in detailed:
-                    content += f"  - 拉回: {'✅ 成功' if detailed['流程3_拉回测试'] else '❌ 失败'}\n"
+                    app_media_groups[app_name].append(media_item_with_app)
+        
+        # 添加说明
+        content += "\n**说明**: ✅表示测试成功，❌表示测试失败\n\n"
         
         # 如果有错误信息，添加到报告中
         if error_message:
             content += f"\n**❌ 错误信息:** {error_message}\n"
         
-        # 准备媒体项
-        media_items_for_notification = []
-        if all_media_items:
-            for item in all_media_items:
-                media_items_for_notification.append({
-                    "type": item["type"],
-                    "display_name": item.get("display_name"),
-                    "url": item["url"],
-                    "app_name": item["app_name"]
-                })
+        # 准备媒体项，按应用分组
+        media_groups_for_notification = []
+        for app_name, media_items in app_media_groups.items():
+            media_groups_for_notification.append({
+                "group_name": app_name,
+                "items": media_items
+            })
         
         # 发送飞书通知
         self.notification_manager.send_feishu_notification(
             title, 
             content, 
             mention_all=not overall_success, 
-            image_urls=media_items_for_notification
+            image_urls=None,  # 不使用旧的图片格式
+            media_groups=media_groups_for_notification  # 使用新的分组格式
         )
 
 

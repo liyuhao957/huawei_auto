@@ -116,7 +116,7 @@ class NotificationManager:
             
             return None
 
-    def send_feishu_notification(self, title, content, mention_user=None, mention_all=False, image_urls=None):
+    def send_feishu_notification(self, title, content, mention_user=None, mention_all=False, image_urls=None, media_groups=None):
         """
         发送飞书机器人通知
         
@@ -126,6 +126,7 @@ class NotificationManager:
             mention_user: 要@的用户ID，如果为None则不@任何人
             mention_all: 是否@所有人
             image_urls: 媒体URL列表或带有类型标识的媒体项列表，如果为None则不发送媒体
+            media_groups: 按应用分组的媒体项列表，格式为[{'group_name': '应用名', 'items': [媒体项]}]
         
         Returns:
             bool: 是否发送成功
@@ -138,7 +139,8 @@ class NotificationManager:
             timestamp = str(int(time.time()))
             
             # 使用卡片消息格式
-            self.logger.info("使用交互式卡片消息格式发送" + (f"，包含{len(image_urls)}张图片链接" if image_urls and len(image_urls) > 0 else ""))
+            has_media = (image_urls and len(image_urls) > 0) or (media_groups and len(media_groups) > 0)
+            self.logger.info("使用交互式卡片消息格式发送" + (f"，包含媒体项" if has_media else ""))
             
             # 确定卡片颜色模板 - 成功为绿色，失败为红色
             card_color = "green" if "成功" in content and "失败" not in content else "red"
@@ -155,8 +157,8 @@ class NotificationManager:
                 }
             })
             
-            # 如果有媒体URL，添加分隔线和媒体链接部分
-            if image_urls and len(image_urls) > 0:
+            # 处理媒体项
+            if has_media:
                 # 添加分隔线
                 elements.append({"tag": "hr"})
                 
@@ -169,49 +171,101 @@ class NotificationManager:
                     }
                 })
                 
-                # 为每个媒体创建按钮
-                image_buttons = []
+                # 新的分组展示方式
+                if media_groups and len(media_groups) > 0:
+                    for group in media_groups:
+                        group_name = group.get("group_name", "")
+                        items = group.get("items", [])
+                        
+                        if len(items) == 0:
+                            continue
+                        
+                        # 添加应用名分组标题
+                        elements.append({
+                            "tag": "div",
+                            "text": {
+                                "tag": "lark_md",
+                                "content": f"**{group_name}**"
+                            }
+                        })
+                        
+                        # 为每个媒体组创建按钮组
+                        image_buttons = []
+                        for item in items:
+                            url = item.get('url')
+                            if url:  # 确保URL不为空
+                                button_text = item.get('display_name', '媒体')
+                                image_buttons.append({
+                                    "tag": "button",
+                                    "text": {
+                                        "tag": "plain_text",
+                                        "content": button_text
+                                    },
+                                    "type": "primary",
+                                    "url": url
+                                })
+                        
+                        # 添加此组的媒体按钮区域
+                        if image_buttons:
+                            elements.append({
+                                "tag": "action",
+                                "actions": image_buttons
+                            })
+                            
+                        # 添加间隔，使不同应用的媒体组之间有视觉分隔
+                        elements.append({
+                            "tag": "div",
+                            "text": {
+                                "tag": "lark_md",
+                                "content": " "
+                            }
+                        })
                 
-                for i, item in enumerate(image_urls):
-                    # 检查是否是带有类型标识的媒体项
-                    if isinstance(item, dict) and 'url' in item:
-                        url = item['url']
-                        # 根据类型设置按钮文字
-                        if 'type' in item:
-                            if 'display_name' in item:
-                                # 优先使用display_name
-                                button_text = item['display_name']
-                            elif item['type'] == 'video':
-                                button_text = f"{item.get('app_name', '')}视频"
-                            elif item['type'] == 'screenshot_swipe':
-                                button_text = f"{item.get('app_name', '')}防侧滑"
-                            elif item['type'] == 'screenshot_home':
-                                button_text = f"{item.get('app_name', '')}拉回"
+                # 向后兼容，支持旧的非分组式媒体展示方式
+                elif image_urls and len(image_urls) > 0:
+                    # 为每个媒体创建按钮
+                    image_buttons = []
+                    
+                    for i, item in enumerate(image_urls):
+                        # 检查是否是带有类型标识的媒体项
+                        if isinstance(item, dict) and 'url' in item:
+                            url = item['url']
+                            # 根据类型设置按钮文字
+                            if 'type' in item:
+                                if 'display_name' in item:
+                                    # 优先使用display_name
+                                    button_text = item['display_name']
+                                elif item['type'] == 'video':
+                                    button_text = f"{item.get('app_name', '')}视频"
+                                elif item['type'] == 'screenshot_swipe':
+                                    button_text = f"{item.get('app_name', '')}防侧滑"
+                                elif item['type'] == 'screenshot_home':
+                                    button_text = f"{item.get('app_name', '')}拉回"
+                                else:
+                                    button_text = f"媒体 {i+1}"
                             else:
                                 button_text = f"媒体 {i+1}"
                         else:
-                            button_text = f"媒体 {i+1}"
-                    else:
-                        # 向后兼容，如果只是字符串URL
-                        url = item
-                        button_text = "防侧滑" if i == 0 else "拉回" if i == 1 else "视频"
+                            # 向后兼容，如果只是字符串URL
+                            url = item
+                            button_text = "防侧滑" if i == 0 else "拉回" if i == 1 else "视频"
+                        
+                        if url:  # 确保URL不为空
+                            image_buttons.append({
+                                "tag": "button",
+                                "text": {
+                                    "tag": "plain_text",
+                                    "content": button_text
+                                },
+                                "type": "primary",
+                                "url": url
+                            })
                     
-                    if url:  # 确保URL不为空
-                        image_buttons.append({
-                            "tag": "button",
-                            "text": {
-                                "tag": "plain_text",
-                                "content": button_text
-                            },
-                            "type": "primary",
-                            "url": url
-                        })
-                
-                # 添加媒体按钮区域
-                elements.append({
-                    "tag": "action",
-                    "actions": image_buttons
-                })
+                    # 添加媒体按钮区域
+                    elements.append({
+                        "tag": "action",
+                        "actions": image_buttons
+                    })
                 
                 # 添加提示文本
                 elements.append({
