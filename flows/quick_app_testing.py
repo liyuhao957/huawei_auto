@@ -31,12 +31,20 @@ class QuickAppTesting:
         self.home_screenshot_path = None   # 拉回测试截图路径
         self.home_screenshot_url = None    # 拉回测试截图URL
     
-    def execute(self):
-        """执行测试流程"""
-        logger.info("===== 开始执行流程3: 搜索并打开快应用进行测试 =====")
+    def execute(self, app_config=None):
+        """执行测试流程
+        
+        Args:
+            app_config: 应用配置字典，包含name和package等信息
+        """
+        # 使用传入的应用配置或默认配置
+        search_keyword = app_config["name"] if app_config else SEARCH_KEYWORD
+        
+        logger.info(f"===== 开始执行流程3: 搜索并打开快应用 '{search_keyword}' 进行测试 =====")
         
         # 用于存储测试结果
         test_results = {
+            "应用名称": search_keyword,
             "防侧滑": False,
             "拉回": False
         }
@@ -47,8 +55,8 @@ class QuickAppTesting:
         time.sleep(1)
         
         # 2. 输入搜索关键词
-        logger.info(f"步骤2: 输入'{SEARCH_KEYWORD}'")
-        self.adb.input_text(SEARCH_KEYWORD)
+        logger.info(f"步骤2: 输入'{search_keyword}'")
+        self.adb.input_text(search_keyword)
         time.sleep(1)
         
         # 3. 按下回车键
@@ -78,19 +86,19 @@ class QuickAppTesting:
         
         # 7. 检查当前应用
         logger.info("步骤7: 检查当前应用")
-        is_quick_app = self.adb.is_quick_app_running(SEARCH_KEYWORD)
+        is_quick_app = self.adb.is_quick_app_running(search_keyword)
         
         if is_quick_app:
-            logger.info("侧滑拦截成功：快应用仍在前台运行")
+            logger.info(f"侧滑拦截成功：快应用 '{search_keyword}' 仍在前台运行")
             test_results["防侧滑"] = True
         else:
-            logger.warning("侧滑拦截失败：快应用已不在前台运行")
+            logger.warning(f"侧滑拦截失败：快应用 '{search_keyword}' 已不在前台运行")
             test_results["防侧滑"] = False
         
         # 8. 截图记录状态
         logger.info("步骤8: 截图记录侧滑后状态")
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.swipe_screenshot_path, self.swipe_screenshot_url = self.adb.take_screenshot(f"after_swipe_{timestamp}", upload=True)
+        self.swipe_screenshot_path, self.swipe_screenshot_url = self.adb.take_screenshot(f"{search_keyword}_swipe_{timestamp}", upload=True)
         
         # 9. 按Home键
         logger.info("步骤9: 按Home键")
@@ -99,20 +107,20 @@ class QuickAppTesting:
         
         # 10. 再次检查当前应用
         logger.info("步骤10: 再次检查当前应用")
-        is_quick_app = self.adb.is_quick_app_running(SEARCH_KEYWORD)
+        is_quick_app = self.adb.is_quick_app_running(search_keyword)
         
         if is_quick_app:
-            logger.info("拉回成功：按Home键后快应用仍在前台运行")
+            logger.info(f"拉回成功：按Home键后快应用 '{search_keyword}' 仍在前台运行")
             test_results["拉回"] = True
         else:
-            logger.warning("拉回失败：按Home键后快应用已不在前台运行")
+            logger.warning(f"拉回失败：按Home键后快应用 '{search_keyword}' 已不在前台运行")
             test_results["拉回"] = False
         
         # 11. 再次截图记录状态
         logger.info("步骤11: 再次截图记录按Home后状态")
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.home_screenshot_path, self.home_screenshot_url = self.adb.take_screenshot(f"after_home_{timestamp}", upload=True)
+        self.home_screenshot_path, self.home_screenshot_url = self.adb.take_screenshot(f"{search_keyword}_home_{timestamp}", upload=True)
         
-        logger.info("流程3执行完成: 搜索并打开快应用进行测试")
+        logger.info(f"流程3执行完成: 搜索并打开快应用 '{search_keyword}' 进行测试")
         # 返回详细的测试结果，而不仅仅是布尔值
         return test_results 

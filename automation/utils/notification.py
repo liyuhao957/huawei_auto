@@ -178,12 +178,15 @@ class NotificationManager:
                         url = item['url']
                         # 根据类型设置按钮文字
                         if 'type' in item:
-                            if item['type'] == 'video':
-                                button_text = "视频"
+                            if 'display_name' in item:
+                                # 优先使用display_name
+                                button_text = item['display_name']
+                            elif item['type'] == 'video':
+                                button_text = f"{item.get('app_name', '')}视频"
                             elif item['type'] == 'screenshot_swipe':
-                                button_text = "防侧滑"
+                                button_text = f"{item.get('app_name', '')}防侧滑"
                             elif item['type'] == 'screenshot_home':
-                                button_text = "拉回"
+                                button_text = f"{item.get('app_name', '')}拉回"
                             else:
                                 button_text = f"媒体 {i+1}"
                         else:
